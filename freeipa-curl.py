@@ -2,7 +2,7 @@ import commands
 import json
 
 def curl(type,parameter):
-        c = "curl -H referer:https://ipa.studentmediene.local/ipa -H \"Content-Type:application/json\" -H \"Accept:applicaton/json\" --negotiate -u : --delegation always --cace$
+        c = "curl -H referer:https://ipa.studentmediene.local/ipa -H \"Content-Type:application/json\" -H \"Accept:applicaton/json\" --negotiate -u : --delegation always --cacert /etc/ipa/ca.crt -d \'{\"method\":\""+type+"\",\"params\":[[\""+parameter+"\"],{}],\"id\":0}\' -X POST https://ipa.studentmediene.local/ipa/json"
         s=commands.getstatusoutput(c)
         return  json.loads(s[1][s[1].index("{"):])
 
@@ -19,7 +19,7 @@ def getGroups():
 
 
 def userAdd(givenname,sn,mail,uid,mobile):
-        c = "curl -H referer:https://ipa.studentmediene.local/ipa -H \"Content-Type:application/json\" -H \"Accept:applicaton/json\" --negotiate -u : --delegation always --cace$
+        c = "curl -H referer:https://ipa.studentmediene.local/ipa -H \"Content-Type:application/json\" -H \"Accept:applicaton/json\" --negotiate -u : --delegation always --cacert /etc/ipa/ca.crt -d \'{\"method\":\"user_add\",\"params\":[[],{\"givenname\":\""+givenname+"\", \"sn\":\""+sn+"\", \"userpassword\":\""+mobile+"\",\"mail\":\""+mail+"\",\"uid\":\""+uid+"\",\"telephonenumber\":\""+mobile+"\",\"loginshell\":\"/bin/sh\"}],\"id\":0}' -X POST https://ipa.studentmediene.local/ipa/json"
         s = commands.getstatusoutput(c)
         js = json.loads(s[1][s[1].index("{"):])
         if(js["error"] != None): return js["error"]["message"]
