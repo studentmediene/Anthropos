@@ -26,7 +26,7 @@ def userAdd(givenname,sn,mail,uid,mobile):
         return js["result"]["summary"]
 
 
-print userAdd("Jon","Tarstad","jon.tarstad@gmail.com","jonuser","45454545")
+#print userAdd("Jon","Tarstad","jon.tarstad@gmail.com","jonuser","45454545")
 #getEmails("ipausers")
 #getGroups()
 #print curl("user_find","boyeborg")["result"]["result"][0]
