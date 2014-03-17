@@ -12,10 +12,10 @@ def curl(type,parameter):
         s=commands.getstatusoutput(c)
         return  json.loads(s[1][s[1].index("{"):])
 
-def getEmails():
+def getEmails(group):
         list =  curl("group_find",group)["result"]["result"][0]["member_user"]
         for name in list:
-                #Obs, admin har ikke mail
+                #Obs, admin does not have an email (results in an error)
                 print curl("user_find",name)["result"]["result"][0]["mail"][0]
 
 def getGroups():
@@ -33,8 +33,10 @@ def userAdd(givenname,sn,mail,uid,mobile):
 	"\"sn\":\""+sn+"\", \"userpassword\":\""+mobile+"\",\"mail\":\""+mail+"\","+ \
 	"\"uid\":\""+uid+"\",\"telephonenumber\":\""+mobile+"\",\"loginshell\":\"/bin/sh\"}],\"id\":0}'" + \
 	"-X POST https://ipa.studentmediene.local/ipa/json"
+	
         s = commands.getstatusoutput(c)
         js = json.loads(s[1][s[1].index("{"):])
+	
         if(js["error"] != None): return js["error"]["message"]
         return js["result"]["summary"]
 
