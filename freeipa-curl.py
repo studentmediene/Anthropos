@@ -51,10 +51,10 @@ def argHandler(args):
 			return
 		elif(args[0] == "-add"):
 			givenname = input("Givenname: ")
-			sn = input("Familyname: ")
-			uid = input("Username: ")
-			mail = input("Email: ")
-			mobile = input("Mobile number: ")
+			sn = String(input("Familyname: "))
+			uid = String(input("Username: "))
+			mail = String(input("Email: "))
+			mobile = String(input("Mobile number: "))
 			print userAdd(givenname,sn,mail,uid,mobile)
 			return
 		else:
