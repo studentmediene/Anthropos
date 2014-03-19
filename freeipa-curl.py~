@@ -41,34 +41,9 @@ def userAdd(givenname,sn,mail,uid,mobile):
         if(js["error"] != None): return js["error"]["message"]
         return js["result"]["summary"]
 
-def argHandler(args):
-	if(len(args) == 0):
-		print "Error: please enter valid argument, try -help for help"
-		return
-	if(len(args) == 1):
-		if(args[0] == "-help"):
-			print "Not available yet"
-			return
-		elif(args[0] == "-add"):
-			print userAdd(input("Fornavn: "),input("Etternavn: "),input("epost: "),input("Brukernavn: "),input("Mobilnummer: "))
-			return
-		else:
-			return "Error: please enter valid argument, try -help for help"
-	elif(len(args) == 2 and args[0] == "-add"):
-		try:
-			f = open(args[1],"r");
-			for line in f:
-				lineAry = line.split(";")
-				if(len(lineAry) != 5):
-					print "Error: Too few arguments!"
-					return
-				userAdd(lineAry[0],lineAry[1],lineAry[2],lineAry[3],lineAry[4])
-		except:
-			print sys.exc_info()[0]
-			return
-
-argHandler(sys.argv[1:])
+def argHandler():
 	
+
 
 #print userAdd("Jon","Tarstad","jon.tarstad@gmail.com","jonuser","45454545")
 #getEmails("ipausers")
