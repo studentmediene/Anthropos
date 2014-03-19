@@ -1,0 +1,10 @@
+import sys
+
+def getArgs():
+	args = list()
+	for arg in range(1,len(sys.argv)):
+		args.append(arg)
+	return args
+
+for arg in  getArgs():
+	print arg

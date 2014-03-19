@@ -50,7 +50,12 @@ def argHandler(args):
 			print "Not available yet"
 			return
 		elif(args[0] == "-add"):
-			print userAdd(input("Fornavn: "),input("Etternavn: "),input("epost: "),input("Brukernavn: "),input("Mobilnummer: "))
+			givenname = input("Givenname: ")
+			sn = input("Familyname: ")
+			uid = input("Username: ")
+			mail = input("Email: ")
+			mobile = input("Mobile number: ")
+			print userAdd(givenname,sn,mail,uid,mobile)
 			return
 		else:
 			return "Error: please enter valid argument, try -help for help"
