@@ -50,11 +50,11 @@ def argHandler(args):
 			print "Not available yet"
 			return
 		elif(args[0] == "-add"):
-			givenname = input("Givenname: ")
-			sn = String(input("Familyname: "))
-			uid = String(input("Username: "))
-			mail = String(input("Email: "))
-			mobile = String(input("Mobile number: "))
+			givenname = raw_input("Givenname: ")
+			sn = raw_input("Familyname: ")
+			uid = raw_input("Username: ")
+			mail = raw_input("Email: ")
+			mobile = raw_input("Mobile number: ")
 			print userAdd(givenname,sn,mail,uid,mobile)
 			return
 		else:
