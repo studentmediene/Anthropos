@@ -6,7 +6,6 @@ python ipascript [options]
 ```
 
 ######Options
--------------
 
 	add-user <file>
 		Promts for all necessery information if no file is provided.
