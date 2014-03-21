@@ -68,11 +68,11 @@ def addUsersFromFile(the_file):
 			print line
 			print "----------"
 			continue
-                        
-		firstname = lineAry[0]
-		lastname = lineAry[1]
-		mail = lineAry[2]
-		username = lineAry[3]
+                
+		username = lineAry[0]        
+		firstname = lineAry[1]
+		lastname = lineAry[2]
+		mail = lineAry[3]
 		mobile = lineAry[4]
 		print addUser(firstname,lastname,mail,username,mobile)
 		if len(lineAry) == 6:
@@ -91,6 +91,8 @@ def argHandler(args):
                 else:
                      	print "Too many arguments. Expected one or two, "+len(args)+" given."
         elif(args[0] == "del-user"):
+		##nothing yet
+		return
         elif(args[0] == "help"):
         	help()
                 
