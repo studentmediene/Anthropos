@@ -13,6 +13,18 @@ python ipascript [options]
 		Each user in the file has to be an seperate lines, and in the following format:
 		<username>;<fist name>;<lastname>;<mail>;<mobile>;<group>
 		The group-option is optional.
+	
+	add-group "<group name>" "<description>"
+		Both <group name> and <description> is mandatory
+
+	del-user <username>
+		Deletes the user from the database
+
+	del-group <group name>
+		Deletes the group from the database
+
+	add-all <group name>
+		Adds all people in the database to the group specified. Use with caution!
 
 	help
 		Displays the help-text
