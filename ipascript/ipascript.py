@@ -106,7 +106,7 @@ def addAllUsersToGroup(group):
 	return "All users added to group \"" + group + "\""
 	
 def addUsersFromFile(the_file):
-	f = open(thefile,"r")
+	f = open(the_file,"r")
 	for line in f:
 		lineAry = line.split(";")
 		lineAry[-1] = lineAry[-1][:len(lineAry[-1])-1]
