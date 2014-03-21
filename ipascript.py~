@@ -1,0 +1,88 @@
+import commands
+import sys
+import smtplib
+import email.utils
+import string
+from email.mime.text import MIMEText
+
+def userAdd(firstname,lastname,mail,username,mobile):
+
+        c =     "ipa user-add " + username+ "  --first " + firstname + " --last " + \
+                lastname + " --shell /bin/sh --email " + mail + " --phone " + mobile + \
+                " --random"
+
+        s = commands.getoutput(c)
+
+        if "ERROR" in s:
+                return s
+
+        password =  s[s.index("Random password: ")+17 : s.index("UID:")]
+        fullname = firstname + " " + lastname
+        status = s[: s.index("User login:")]
+        sendMail(mail,username,password,fullname)
+
+        return "User added: " + username + " (Password sent to " + mail + ")"
+
+def addUserToGroup(group,users):
+        c = "ipa group-add-member " + group + " --users " + ",".join(users)
+        s = commands.getoutput(c)
+
+        if "ERROR" in s:
+                return s
+
+        return ",".join(users) + " added to " + group
+
+def sendMail(mail,username,password,name):
+        msgText = open('msgText.txt', 'r').read().split('{split}')
+
+        msg = MIMEText(msgText[0]+username+msgText[1]+password+msgText[2])
+        msg['To'] = email.utils.formataddr((name, mail))
+        msg['From'] = email.utils.formataddr(('IT-Drift', 'it-drift@studentmediene.no'))
+        msg['Subject'] = 'Brukerkonto'
+
+        server = smtplib.SMTP('mail.studentmediene.local')
+        server.sendmail('it-drift@studentmediene.no', [mail], msg.as_string())
+        server.quit()
+
+def argHandler(args):
+        if(len(args) == 0):
+                print "Please enter an argument"
+                return
+        elif(len(args) == 1):
+                if(args[0] == "-add"):
+                        firstname = raw_input("First Name: ")
+                        lastname = raw_input("Last Name: ")
+                        username = raw_input("Username: ")
+                        mail = raw_input("Email: ")
+                        mobile = raw_input("Mobile number: ")
+
+                        print userAdd(firstname,lastname,mail,username,mobile)
+                else:
+                     	print "Please enter a valid argument"
+                        return
+        elif(len(args) == 2 and args[0] == "-add"):
+                f = open(args[1],"r")
+                for line in f:
+                        lineAry = line.split(";")
+                        lineAry[-1] = lineAry[-1][:len(lineAry[-1])-1]
+
+                        if not (5 <= len(lineAry) <= 6):
+                                print "----------"
+                                print "Error: Too few arguments on line:"
+                                print line
+                                print "----------"
+                                continue
+                        
+			firstname = lineAry[0]
+                        lastname = lineAry[1]
+                        mail = lineAry[2]
+                        username = lineAry[3]
+                        mobile = lineAry[4]
+                        print userAdd(firstname,lastname,mail,username,mobile)
+                        if len(lineAry) == 6:
+                                group = lineAry[5]
+                                print addUserToGroup(group,[username])
+        else:
+             	print "Not valid argument"
+
+argHandler(sys.argv[1:])
