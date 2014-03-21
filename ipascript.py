@@ -54,7 +54,7 @@ def addOneUser():
 	print addUser(firstname,lastname,mail,username,mobile)
 	
 def help():
-	print "not avaliable yet... see [URL] for instructions"
+	print "not avaliable yet... see [ https://github.com/boyeborg/IPA-SMMDB ] for instructions"
 	
 def addUsersFromFile(the_file):
 	f = open(thefile,"r")
