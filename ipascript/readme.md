@@ -1,6 +1,4 @@
 ##Usage
-=======
-
 
 ```
 python ipascript [options]
