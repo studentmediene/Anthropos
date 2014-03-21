@@ -14,5 +14,5 @@ python ipascript [options]
 		<username>;<fist name>;<lastname>;<mail>;<mobile>;<group>
 		The group-option is optional.
 
-	help:
+	help
 		Displays the help-text
