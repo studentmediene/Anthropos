@@ -1,0 +1,42 @@
+"curl -H referer:https://<ipa server>/ipa
+-H "Content-Type:application/json"
+-H "Accept:applicaton/json"
+--negotiate -u : --delegation always --cacert /etc/ipa/ca.crt 
+-d '{"method":"<methon>","params":[[],{<param>}],"id":0}'
+-X POST https://<ipa server>/ipa/json"
+
+add user to goup:
+	method: "group_add_member"
+	param: 	"cn":"<group name>","user":"<username1>,<username2>,...",
+		"group":"<groupname1>,<groupname2>,..."
+
+delete user:
+	method: "user_del"
+	param: 	"uid":"<username>"
+
+delete group:
+	method: "group_del"
+	param: 	"cn":"<group name>"
+
+disable/enable user:
+	method: "user_disable"/"user_enable"
+	param:	"uid":"<username>"
+
+modify user:
+	method: "user_mod"
+	param:	"uid":"<username>", **MODIFICATIONS**
+
+
+add user:
+	method:	"user_add"
+	param:	"uid":"<username>","userpassword":"<password>",
+		"givenname":"<givenname>","sn":"<familyname>",
+		"telephonenumber":"<mobile number>","mail":"<email>",
+		"loginshell":"/bin/sh"
+add group:
+	method:	"group_add"
+	param:	"cn":"<group name>","descripion":"<group description>"
+
+ssh root@ipa --> ipa help commands
+
+ipa <command> -h
