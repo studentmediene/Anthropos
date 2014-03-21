@@ -132,29 +132,29 @@ def addUsersFromFile(the_file):
 def argHandler(args):
         if len(args) == 0:
                 print "Please enter an argument"
-        elif(arg[0] == "add-user"):
+        elif args[0] == "add-user":
                 if len(args) == 1:
                         addOneUser()
                 elif len(args) == 2:
                 	addUsersFromFile(args[1])
                 else:
                      	print "Too many arguments. Expected one or two, " + len(args) + " given."
-        elif(args[0] == "del-user"):
+        elif args[0] == "del-user":
 		if len(args) == 2:
 			print deleteUser(args[1])
 		else:
 			print "Expected two arguments, " + len(args) + " given"
-	elif(args[0] == "add-group"):
+	elif args[0] == "add-group":
 		if len(args) == 3:
 			print addGroup(args[1],args[2])
 		else:
 			print "Expected three arguments, " + len(args) + " given"
-	elif(args[0] == "del-group"):
+	elif args[0] == "del-group":
 		if len(args) == 2:
 			print deleteGroup(args[1])
 		else:
 			print "Expected two arguments, " + len(args) + " given"
-	elif(args[0] == "add-all"):
+	elif args[0] == "add-all":
 		if len(args) == 2:
 			warning = "This will add all users to the group \"" + args[1] + "\". Are you sure you want to continue [Y/N]? "
 			answer = input(warning)
