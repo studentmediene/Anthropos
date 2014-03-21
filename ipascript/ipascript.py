@@ -76,7 +76,7 @@ def deleteUser(username):
 	return "User \"" + username + "\" deleted"
 	
 def addGroup(group,description):
-	c = "ipa group-add " + group + " --desc " + description
+	c = "ipa group-add " + group + " --desc \"" + description + "\""
 	s = commands.getoutput(c)
 	
 	if "ERROR" in s:
