@@ -1,16 +1,23 @@
 package com.springapp.mvc;
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 
 /**
  * Created by adrianh on 16.02.14.
  */
-public class PersonList {
+public class PersonList extends ArrayList<Person> {
     ArrayList<Person> personList = new ArrayList<Person>();
 
     PersonList() {
-        Person test = new Person("Test", "test@test.test", 1);
+        Person test = new Person("Test", "test@test.test", "smint", 1);
+        Person adrian = new Person("Adrian", "adrian@smint.no", "smint", 2);
+        Person person = new Person("Person", "person@earth.com", "smint", 3);
+        Person person1 = new Person("Randy", "randy@wat.wat", "IT", 4);
         this.personList.add(test);
+        this.personList.add(adrian);
+        this.personList.add(person);
+        this.personList.add(person1);
     }
 
     public void addPerson(Person person) {
@@ -28,5 +35,9 @@ public class PersonList {
             }
         }
         throw new IllegalArgumentException("No person with that id found");
+    }
+
+    public ArrayList<Person> getPersonList() {
+        return this.personList;
     }
 }
