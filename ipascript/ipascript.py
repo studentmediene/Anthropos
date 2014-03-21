@@ -99,7 +99,10 @@ def deleteGroup(group):
 	return "Group \"" + group + "\" deleted"
 
 def addAllUsersToGroup(group):
-	#Add All users to group
+	#This oneliner should really be replaced
+	s = commands.getoutput("ipa group-add-member "+group+" --user "+",".join([x[:len(x)-4] for x in commands.getoutput("ipa user-find --pkey-only").split("User login: ")[1:len(commands.getoutput("ipa user-find --pkey-only").split("User login: "))-1]]))
+	if "ERROR" in s:
+		return "Error!\n" + s
 	return "All users added to group \"" + group + "\""
 	
 def addUsersFromFile(the_file):
