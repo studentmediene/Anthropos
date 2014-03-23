@@ -14,6 +14,7 @@ var app = angular.module('mdbApp',["ngResource", "ngRoute"]);
                     templateUrl: 'views/person.html',
                     controller: 'PersonCtrl'
                 })
+
                 .otherwise({
                     redirectTo: '/'
                 });
