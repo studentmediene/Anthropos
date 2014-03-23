@@ -7,7 +7,7 @@
 
 add user to goup:
 	method: "group_add_member"
-	param: 	"cn":"<group name>","user":"<username1>,<username2>,...",
+	param: 	"cn":"<group firstName>","user":"<username1>,<username2>,...",
 		"group":"<groupname1>,<groupname2>,..."
 
 delete user:
@@ -16,7 +16,7 @@ delete user:
 
 delete group:
 	method: "group_del"
-	param: 	"cn":"<group name>"
+	param: 	"cn":"<group firstName>"
 
 disable/enable user:
 	method: "user_disable"/"user_enable"
@@ -35,7 +35,7 @@ add user:
 		"loginshell":"/bin/sh"
 add group:
 	method:	"group_add"
-	param:	"cn":"<group name>","descripion":"<group description>"
+	param:	"cn":"<group firstName>","descripion":"<group description>"
 
 ssh root@ipa --> ipa help commands
 
