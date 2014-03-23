@@ -5,18 +5,26 @@ package com.springapp.mvc;
  */
 
 public class Person {
-    private String name;
+    private String firstName;
+    private String lastName;
     private String email;
+    private String membership;
     private int id;
 
-    Person(String name, String email, int id) {
-        setName(name);
+    Person(String firstName, String lastName, String email, String membership, int id) {
+        setFirstName(firstName);
+        setLastName(lastName);
         setEmail(email);
         setId(id);
+        setMembership(membership);
     }
 
-    public String getName() {
-        return this.name;
+    public String getFirstName() {
+        return this.firstName;
+    }
+
+    public String getLastName() {
+        return this.lastName;
     }
 
     public String getEmail() {
@@ -27,8 +35,16 @@ public class Person {
         return this.id;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public String getMembership() {
+        return this.membership;
+    }
+
+    public void setFirstName(String firstName) {
+        this.firstName = firstName;
+    }
+
+    public void setLastName(String lastName) {
+        this.lastName = lastName;
     }
 
     public void setEmail(String email) {
@@ -36,4 +52,8 @@ public class Person {
     }
 
     public void setId(int id) { this.id = id; }
+
+    public void setMembership(String membership) {
+        this.membership = membership;
+    }
 }
