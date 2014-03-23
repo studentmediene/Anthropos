@@ -1,0 +1,97 @@
+<div id="page-wrap">
+    <form method="post" id="contact" name="contact">
+        <fieldset>
+            <legend>Behandle bruker</legend>
+            <div class="heightPad">
+                <label for="name">Fornavn</label>
+                <input type="text" id="name" name="name" />
+            </div>
+
+            <div class="heightPad">
+            <label for="surname">Etternavn</label>
+            <input type="text" id="surname" name="surname" />
+</div>
+
+            <div class="heightPad">
+            <label for="username">Brukernavn</label>
+            <input type="text" id="username" name="username" />
+</div>
+            <div class="heightPad">
+            <label for="email">Email</label>
+            <input type="email" id="email" name="email" />
+</div>
+            <div class="heightPad">
+            <label for="mobile">Mobilnummer</label>
+            <input type="text" id="mobile" name="mobile"/>
+</div>
+
+
+        <label>Velg mailgrupper</label>
+        <div class="btn-group" data-ng-class="{open: openMailList}">
+            <button class="btn dropdown-toggle" data-ng-click="openMailList=!openMailList">
+                Mailinglister <span class="caret"></span>
+            </button>
+            <ul class="dropdown-menu" aria-labelledby="dropdownMenu">
+                <input type = "text" ng-model="mailListSearch" class="searchGroup"/>
+                <li>
+                    <a data-ng-click="checkAll()">
+                        <i class="icon-ok-sign"></i> Velg alle</a>
+                </li>
+                <li>
+                    <a data-ng-click="uncheck()">
+                        <i class="icon-remove-sign"></i> Fjern Alle</a>
+                </li>
+                <li class="divider"></li>
+                <div class="filterScrollBar pull-right">
+                    <li data-ng-repeat="mail in mailingList | filter:mailListSearch">
+                        <a data-ng-click="mailSelection(mail)">
+                            {{mail.Name}}
+                            <span data-ng-class="isChecked(mail)"></span>
+                        </a>
+                    </li>
+                </div>
+            </ul>
+        </div>
+
+        </fieldset>
+    </form>
+
+    <div style="height:40px"></div>
+<legend>Grupper
+
+    <div class="btn-group pull-right" data-ng-class="{open: openGroup}">
+        <button class="btn dropdown-toggle" data-ng-click="openGroup=!openGroup">
+            Endre grupper <span class="caret"></span>
+        </button>
+        <ul class="dropdown-menu" aria-labelledby="dropdownMenu">
+            <input type = "text" ng-model="groupSearch" class="searchGroup"/>
+            <div class="filterScrollBar pull-right">
+                <li data-ng-repeat="group in allGroups | filter:groupSearch">
+                    <a data-ng-click="groupSelection(group)">
+                        {{group.Group}}
+                        <span data-ng-class="groupIsChecked(group)"></span>
+                    </a>
+                </li>
+            </div>
+        </ul>
+    </div>
+</legend>
+
+
+
+    <table class = "table table-bordered">
+        <tr ng-repeat="group in myGroups" class = "{{createHover()}}">
+
+            <td class ="ng-binding "  data-ng-click="remove(group)">{{group.Group}} <span data-ng-class="editable()"></span>
+            </td>
+        </tr>
+    </table>
+
+
+    {{showExplanation}}
+    <li ng-repeat="insufficient in insufficientList">
+        <div style="color:red">{{insufficient}}</div>
+    </li>
+    <a href = "/add"><button class="btn" data-ng-click="save()" style="background:limegreen; color:white">Lagre endringer</button> </a>
+
+</div>
