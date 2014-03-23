@@ -22,11 +22,13 @@
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
         <processorPath useClasspath="true" />
-        <module name="MedlemsDatabase" />
+        <module name="Medlemsdatabase" />
+        <module name="untitled" />
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
-      <module name="MedlemsDatabase" target="1.6" />
+      <module name="Medlemsdatabase" target="1.6" />
+      <module name="untitled" target="1.6" />
     </bytecodeTargetLevel>
   </component>
 </project>
