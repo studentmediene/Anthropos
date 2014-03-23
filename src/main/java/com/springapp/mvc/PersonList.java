@@ -1,6 +1,5 @@
 package com.springapp.mvc;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 
 /**
@@ -10,10 +9,12 @@ public class PersonList extends ArrayList<Person> {
     ArrayList<Person> personList = new ArrayList<Person>();
 
     PersonList() {
-        Person test = new Person("Test", "Testerson", "test@test.test", "smint", 1);
-        Person adrian = new Person("Adrian", "Hundseth", "adrian@smint.no", "smint", 2);
-        Person person = new Person("Person", "Norsep", "person@earth.com", "smint", 3);
-        Person person1 = new Person("Randy", "Inty", "rand@int.wat", "IT", 4);
+        String[] smint = {"smint"};
+        String[] it = {"it"};
+        Person test = new Person("Test", "Testerson", "test@test.test", smint, 1);
+        Person adrian = new Person("Adrian", "Hundseth", "adrian@smint.no", smint, 2);
+        Person person = new Person("Person", "Norsep", "person@earth.com", it, 3);
+        Person person1 = new Person("Randy", "Inty", "rand@int.wat", it, 4);
         this.personList.add(test);
         this.personList.add(adrian);
         this.personList.add(person);
