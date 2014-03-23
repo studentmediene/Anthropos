@@ -22,7 +22,7 @@ public class JSONController {
         return "index";
     }
 
-    @RequestMapping(value = "/add", method = RequestMethod.POST)
+    @RequestMapping(value = "add", method = RequestMethod.POST)
     public @ResponseBody Person post(@RequestBody final Person person) {
         System.out.print(person.getId() + " " + person.getFirstName());
         personList.addPerson(person);
@@ -39,6 +39,7 @@ public class JSONController {
 
     @RequestMapping(value = "list", method = RequestMethod.GET)
     public @ResponseBody ArrayList<Person> getList() {
+        System.out.print("list");
         return personList.getPersonList();
     }
 

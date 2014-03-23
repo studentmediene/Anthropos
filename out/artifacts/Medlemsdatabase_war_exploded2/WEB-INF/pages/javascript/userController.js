@@ -161,9 +161,7 @@ app.controller("UserCtrl", function($scope, $resource) {
                 <!-- TODO: send dette til backend -->
                 console.log(user);
                 var fd = new FormData();
-                fd.append('add', angular.toJSON(user));
-                return $http.post('/data/fileupload', fd, {transformRequest: angular.identity, headers: {'Content-Type' : undefined}});
-
+                return $http.post('add', user);
             }
         }
 
