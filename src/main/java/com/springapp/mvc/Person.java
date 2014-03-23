@@ -8,15 +8,15 @@ public class Person {
     private String firstName;
     private String lastName;
     private String email;
-    private String membership;
+    private String[] groups;
     private int id;
 
-    Person(String firstName, String lastName, String email, String membership, int id) {
+    Person(String firstName, String lastName, String email, String[] groups, int id) {
         setFirstName(firstName);
         setLastName(lastName);
         setEmail(email);
         setId(id);
-        setMembership(membership);
+        setGroups(groups);
     }
 
     public String getFirstName() {
@@ -35,8 +35,8 @@ public class Person {
         return this.id;
     }
 
-    public String getMembership() {
-        return this.membership;
+    public String[] getGroups() {
+        return this.groups;
     }
 
     public void setFirstName(String firstName) {
@@ -53,7 +53,7 @@ public class Person {
 
     public void setId(int id) { this.id = id; }
 
-    public void setMembership(String membership) {
-        this.membership = membership;
+    public void setGroups(String[] groups) {
+        this.groups = groups;
     }
 }

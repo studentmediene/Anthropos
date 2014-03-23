@@ -48,12 +48,15 @@ public class JSONController {
     }
 
     @RequestMapping(value = "/memberOf/{membership}", method = RequestMethod.GET)
-    public @ResponseBody ArrayList<Person> personsByMembership(@PathVariable String membership) {
+    public @ResponseBody ArrayList<Person> personsByMembership(@PathVariable String groups) {
         ArrayList<Person> retList = new ArrayList<Person>();
         for (Person person : personList.getPersonList()) {
-            if (person.getMembership().compareTo(membership) == 0) {
-                retList.add(person);
+            for (String group : person.getGroups()) {
+                if (group.compareTo(groups) == 0) {
+                    retList.add(person);
+                }
             }
+
         }
         return retList;
     }
