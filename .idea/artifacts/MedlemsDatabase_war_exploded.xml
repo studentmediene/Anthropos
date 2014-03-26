@@ -1,7 +1,8 @@
 <component name="ArtifactManager">
   <artifact type="exploded-war" name="MedlemsDatabase:war exploded">
-    <output-path>$PROJECT_DIR$/out/artifacts/MedlemsDatabase_war_exploded</output-path>
+    <output-path>$PROJECT_DIR$/target/MedlemsDatabase</output-path>
     <root id="root">
+      <element id="javaee-facet-resources" facet="MedlemsDatabase/web/Web" />
       <element id="directory" name="WEB-INF">
         <element id="directory" name="classes">
           <element id="module-output" name="MedlemsDatabase" />
@@ -15,14 +16,14 @@
           <element id="library" level="project" name="Maven: aopalliance:aopalliance:1.0" />
           <element id="library" level="project" name="Maven: org.springframework:spring-beans:3.2.0.RELEASE" />
           <element id="library" level="project" name="Maven: org.springframework:spring-expression:3.2.0.RELEASE" />
-          <element id="library" level="project" name="Maven: org.slf4j:slf4j-api:1.7.6" />
-          <element id="library" level="project" name="Maven: org.codehaus.jackson:jackson-mapper-asl:1.4.3" />
-          <element id="library" level="project" name="Maven: org.codehaus.jackson:jackson-core-asl:1.4.3" />
-          <element id="library" level="project" name="Maven: org.json:json:20080701" />
+          <element id="library" level="project" name="Maven: javax.servlet:servlet-api:2.5" />
           <element id="library" level="project" name="Maven: org.springframework:spring-webmvc:3.2.0.RELEASE" />
+          <element id="library" level="project" name="Maven: org.slf4j:slf4j-api:1.7.6" />
+          <element id="library" level="project" name="Maven: org.codehaus.jackson:jackson-mapper-asl:1.9.12" />
+          <element id="library" level="project" name="Maven: org.codehaus.jackson:jackson-core-asl:1.9.12" />
+          <element id="library" level="project" name="Maven: org.json:json:20080701" />
         </element>
       </element>
-      <element id="javaee-facet-resources" facet="MedlemsDatabase/web/Web" />
     </root>
   </artifact>
 </component>

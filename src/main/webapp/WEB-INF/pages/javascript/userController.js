@@ -152,14 +152,18 @@ app.controller("UserCtrl", function($scope, $resource, $http) {
                     "firstName":document.getElementById('name').value,
                     "lastName":document.getElementById('surname').value,
                     "username":document.getElementById('username').value,
-                    "email":document.getElementById('email').value,
-                    "mobil e":document.getElementById('mobile').value,
-                    "groups":$scope.myGroups,
-                    "mailingList":$scope.mailsSelected
+                    "email":document.getElementById('email').value
+
 
                 };
                 <!-- TODO: send dette til backend -->
-                return $resource('/user/:id',{ 'update': {method:"add"}  });
+                return $http({
+                    method : 'POST',
+                    data : user,
+                    url : 'add'
+
+
+                });
             }
         }
 

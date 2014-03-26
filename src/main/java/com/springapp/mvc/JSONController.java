@@ -22,11 +22,18 @@ public class JSONController {
         return "index";
     }
 
-    @RequestMapping(value = "add", method = RequestMethod.POST)
+    @RequestMapping(value="/add", method=RequestMethod.POST)
     public @ResponseBody Person post(@RequestBody final Person person) {
+        System.out.print("adding");
         System.out.print(person.getId() + " " + person.getFirstName());
         personList.addPerson(person);
         return person;
+    }
+
+    @RequestMapping(value="/streng", method = RequestMethod.POST)
+    public String test(String s) {
+        System.out.print("Streng: " + s);
+        return "/";
     }
 
     @RequestMapping(value = "/addList", method = RequestMethod.POST)
