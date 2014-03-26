@@ -167,7 +167,11 @@ for aUser in sm:
             add = not user_exists("email", aUser["mail"])
         if add:
             name = get_names(aUser["name"])
-            add_user(name[0], name[1], aUser["mail"],get_username(aUser["email"]),aUser["phone"],True)
+	    username = get_username(aUser["name"])
+	    if username == "":
+		print "Not added: " + aUser["name"] + ". Username already exists"
+		continue
+            add_user(name[0], name[1], aUser["mail"],get_username(aUser["name"]),aUser["phone"],True)
             print "no group added!"
             add_users_to_role("active", get_username(aUser["email"]))
         else:
