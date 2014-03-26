@@ -153,15 +153,13 @@ app.controller("UserCtrl", function($scope, $resource, $http) {
                     "lastName":document.getElementById('surname').value,
                     "username":document.getElementById('username').value,
                     "email":document.getElementById('email').value,
-                    "mobile":document.getElementById('mobile').value,
+                    "mobil e":document.getElementById('mobile').value,
                     "groups":$scope.myGroups,
                     "mailingList":$scope.mailsSelected
 
                 };
                 <!-- TODO: send dette til backend -->
-                console.log(user);
-                var fd = new FormData();
-                return $http.post();
+                return $resource('/user/:id',{ 'update': {method:"add"}  });
             }
         }
 
