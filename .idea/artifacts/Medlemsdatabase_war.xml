@@ -1,0 +1,8 @@
+<component name="ArtifactManager">
+  <artifact type="war" name="Medlemsdatabase:war">
+    <output-path>$PROJECT_DIR$/out/artifacts/Medlemsdatabase_war</output-path>
+    <root id="archive" name="Medlemsdatabase_war.war">
+      <element id="artifact" artifact-name="Medlemsdatabase:war exploded" />
+    </root>
+  </artifact>
+</component>
