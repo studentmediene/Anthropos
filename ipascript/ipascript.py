@@ -1,187 +1,194 @@
 import commands
-import sys
 
 
-def addUser(firstname, lastname, mail, username, mobile):
-    if firstname == "" or lastname == "" or username == "": return username + " not added. A required field is empty"
-    if mail == "": mail = username
-    if mobile == "": mobile = "00000000"
+def user_exists(term, value):
+    s = commands.getoutput("ipa user-find --" + term + " " + value)
 
-    c = "ipa user-add " + username + "  --first " + firstname + " --last " + \
-        lastname + " --shell /bin/sh --email " + mail + " --phone " + mobile + \
-        " --random"
+    if len(s) > 210:
+        return True
+
+    return False
+
+
+def add_user(forename, lastname, mail, username, phone, active):
+    if forename == "" or lastname == "" or username == "":
+        return username + " not added. A required field is empty"
+    if mail != "":
+        mail = " --email " + mail
+    if phone != "":
+        phone = " --phone " + phone
+
+    c = "ipa user-add " + username + "  --first " + forename + " --last " + \
+        lastname + " --shell /bin/sh" + mail + phone + " --random"
 
     s = commands.getoutput(c)
 
     if not "Added user" in s:
-        return s
+        print "-----Error-----\n" + s + "\n---------------"
+        return False
 
-    password = s[s.index("Random password: ") + 17: s.index("UID:")]
-    fullname = firstname + " " + lastname
-    sendMail(mail, username, password, fullname)
+    if mail != "" and active:
 
-    return "User added: " + username + " (Password sent to " + mail + ")"
+        password = s[s.index("Random password: ") + 17: s.index("UID:")]
+        fullname = forename + " " + lastname
+        send_password(mail, username, password, fullname)
+        print "User added: " + username + " (Password sent to " + mail + ")"
+        return True
+
+    print "User added: " + username + " (Password not sent)"
+    return True
 
 
-def addUserToGroup(group, user):
-    c = "ipa group-add-member " + group + " --users " + user
+def add_users_to_group(group, users):
+    c = "ipa group-add-member " + group + " --users " + ",".join(users)
     s = commands.getoutput(c)
 
     if "Failed members:" in s:
-        if "no such entry" in s:
-            return "User \"" + user + "\" not found"
-        else:
-            return "User \"" + user + "\" if already member of \"" + group + "\""
+        error = s[s.index("Failed members:") + 15:].strip().split("member user: ")
+        error[-1] = error[-1].split("member group:")[0]
+        error.remove(error[0])
+        print [e.strip() for e in error]
+        return False
     elif "ERROR" in s:
-        return "Group \"" + group + "\" not found"
+        print "Group \"" + group + "\" not found"
+        return False
 
-    return user + " added to " + group
+    print user + " added to " + group
+    return True
 
 
-def sendMail(mail, username, password, name):
+def add_group(group, description):
+    c = "ipa group-add " + group + " --desc \"" + description + "\""
+    s = commands.getoutput(c)
+
+    if "ERROR" in s:
+        if "invalid 'group_name'" in s:
+            print "\"" + group + "\" is not a valid group name"
+            return False
+        else:
+            print "Group with name \"" + group + "\" already exists"
+            return False
+    elif not "Added group" in s:
+        print "-----\nERROR-----\n" + s + "\n---------------"
+        return False
+
+    print "Group \"" + group + "\" added"
+    return True
+
+
+def send_password(mail, username, password, name):
     import smtplib
     import email.utils
     from email.mime.text import MIMEText
 
-    msgText = open('msgText.txt', 'r').read().split('{split}')
+    msg_text = open('msgText.txt', 'r').read().split('{split}')
 
-    msg = MIMEText(msgText[0] + username + msgText[1] + password + msgText[2])
+    msg = MIMEText(msg_text[0] + username + msg_text[1] + password + msg_text[2])
     msg['To'] = email.utils.formataddr((name, mail))
     msg['From'] = email.utils.formataddr(('IT-Drift', 'it-drift@studentmediene.no'))
-    msg['Subject'] = 'Brukerkonto'
+    msg['Subject'] = "Brukerkonto"
 
     server = smtplib.SMTP('mail.studentmediene.local')
     server.sendmail('it-drift@studentmediene.no', [mail], msg.as_string())
     server.quit()
 
 
-def addOneUser():
-    firstname = raw_input("First Name: ")
-    lastname = raw_input("Last Name: ")
-    username = raw_input("Username: ")
-    mail = raw_input("Email [" + username + "@smint.no]: ")
-    mobile = raw_input("Mobile number: ")
-
-    print addUser(firstname, lastname, mail, username, mobile)
-
-
-def showHelp():
-    return "not avaliable yet... see [ https://github.com/boyeborg/IPA-SMMDB/tree/master/ipascript ] for instructions"
-
-
-def deleteUser(username):
-    c = "ipa user-del " + username
+def add_users_to_role(role,users):
+    c = "ipa role-add-member " + role + " --users " + ",".join(users)
     s = commands.getoutput(c)
 
     if "ERROR" in s:
-        return "User \"" + username + "\" not found"
+        print "Role \"" + role + "\" not found"
+        return False
+    elif "Failed members:" in s:
+        error = s[s.index("Failed members:") + 15:].strip().split("member user: ")
+        error[-1] = error[-1].split("member group:")[0]
+        error.remove(error[0])
+        print [e.strip() for e in error]
+        return False
 
-    return "User \"" + username + "\" deleted"
-
-
-def addGroup(group, description):
-    c = "ipa group-add " + group + " --desc \"" + description + "\""
-    s = commands.getoutput(c)
-
-    if "ERROR" in s:
-        if "invalid 'group_name'" in s:
-            return "\"" + group + "\" is not a valid group name"
-        else:
-            return "Group with name \"" + group + "\" already exists"
-    elif not "Added group" in s:
-        return "-----\nERROR!\n" + s + "\n-----"
-
-    return "Group \"" + group + "\" added"
+    return True
 
 
-def deleteGroup(group):
-    c = "ipa group-del " + group
-    s = commands.getoutput(c)
+def get_names(name):
+    name = name.split(" ")
 
-    if "ERROR" in s:
-        return "Group \"" + group + "\" not found"
-
-    return "Group \"" + group + "\" deleted"
+    return [" ".join(name[:len(name)-1]), name[-1]]
 
 
-def addAllUsersToGroup(group):
-    #This oneliner should really be replaced
-    s = commands.getoutput("ipa group-add-member " + group + " --user " + ",".join([x[:len(x) - 4] for x in
-                                                                                    commands.getoutput(
-                                                                                        "ipa user-find --pkey-only").split(
-                                                                                        "User login: ")[1:len(
-                                                                                        commands.getoutput(
-                                                                                            "ipa user-find --pkey-only").split(
-                                                                                            "User login: ")) - 1]]))
-    if "ERROR" in s:
-        return "Error!\n" + s
-    return "All users added to group \"" + group + "\""
+def get_username(name):
+    return email.split("@")[0]
 
 
-def addUsersFromFile(the_file):
-    f = open(the_file, "r")
-    for line in f:
-        lineAry = line.split(";")
-        lineAry[-1] = lineAry[-1][:len(lineAry[-1]) - 1]
+f = open("medlemsliste.csv")
 
-        if not (5 <= len(lineAry) <= 6):
-            print "----------"
-            print "Error: Too few arguments on line:"
-            print line
-            print "----------"
-            continue
+users = list()
+sm = list()
 
-        username = lineAry[0]
-        firstname = lineAry[1]
-        lastname = lineAry[2]
-        mail = lineAry[3]
-        mobile = lineAry[4]
-        print addUser(firstname, lastname, mail, username, mobile)
-        if len(lineAry) == 6:
-            groups = lineAry[5].spilt(",")
-            for group in groups:
-                print addUserToGroup(group, username)
-
-
-def argHandler(args):
-    if len(args) == 0:
-        print "Please enter an argument"
-    elif args[0] == "add-user":
-        if len(args) == 1:
-            addOneUser()
-        elif len(args) == 2:
-            addUsersFromFile(args[1])
-        else:
-            print "Too many arguments. Expected one or two, " + len(args) + " given."
-    elif args[0] == "del-user":
-        if len(args) == 2:
-            print deleteUser(args[1])
-        else:
-            print "Expected two arguments, " + len(args) + " given"
-    elif args[0] == "add-group":
-        if len(args) == 3:
-            print addGroup(args[1], args[2])
-        else:
-            print "Expected three arguments, " + len(args) + " given"
-    elif args[0] == "del-group":
-        if len(args) == 2:
-            print deleteGroup(args[1])
-        else:
-            print "Expected two arguments, " + len(args) + " given"
-    elif args[0] == "add-all":
-        if len(args) == 2:
-            warning = "This will add all users to the group \"" + args[
-                1] + "\". Are you sure you want to continue [Y/N]? "
-            answer = input(warning)
-            while answer.upper() != "Y":
-                if answer.upper() == "N":
-                    return
-                answer = input(warning)
-            print addAllUsersToGroup(args[1])
-    elif args[0] == "help":
-        print showHelp()
+for line in f:
+    person = line.split(",")
+    username = person[0]
+    forename = person[1]
+    lastname = person[2]
+    phone = person[3]
+    mail = person[4]
+    memberOf = person[5]
+    if memberOf == "SM":
+        sm.append({"name": forename, "phone": phone, "mail": mail})
     else:
-        print "Not valid argument, try \"help\" for help"
+        users.append({"username": username, "forename": forename, "lastname": lastname,
+                      "phone": phone, "mail": mail, "memberOf": memberOf, "active": False})
 
 
-argHandler(sys.argv[1:])
+for aUser in sm:
+    if aUser["mail"] == "" and aUser["phone"] == "":
+        print "Not added: " + aUser["name"] + " (lack of mail, username and phone)"
+        continue
+    for user in users:
+        if user["mail"] == aUser["mail"]:
+            user["active"] = True
+            break
+        elif user["phone"] == aUser["phone"]:
+            user["active"] = True
+            break
+    else:
+        if aUser["mail"] != "":
+            print "Not added: " + aUser["name"] + " (lack of mail and username)"
+            continue
+        add = not user_exists("email", aUser["mail"])
+        if add and aUser["phone"] != "":
+            add = not user_exists("email", aUser["mail"])
+        if add:
+            name = get_names(aUser["name"])
+            add_user(name[0], name[1], aUser["mail"],get_username(aUser["email"]),aUser["phone"],True)
+            print "no group added!"
+            add_users_to_role("active", get_username(aUser["email"]))
+        else:
+            print aUser["name"] + " not added. (User exists)"
+
+dusken = list()
+radio = list()
+stv = list()
+aktive = list()
+inaktive = list()
+
+for user in users:
+    if add_user(user["forename"], user["lastname"], user["mail"], user["username"], user["phone"], user["active"]):
+        if user["username"] == "Dusken":
+            dusken.append(user["username"])
+        elif user["username"] == "Radio":
+            radio.append(user["username"])
+        elif user["username"] == "stv":
+            stv.append(user["username"])
+        else:
+            print "unknown group"
+        if user["aktiv"]:
+            aktive.append(user["username"])
+        else:
+            inaktive.append(user["username"])
+
+add_users_to_group("Dusken", dusken)
+add_users_to_group("Radio", radio)
+add_users_to_group("STV", stv)
+add_users_to_role("aktiv", aktive)
+add_users_to_role("inaktiv", inaktive)
