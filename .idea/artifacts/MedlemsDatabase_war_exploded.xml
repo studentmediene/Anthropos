@@ -1,10 +1,10 @@
 <component name="ArtifactManager">
-  <artifact type="exploded-war" name="Medlemsdatabase:war exploded2">
-    <output-path>$PROJECT_DIR$/out/artifacts/Medlemsdatabase_war_exploded2</output-path>
+  <artifact type="exploded-war" name="MedlemsDatabase:war exploded">
+    <output-path>$PROJECT_DIR$/out/artifacts/MedlemsDatabase_war_exploded</output-path>
     <root id="root">
       <element id="directory" name="WEB-INF">
         <element id="directory" name="classes">
-          <element id="module-output" name="Medlemsdatabase" />
+          <element id="module-output" name="MedlemsDatabase" />
         </element>
         <element id="directory" name="lib">
           <element id="library" level="project" name="Maven: org.springframework:spring-core:3.2.0.RELEASE" />
@@ -22,7 +22,7 @@
           <element id="library" level="project" name="Maven: org.springframework:spring-webmvc:3.2.0.RELEASE" />
         </element>
       </element>
-      <element id="javaee-facet-resources" facet="Medlemsdatabase/web/Web" />
+      <element id="javaee-facet-resources" facet="MedlemsDatabase/web/Web" />
     </root>
   </artifact>
 </component>

@@ -1,7 +1,7 @@
 /**
  * Created by Kristian on 05/03/14.
  */
-app.controller("UserCtrl", function($scope, $resource) {
+app.controller("UserCtrl", function($scope, $resource, $http) {
 
 
     $scope.mailsSelected = [];
@@ -161,7 +161,7 @@ app.controller("UserCtrl", function($scope, $resource) {
                 <!-- TODO: send dette til backend -->
                 console.log(user);
                 var fd = new FormData();
-                return $http.post('add', user);
+                return $http.post();
             }
         }
 
