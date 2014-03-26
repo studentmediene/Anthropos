@@ -117,7 +117,14 @@ def get_names(name):
 
 
 def get_username(name):
-    return email.split("@")[0]
+	fullname = name.split(' ')
+	username = ''
+	for word in fullname[:-1]:
+		username += word+'.'
+	username += fullname[-1]
+	if(user_exist('login',username)):
+		return ''
+	return username
 
 
 f = open("medlemsliste.csv")
