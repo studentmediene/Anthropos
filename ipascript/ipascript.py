@@ -1,3 +1,4 @@
+#-*- coding: utf-8 -*-
 import commands
 
 
@@ -14,6 +15,7 @@ def add_user(forename, lastname, mail, username, phone, active):
     if forename == "" or lastname == "" or username == "":
         return username + " not added. A required field is empty"
     if mail != "":
+	passMail = mail
         mail = " --email " + mail
     if phone != "":
         phone = " --phone " + phone
@@ -31,8 +33,8 @@ def add_user(forename, lastname, mail, username, phone, active):
 
         password = s[s.index("Random password: ") + 17: s.index("UID:")]
         fullname = forename + " " + lastname
-        send_password(mail, username, password, fullname)
-        print "User added: " + username + " (Password sent to " + mail + ")"
+        send_password(passMail, username, password, fullname)
+        print "User added: " + username + " (Password sent to " + passMail + ")"
         return True
 
     print "User added: " + username + " (Password not sent)"
@@ -53,7 +55,8 @@ def add_users_to_group(group, users):
         print "Group \"" + group + "\" not found"
         return False
 
-    print user + " added to " + group
+    print users
+    print " added to " + group
     return True
 
 
@@ -119,10 +122,13 @@ def get_names(name):
 def get_username(name):
 	fullname = name.split(' ')
 	username = ''
-	for word in fullname[:-1]:
-		username += word+'.'
-	username += fullname[-1]
-	if(user_exist('login',username)):
+	for word in fullname:
+		word = word.replace('å','aa')
+		word = word.replace('ø','oe')
+		word = word.replace('æ','ae')
+		username += word+'_'
+	username = username[:-1]
+	if(user_exists('login',username)):
 		return ''
 	return username
 
@@ -131,6 +137,7 @@ f = open("medlemsliste.csv")
 
 users = list()
 sm = list()
+ukjent = list()
 
 for line in f:
     person = line.split(",")
@@ -139,8 +146,8 @@ for line in f:
     lastname = person[2]
     phone = person[3]
     mail = person[4]
-    memberOf = person[5]
-    if memberOf == "SM":
+    memberOf = person[5][:-1]
+    if memberOf.lower() == "sm":
         sm.append({"name": forename, "phone": phone, "mail": mail})
     else:
         users.append({"username": username, "forename": forename, "lastname": lastname,
@@ -159,7 +166,7 @@ for aUser in sm:
             user["active"] = True
             break
     else:
-        if aUser["mail"] != "":
+        if aUser["mail"] == "":
             print "Not added: " + aUser["name"] + " (lack of mail and username)"
             continue
         add = not user_exists("email", aUser["mail"])
@@ -171,9 +178,9 @@ for aUser in sm:
 	    if username == "":
 		print "Not added: " + aUser["name"] + ". Username already exists"
 		continue
-            add_user(name[0], name[1], aUser["mail"],get_username(aUser["name"]),aUser["phone"],True)
-            print "no group added!"
-            add_users_to_role("active", get_username(aUser["email"]))
+            add_user(name[0], name[1], aUser["mail"],username,aUser["phone"],True)
+	    ukjent.append(username)
+            add_users_to_role("Aktiv", [username])
         else:
             print aUser["name"] + " not added. (User exists)"
 
@@ -185,15 +192,15 @@ inaktive = list()
 
 for user in users:
     if add_user(user["forename"], user["lastname"], user["mail"], user["username"], user["phone"], user["active"]):
-        if user["username"] == "Dusken":
+        if user["memberOf"].lower() == "dusken":
             dusken.append(user["username"])
-        elif user["username"] == "Radio":
+        elif user["memberOf"].lower() == "radio":
             radio.append(user["username"])
-        elif user["username"] == "stv":
+        elif user["memberOf"].lower() == "stv":
             stv.append(user["username"])
         else:
             print "unknown group"
-        if user["aktiv"]:
+        if user["active"]:
             aktive.append(user["username"])
         else:
             inaktive.append(user["username"])
@@ -201,5 +208,6 @@ for user in users:
 add_users_to_group("Dusken", dusken)
 add_users_to_group("Radio", radio)
 add_users_to_group("STV", stv)
-add_users_to_role("aktiv", aktive)
-add_users_to_role("inaktiv", inaktive)
+add_users_to_group("ukjent",ukjent)
+add_users_to_role("Aktiv", aktive)
+add_users_to_role("Inaktiv", inaktive)
