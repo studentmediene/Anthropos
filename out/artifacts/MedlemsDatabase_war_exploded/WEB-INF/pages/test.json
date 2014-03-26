@@ -1,0 +1,8 @@
+[
+    {"name":"Per", "surname":"Knudsen","username":"perknu","email":"peremann@gmail.com","mobile":"80425088","groups":["Radio", "IT"], "id":"1" },
+    {"name":"Kalle", "surname":"Halvardsen","username":"kallha","email":"kalle_92@xi.no","mobile":"84383248","groups":["Videotekniker"],"id":"2" },
+    {"name":"Janne", "surname":"Ahonen","username":"jaah","email":"janho@hotmail.com","mobile":"54661490","groups":["Sportsjournalist"],"id":"3" },
+    {"name":"Espen", "surname":"Askeladden","username":"askla","email":"espen_ask@gmail.com","mobile":"64912345","groups":["Radio"],"id":"4" },
+    {"name":"Jakob", "surname":"Halvardsen","username":"jaha","email":"jakobmann@hotmail.com","mobile":"49502879","groups":["Ting"],"id":"2" },
+    {"name":"Kine", "surname":"Rasmundsen","username":"kinras","email":"kira@gmail.com","mobile":"64059508","groups":["Redaktør"],"id":"5" }
+]
