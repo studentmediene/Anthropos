@@ -1,7 +1,7 @@
 ##Usage
 
 ```
-python ipascript [options]
+python ipascript.py [options]
 
 ```
 
