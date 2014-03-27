@@ -231,3 +231,5 @@ add_users_to_role("Inaktiv", inaktive)
 f = open("log.txt", "a")
 for line in log:
 	f.write(line)
+
+f.close()
