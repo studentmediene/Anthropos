@@ -6,8 +6,8 @@
 
 
 # Java compiled files #
-*target/
-*out/
+target/
+out/
 *.class
 
 # Package Files #
@@ -17,5 +17,4 @@
 
 # Log files #
 */log/*
-
-MedlemsDatabase.iml
+*/lib/*
