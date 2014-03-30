@@ -1,1 +1,21 @@
-.DS_STORE
+# Idea Files #
+*.iml
+*.ipr
+*.iws
+.idea
+
+
+# Java compiled files #
+*target/
+*out/
+*.class
+
+# Package Files #
+*.jar
+*.war
+*.ear
+
+# Log files #
+*/log/*
+
+MedlemsDatabase.iml

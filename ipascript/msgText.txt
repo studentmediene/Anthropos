@@ -14,9 +14,9 @@ Det du trenger å gjøre:
 	3. Etter du har trykket på "logg inn" kommer det opp en ny boks som ber deg lage et nytt passord.
 	4. Skriv inn et passord du husker
 
-Det er informasjonen (brukernavn og passord) som er lagret her du vil benytte for å logge deg inn i wikien fremover.
+Det er informasjonen (brukernavn og passord) som er lagret her du vil benytte for å logge deg inn i wiki.smint.no fremover.
 
-(Dersom du har spørsmål send mail til bruker@studentmediene.no)
+(Dersom du har spørsmål anngående din brukerkonto send mail til bruker@studentmediene.no)
 
 --
 Vennlig hilsen,
