@@ -32,6 +32,7 @@ def add_user(forename, lastname, mail, username, phone, active):
 
     if not "Added user" in s:
         log.append("-----Error-----\n" + s + "\n---------------")
+        print "-----Error-----\n" + s + "\n---------------"
         return False
 
     if mail != "" and active:
@@ -39,9 +40,11 @@ def add_user(forename, lastname, mail, username, phone, active):
         fullname = forename + " " + lastname
         send_password(passMail, username, password, fullname)
         log.append("User added: " + username + " (Password sent to " + passMail + ")")
+        print "User added: " + username + " (Password sent to " + passMail + ")"
         return True
 
     log.append("User added: " + username + " (Password not sent)")
+    print "User added: " + username + " (Password not sent)"
     return True
 
 
@@ -55,12 +58,15 @@ def add_users_to_group(group, users):
         error[-1] = error[-1].split("member group:")[0]
         error.remove(error[0])
         log.append(", ".join([e.strip() for e in error]))
+        print ", ".join([e.strip() for e in error])
         return False
     elif "ERROR" in s:
         log.append("Group \"" + group + "\" not found")
+        print "Group \"" + group + "\" not found"
         return False
 
     log.append(", ".join(users) + " added to " + group)
+    print ", ".join(users) + " added to " + group
     return True
 
 
@@ -72,15 +78,19 @@ def add_group(group, description):
     if "ERROR" in s:
         if "invalid 'group_name'" in s:
             log.append("\"" + group + "\" is not a valid group name")
+            print "\"" + group + "\" is not a valid group name"
             return False
         else:
             log.append("Group with name \"" + group + "\" already exists")
+            print "Group with name \"" + group + "\" already exists"
             return False
     elif not "Added group" in s:
         log.append("-----\nERROR-----\n" + s + "\n---------------")
+        print "-----\nERROR-----\n" + s + "\n---------------"
         return False
 
     log.append("Group \"" + group + "\" added")
+    print "Group \"" + group + "\" added"
     return True
 
 
@@ -107,12 +117,14 @@ def add_users_to_role(role, users):
 
     if "ERROR" in s:
         log.append("Role \"" + role + "\" not found")
+        print "Role \"" + role + "\" not found"
         return False
     elif "Failed members:" in s:
         error = s[s.index("Failed members:") + 15:].strip().split("member user: ")
         error[-1] = error[-1].split("member group:")[0]
         error.remove(error[0])
         log.append(", ".join([e.strip() for e in error]))
+        print ", ".join([e.strip() for e in error])
         return False
 
     return True
@@ -170,6 +182,7 @@ for line in f:
 
 for aUser in sm:
     if aUser["mail"] == "" and aUser["phone"] == "":
+        print "Not added: " + aUser["name"] + " (lack of mail, username and phone)"
         log.append("Not added: " + aUser["name"] + " (lack of mail, username and phone)")
         continue
     for user in users:
@@ -181,6 +194,7 @@ for aUser in sm:
             break
     else:
         if aUser["mail"] == "":
+            print "Not added: " + aUser["name"] + " (lack of mail and username)"
             log.append("Not added: " + aUser["name"] + " (lack of mail and username)")
             continue
         add = not user_exists("email", aUser["mail"])
@@ -190,12 +204,14 @@ for aUser in sm:
             name = get_names(aUser["name"])
             username = get_username(aUser["name"])
             if username == "":
+                print "Not added: " + aUser["name"] + ". Username already exists"
                 log.append("Not added: " + aUser["name"] + ". Username already exists")
                 continue
             add_user(name[0], name[1], aUser["mail"], username, aUser["phone"], True)
             ukjent.append(username)
             add_users_to_role("Aktiv", [username])
         else:
+            print aUser["name"] + " not added. (User exists)"
             log.append(aUser["name"] + " not added. (User exists)")
 
 dusken = list()
@@ -213,6 +229,7 @@ for user in users:
         elif user["memberOf"].lower() == "stv":
             stv.append(user["username"])
         else:
+            print "Group " + user["memberOf"] + " is unknown"
             log.append("Group " + user["memberOf"] + " is unknown")
         if user["active"]:
             aktive.append(user["username"])
