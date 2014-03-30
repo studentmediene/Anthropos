@@ -140,6 +140,7 @@ def get_username(name):
     fullname = filter(None, name.split(' '))
     username = ''
     for word in fullname:
+        word = word.lower()
         word = word.replace('å', 'aa')
         word = word.replace('ø', 'oe')
         word = word.replace('æ', 'ae')
@@ -151,6 +152,7 @@ def get_username(name):
 
 
 def remove_specials(s):
+    s = s.lower()
     s = s.replace('å', 'aa')
     s = s.replace('ø', 'oe')
     s = s.replace('æ', 'ae')
