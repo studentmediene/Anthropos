@@ -25,8 +25,8 @@ def add_user(forename, lastname, mail, username, phone, active):
     if phone != "":
         phone = " --phone " + phone
 
-    c = "ipa user-add " + username + "  --first " + forename + " --last " + \
-        lastname + " --shell /bin/sh" + mail + phone + " --random"
+    c = "ipa user-add '" + username + "'  --first '" + forename + "' --last '" + \
+        lastname + "' --shell /bin/sh" + mail + phone + " --random"
 
     s = commands.getoutput(c)
 
