@@ -6,9 +6,7 @@
     </artifacts-to-build>
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="ced18d04-e67e-4419-9f7d-eb118421d33b" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-    </list>
+    <list default="true" id="ced18d04-e67e-4419-9f7d-eb118421d33b" name="Default" comment="" />
     <ignored path="MedlemsDatabase.iws" />
     <ignored path=".idea/workspace.xml" />
     <option name="TRACKING_ENABLED" value="true" />
@@ -79,8 +77,8 @@
       <file leaf-file-name="pom.xml" pinned="false" current="true" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/pom.xml">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.7247438" vertical-offset="0" max-vertical-offset="1785">
-              <caret line="33" column="21" selection-start-line="33" selection-start-column="21" selection-end-line="33" selection-end-column="21" />
+            <state vertical-scroll-proportion="0.6368961" vertical-offset="0" max-vertical-offset="1785">
+              <caret line="29" column="34" selection-start-line="29" selection-start-column="34" selection-end-line="29" selection-end-column="34" />
               <folding />
             </state>
           </provider>
@@ -794,7 +792,7 @@
       <workItem from="1395868896836" duration="182000" />
       <workItem from="1397065989924" duration="1614000" />
       <workItem from="1397069266324" duration="438000" />
-      <workItem from="1397073182365" duration="28000" />
+      <workItem from="1397073182365" duration="247000" />
     </task>
     <task id="LOCAL-00001" summary="jasdljlk">
       <created>1395594635675</created>
@@ -804,7 +802,7 @@
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="22082000" />
+    <option name="totallyTimeSpent" value="22301000" />
   </component>
   <component name="TodoView" selected-index="0">
     <todo-panel id="selected-file">
@@ -1330,8 +1328,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/pom.xml">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.7247438" vertical-offset="0" max-vertical-offset="1785">
-          <caret line="33" column="21" selection-start-line="33" selection-start-column="21" selection-end-line="33" selection-end-column="21" />
+        <state vertical-scroll-proportion="0.6368961" vertical-offset="0" max-vertical-offset="1785">
+          <caret line="29" column="34" selection-start-line="29" selection-start-column="34" selection-end-line="29" selection-end-column="34" />
           <folding />
         </state>
       </provider>
