@@ -23,10 +23,12 @@
         <outputRelativeToContentRoot value="true" />
         <processorPath useClasspath="true" />
         <module name="Medlemsdatabase" />
+        <module name="MedlemsDatabase" />
         <module name="untitled" />
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
+      <module name="MedlemsDatabase" target="1.6" />
       <module name="Medlemsdatabase" target="1.6" />
       <module name="untitled" target="1.6" />
     </bytecodeTargetLevel>
