@@ -1,0 +1,23 @@
+Hei!
+
+Du er nå lagt til i Studentmedienes nye medlemsdatabase.
+
+Ditt brukernavn er: {split}
+Ditt midlertidige passord er: {split}
+
+Passordet du har fått er MIDLERTIDIG, så endre det så raskt som mulig (les: NÅ). 
+
+Det du trenger å gjøre:
+
+	1. Gå inn på denne linken: http://ipa.smint.no/
+	2. Logg inn med informasjonen over (pass på å skrive passordet riktig, gjerne kopier og lim inn for å være på den sikre siden)
+	3. Etter du har trykket på "logg inn" kommer det opp en ny boks som ber deg lage et nytt passord.
+	4. Skriv inn et passord du husker
+
+Det er informasjonen (brukernavn og passord) som er lagret her du vil benytte for å logge deg inn i wiki.smint.no fremover.
+
+(Dersom du har spørsmål anngående din brukerkonto send mail til bruker@studentmediene.no)
+
+--
+Vennlig hilsen,
+IT-Drift, Studentmediene
