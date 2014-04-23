@@ -22,11 +22,12 @@ public class JSONController {
         return "index";
     }
 
-    @RequestMapping(value="/add", method=RequestMethod.POST)
+    @RequestMapping(value="add", method=RequestMethod.POST)
     public @ResponseBody Person post(@RequestBody final Person person) {
         System.out.print("adding");
-        System.out.print(person.getId() + " " + person.getFirstName());
+//        System.out.print(person.getId() + " " + person.getFirstName());
         personList.addPerson(person);
+        System.out.print(person);
         return person;
     }
 
@@ -50,6 +51,8 @@ public class JSONController {
         return personList.getPersonList();
     }
 
+
+
     @RequestMapping(value = "{id}", method = RequestMethod.GET)
     public @ResponseBody Person getPersonById(@PathVariable int id) {
         return personList.getPersonById(id);
@@ -59,11 +62,11 @@ public class JSONController {
     public @ResponseBody ArrayList<Person> personsByMembership(@PathVariable String groups) {
         ArrayList<Person> retList = new ArrayList<Person>();
         for (Person person : personList.getPersonList()) {
-            for (String group : person.getGroups()) {
+           /* for (String group : person.getGroups()) {
                 if (group.compareTo(groups) == 0) {
                     retList.add(person);
                 }
-            }
+            }*/
 
         }
         return retList;
