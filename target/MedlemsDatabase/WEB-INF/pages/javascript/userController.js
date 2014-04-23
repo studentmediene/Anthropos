@@ -151,7 +151,7 @@ app.controller("UserCtrl", function($scope, $resource, $http) {
 
                     "firstName":document.getElementById('name').value,
                     "lastName":document.getElementById('surname').value,
-                    "username":document.getElementById('username').value,
+                    "userName":document.getElementById('username').value,
                     "email":document.getElementById('email').value
 
 
