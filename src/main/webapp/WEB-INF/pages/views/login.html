@@ -1,0 +1,46 @@
+
+
+<div id="page-wrap" class="pagination-centered">
+
+        <img style="padding-bottom: 30px" src="../img/SM-logo[large].png">
+
+    <div>
+        <input type="text" id="username" placeholder="Brukernavn"/>
+    </div>
+    <div>
+        <input type="password" id="pass" placeholder="Passord"/>
+    </div>
+
+    <div class="pagination-centered">
+        <button class="btn, borderBtn" data-ng-click="login()" style="background: #326ca6; color: white; width: 225px; height: 40px">Logg inn</button>
+    </div>
+    <div style="padding-top: 60px">
+        <div class="pagination-centered">
+            <button class = "btn" data-ng-click ="resetPassword()">Glemt passord/brukernavn</button>
+        </div>
+    </div>
+
+    <script type="text/ng-template" id ="resetPw.html">
+        <div class="modal-header">
+            <Legend>Tilbakestill passord</Legend>
+            <div class="modal-body">
+                <div class="heightPad">
+                    <label>Epost</label>
+                    <input type="text" id="epost" />
+                </div>
+            </div>
+            <div class="modal-footer">
+                <text rows="4" cols="50" class="pull-left">
+                    Customersupport: bruker@studentmediene.no
+                </text>
+                <button class="btn" data-ng-click="confirmReset()"
+                        style="
+                        background:limegreen;
+                        color:white">OK</button>
+                <button class="btn" data-ng-click="cancel()" style="background:orange; color:white">Avbryt</button>
+            </div>
+        </div>
+    </script>
+
+
+</div>

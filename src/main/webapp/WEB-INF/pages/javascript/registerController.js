@@ -1,11 +1,13 @@
 /**
- * Created by Kristian on 05/03/14.
+ * Created by Kristian on 30/04/14.
  */
-app.controller("UserCtrl", function($scope, $resource, $http, $modal) {
+app.controller("RegisterCtrl", function($scope, $resource, $http) {
 
 
     $scope.mailsSelected = [];
     $scope.myGroups = [];
+    $scope.explanation = "Følgende felter er ikke utfylt: "
+    $scope.showExplanation = "";
 
     var tmpObj = $resource("mailingLists.json", {}, {
             get:{
@@ -118,8 +120,7 @@ app.controller("UserCtrl", function($scope, $resource, $http, $modal) {
     }
 
 
-    $scope.explanation = "Følgende felter er ikke utfylt: "
-    $scope.showExplanation = "";
+
     $scope.save = function() {
         $scope.insufficientList = [];
         if ( document.getElementById('name').value.length < 2 ) {
@@ -157,60 +158,29 @@ app.controller("UserCtrl", function($scope, $resource, $http, $modal) {
 
                 };
                 <!-- TODO: send dette til backend -->
-<!--
-                $http({
-                    method: 'POST',
-                    url: 'add',
-                    data: "message=" +"HEISANN",
-                    headers: {'Content-Type': 'application/x-www-form-urlencoded'}
-                });
--->
-<!--
-                $resource("add", user, {
-                        save:{
-                            method:"POST"
-                        }
-                    }
-                );
--->
+                <!--
+                                $http({
+                                    method: 'POST',
+                                    url: 'add',
+                                    data: "message=" +"HEISANN",
+                                    headers: {'Content-Type': 'application/x-www-form-urlencoded'}
+                                });
+                -->
+                <!--
+                                $resource("add", user, {
+                                        save:{
+                                            method:"POST"
+                                        }
+                                    }
+                                );
+                -->
 
                 $http.post('add', '{ "firstName": "moi"}');
-                history.go(-1);
+
 
             }
         }
     }
-    var modalInstance;
-    $scope.editPassword = function() {
-            modalInstance = $modal.open({
-            templateUrl: 'editPw.html',
-            controller: 'UserCtrl'
-
-        });
-
-    }
-
-
-
-    $scope.changePassword = function() {
-        var oldpass = document.getElementById('oldpass').value;
-        var newpass = document.getElementById('newpass').value;
-        var confpass = document.getElementById('confpass').value;
-        console.log(newpass);
-        console.log(confpass);
-
-        if ( newpass == confpass && newpass.length >7) {
-            console.log("Equals and greater than 7");
-            modalInstance.close("OK");
-        }
-    }
-
-
-
-    $scope.cancel = function () {
-        modalInstance.dismiss('cancel');
-
-    };
 
     $scope.remove = function(group) {
         if($scope.edit) {
