@@ -13,14 +13,19 @@ app.controller("LoginCtrl", function($scope, $modal) {
         $http.post('login', '{ "userName": "'+userName+'"}');
     }
 
+    $scope.modalInstance;
     $scope.resetPassword = function() {
-        $scope.modalInstance = $modal.open({
+        modalInstance = $modal.open({
             templateUrl: 'resetPw.html',
             controller: 'LoginCtrl'
         });
-        $scope.modalInstance.result.then(function (confirm) {
-            $scope.selected = 0;
-        }, function () {});
+        $scope.modalInstance.result.then(function() {
+            console.log('Success');
+        }, function() {
+            console.log('Cancelled');
+        })['finally'](function(){
+            $scope.modalInstance = undefined  // <--- This fixes
+        });
     }
 
     $scope.cancel = function () {

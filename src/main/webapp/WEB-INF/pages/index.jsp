@@ -16,7 +16,7 @@
     <script src="javascript/testCtrl.js" type = "text/javascript"></script>
     <script src="javascript/loginController.js" type = "text/javascript"></script>
     <script src="javascript/registerController.js" type = "text/javascript"></script>
-    <script src="javascript/mainController.js" type = "text/javascript"></script>
+    <script src="javascript/maincontroller.js" type = "text/javascript"></script>
 
 
     <script src="javascript/ui-bootstrap-tpls-0.11.0.js" type = "text/javascript"></script>
@@ -39,7 +39,8 @@
                 <a href="#/user"> <b>Behandle bruker </b></a>
                 <a href="#/login"> <b>Logg inn </b></a>
                 <span ng-show="ting">
-                    <a href="#/register"> <b>Opprett bruker </b></a>
+                    <a href="#/register" style="border-left:1px solid #FFF;height: 30px"> <b>Opprett bruker </b></a>
+                     <a href="#/memberPw"> <b>Endre medlems passord</b></a>
                 </span>
 
             </div>
@@ -48,8 +49,8 @@
             <h2>Medlemsdatabase for Studentmediene</h2>
         </div>
         <a class="banner-icon" href="#" ng-mouseover="count=count+1" ng-init="count=0"></a>
-        <a href="https://www.youtube.com/watch?v=PGNiXGX2nLU" ng-show="easter(count)"><b><div style="color: black;  ">{{egg}}</div></b></a>
-
+       <!-- <a href="https://www.youtube.com/watch?v=PGNiXGX2nLU" ng-show="easter(count)"><b><div style="color: black;  ">{{egg}}</div></b></a>
+        -->
     </div>
 
 

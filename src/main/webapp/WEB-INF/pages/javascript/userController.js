@@ -125,11 +125,8 @@ app.controller("UserCtrl", function($scope, $resource, $http, $modal) {
         if ( document.getElementById('name').value.length < 2 ) {
             $scope.insufficientList.push('Fornavn');
         }
-        if ( document.getElementById('surname').value.length < 2 ) {
+        if ( document.getElementById('lastname').value.length < 2 ) {
             $scope.insufficientList.push('Etternavn');
-        }
-        if ( document.getElementById('username').value.length < 2 ) {
-            $scope.insufficientList.push('Brukernavn');
         }
         if ( document.getElementById('email').value.length < 6 ) {
             $scope.insufficientList.push('Email');
@@ -148,46 +145,35 @@ app.controller("UserCtrl", function($scope, $resource, $http, $modal) {
                 var user =  {
 
                     "firstName":document.getElementById('name').value,
-                    "lastName":document.getElementById('surname').value,
-                    "username":document.getElementById('username').value,
+                    "lastName":document.getElementById('lastname').value,
                     "email":document.getElementById('email').value,
-                    "mobil e":document.getElementById('mobile').value,
+                    "mobile":document.getElementById('mobile').value,
                     "groups":$scope.myGroups,
                     "mailingList":$scope.mailsSelected
 
                 };
                 <!-- TODO: send dette til backend -->
-<!--
-                $http({
-                    method: 'POST',
-                    url: 'add',
-                    data: "message=" +"HEISANN",
-                    headers: {'Content-Type': 'application/x-www-form-urlencoded'}
+                return $http({
+                    method : 'POST',
+                    data : user,
+                    url : 'add'
                 });
--->
-<!--
-                $resource("add", user, {
-                        save:{
-                            method:"POST"
-                        }
-                    }
-                );
--->
-
-                $http.post('add', '{ "firstName": "moi"}');
-                history.go(-1);
-
             }
         }
     }
-    var modalInstance;
+    $scope.modalInstance;
     $scope.editPassword = function() {
-            modalInstance = $modal.open({
+        modalInstance = $modal.open({
             templateUrl: 'editPw.html',
             controller: 'UserCtrl'
-
         });
-
+        $scope.modalInstance.result.then(function() {
+            console.log('Success');
+        }, function() {
+            console.log('Cancelled');
+        })['finally'](function(){
+            $scope.modalInstance = undefined  // <--- This fixes
+        });
     }
 
 
@@ -196,8 +182,6 @@ app.controller("UserCtrl", function($scope, $resource, $http, $modal) {
         var oldpass = document.getElementById('oldpass').value;
         var newpass = document.getElementById('newpass').value;
         var confpass = document.getElementById('confpass').value;
-        console.log(newpass);
-        console.log(confpass);
 
         if ( newpass == confpass && newpass.length >7) {
             console.log("Equals and greater than 7");
@@ -221,7 +205,7 @@ app.controller("UserCtrl", function($scope, $resource, $http, $modal) {
 
 
     mailSort = function(mailingList) {
-        mailingList.sort(function(a, b){   /** By first sorting by forname, people with same surname will get sorted automatically #latskap **/
+        mailingList.sort(function(a, b){   /** By first sorting by forname, people with same lastname will get sorted automatically #latskap **/
             if(a.name < b.name) return -1;
             if(a.name > b.name) return 1;
             return 0;

@@ -18,6 +18,10 @@ var app = angular.module('mdbApp',["ngResource", "ngRoute","ui.bootstrap"]);
                     templateUrl: 'views/login.html',
                     controller: 'LoginCtrl'
                  })
+                .when('/memberPw', {
+                    templateUrl: 'views/editMemberPW.html',
+                    controller: 'EditPwCtrl'
+                })
                 .when('/register', {
                     templateUrl: 'views/newUser.html',
                     controller: 'RegisterCtrl'

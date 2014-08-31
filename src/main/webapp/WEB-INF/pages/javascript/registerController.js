@@ -126,11 +126,8 @@ app.controller("RegisterCtrl", function($scope, $resource, $http) {
         if ( document.getElementById('name').value.length < 2 ) {
             $scope.insufficientList.push('Fornavn');
         }
-        if ( document.getElementById('surname').value.length < 2 ) {
+        if ( document.getElementById('lastname').value.length < 2 ) {
             $scope.insufficientList.push('Etternavn');
-        }
-        if ( document.getElementById('username').value.length < 2 ) {
-            $scope.insufficientList.push('Brukernavn');
         }
         if ( document.getElementById('email').value.length < 6 ) {
             $scope.insufficientList.push('Email');
@@ -147,36 +144,17 @@ app.controller("RegisterCtrl", function($scope, $resource, $http) {
             if(confirm("Er du sikker på at du vil lagre endringer?")) {
                 console.log("JA");
                 var user =  {
-
                     "firstName":document.getElementById('name').value,
                     "lastName":document.getElementById('surname').value,
-                    "username":document.getElementById('username').value,
                     "email":document.getElementById('email').value,
                     "mobil e":document.getElementById('mobile').value,
-                    "groups":$scope.myGroups,
-                    "mailingList":$scope.mailsSelected
-
                 };
                 <!-- TODO: send dette til backend -->
-                <!--
-                                $http({
-                                    method: 'POST',
-                                    url: 'add',
-                                    data: "message=" +"HEISANN",
-                                    headers: {'Content-Type': 'application/x-www-form-urlencoded'}
-                                });
-                -->
-                <!--
-                                $resource("add", user, {
-                                        save:{
-                                            method:"POST"
-                                        }
-                                    }
-                                );
-                -->
-
-                $http.post('add', '{ "firstName": "moi"}');
-
+                return $http({
+                    method : 'POST',
+                    data : user,
+                    url : 'add'
+                });
 
             }
         }
