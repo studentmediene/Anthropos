@@ -1,11 +1,13 @@
 /**
- * Created by Kristian on 05/03/14.
+ * Created by Kristian on 30/04/14.
  */
-app.controller("UserCtrl", function($scope, $resource, $http, $modal) {
+app.controller("RegisterCtrl", function($scope, $resource, $http) {
 
 
     $scope.mailsSelected = [];
     $scope.myGroups = [];
+    $scope.explanation = "Følgende felter er ikke utfylt: "
+    $scope.showExplanation = "";
 
     var tmpObj = $resource("mailingLists.json", {}, {
             get:{
@@ -118,8 +120,7 @@ app.controller("UserCtrl", function($scope, $resource, $http, $modal) {
     }
 
 
-    $scope.explanation = "Følgende felter er ikke utfylt: "
-    $scope.showExplanation = "";
+
     $scope.save = function() {
         $scope.insufficientList = [];
         if ( document.getElementById('name').value.length < 2 ) {
@@ -143,14 +144,10 @@ app.controller("UserCtrl", function($scope, $resource, $http, $modal) {
             if(confirm("Er du sikker på at du vil lagre endringer?")) {
                 console.log("JA");
                 var user =  {
-
                     "firstName":document.getElementById('name').value,
-                    "lastName":document.getElementById('lastname').value,
+                    "lastName":document.getElementById('surname').value,
                     "email":document.getElementById('email').value,
-                    "mobile":document.getElementById('mobile').value,
-                    "groups":$scope.myGroups,
-                    "mailingList":$scope.mailsSelected
-
+                    "mobil e":document.getElementById('mobile').value,
                 };
                 <!-- TODO: send dette til backend -->
                 return $http({
@@ -158,43 +155,10 @@ app.controller("UserCtrl", function($scope, $resource, $http, $modal) {
                     data : user,
                     url : 'add'
                 });
+
             }
         }
     }
-    $scope.modalInstance;
-    $scope.editPassword = function() {
-        modalInstance = $modal.open({
-            templateUrl: 'editPw.html',
-            controller: 'UserCtrl'
-        });
-        $scope.modalInstance.result.then(function() {
-            console.log('Success');
-        }, function() {
-            console.log('Cancelled');
-        })['finally'](function(){
-            $scope.modalInstance = undefined  // <--- This fixes
-        });
-    }
-
-
-
-    $scope.changePassword = function() {
-        var oldpass = document.getElementById('oldpass').value;
-        var newpass = document.getElementById('newpass').value;
-        var confpass = document.getElementById('confpass').value;
-
-        if ( newpass == confpass && newpass.length >7) {
-            console.log("Equals and greater than 7");
-            modalInstance.close("OK");
-        }
-    }
-
-
-
-    $scope.cancel = function () {
-        modalInstance.dismiss('cancel');
-
-    };
 
     $scope.remove = function(group) {
         if($scope.edit) {
@@ -205,7 +169,7 @@ app.controller("UserCtrl", function($scope, $resource, $http, $modal) {
 
 
     mailSort = function(mailingList) {
-        mailingList.sort(function(a, b){   /** By first sorting by forname, people with same lastname will get sorted automatically #latskap **/
+        mailingList.sort(function(a, b){   /** By first sorting by forname, people with same surname will get sorted automatically #latskap **/
             if(a.name < b.name) return -1;
             if(a.name > b.name) return 1;
             return 0;

@@ -117,10 +117,10 @@ b:focus {
     }
 
     .searchGroup {
-        line-height: 50 px;
+        line-height: 50px;
         background-color: white;
         color: black;
-        width: 50 px;
+        width: 90%;
         margin-bottom: 10px;
         margin-left: 5px;
         margin-right: 5px;
@@ -158,22 +158,7 @@ b:focus {
     filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#ff0088cc', endColorstr='#ff0077b3', GradientType=0);
 }
 
-.dropdown-menu > div > li > a:hover,
-.dropdown-menu > div > li > a:focus,
-.dropdown-submenu:hover > a,
-.dropdown-submenu:focus > a {
-    cursor: pointer;
-    color: #ffffff;
-    text-decoration: none;
-    background-color: #0081c2;
-    background-image: -moz-linear-gradient(top, #0088cc, #0077b3);
-    background-image: -webkit-gradient(linear, 0 0, 0 100%, from(#0088cc), to(#0077b3));
-    background-image: -webkit-linear-gradient(top, #0088cc, #0077b3);
-    background-image: -o-linear-gradient(top, #0088cc, #0077b3);
-    background-image: linear-gradient(to bottom, #0088cc, #0077b3);
-    background-repeat: repeat-x;
-    filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#ff0088cc', endColorstr='#ff0077b3', GradientType=0);
-}
+
 /* END OF BOOTSTRAP EDIT */
 
 .userDescription{
@@ -198,4 +183,15 @@ legend				{ font-size: 1.8em; }
     background-color:#326ca6;
     color:white;
     cursor:pointer;
+}
+
+
+.borderBtn {
+    border-style: none;
+    border-radius: 4px;
+}
+
+.borderBtn:hover {
+    border-style:solid;
+    border-color: #23A2FC;
 }
