@@ -179,7 +179,11 @@ input, textarea		{ margin-bottom: 5px; }
 legend				{ font-size: 1.8em; }
 
 
-.tableSelection:hover {
+.tableSelection:nth-child(odd) {
+    background-color: #F9F9F9;
+}
+
+.tableSelection:hover td{
     background-color:#326ca6;
     color:white;
     cursor:pointer;

@@ -6,7 +6,7 @@ var app = angular.module('mdbApp',["ngResource", "ngRoute","ui.bootstrap"]);
     app.config(['$routeProvider',
         function($routeProvider) {
             $routeProvider
-                .when('/user', {
+                .when('/user/:id', {
                     templateUrl: 'views/user.html',
                     controller: 'UserCtrl'
                 })

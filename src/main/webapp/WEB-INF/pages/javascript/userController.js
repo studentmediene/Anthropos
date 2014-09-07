@@ -1,11 +1,31 @@
 /**
  * Created by Kristian on 05/03/14.
  */
-app.controller("UserCtrl", function($scope, $resource, $http, $modal) {
+app.controller("UserCtrl", function($scope, $resource, $http, $modal, $routeParams) {
+
+    var tmpObj = $resource("/"+$routeParams.id, {}, {
+            get:{
+                isArray:false,
+                method:"GET"
+            }
+        }
+    );
+    var user = tmpObj.get(
+        testing =function() {
+            $scope.firstName=user.firstName;
+            $scope.lastName = user.lastName;
+            $scope.email = user.email;
+        }
+    );
+
+
+
 
 
     $scope.mailsSelected = [];
     $scope.myGroups = [];
+
+    console.log($routeParams);
 
     var tmpObj = $resource("mailingLists.json", {}, {
             get:{
