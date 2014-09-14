@@ -11,11 +11,6 @@
             <label for="surname">Etternavn</label>
             <input type="text" id="surname" name="surname" />
 </div>
-
-            <div class="heightPad">
-            <label for="username">Brukernavn</label>
-            <input type="text" id="username" name="username" />
-</div>
             <div class="heightPad">
             <label for="email">Email</label>
             <input type="email" id="email" name="email" />
@@ -55,6 +50,8 @@
 
         </fieldset>
     </form>
+    <!-- <a href = "#/pw"> -->
+    <button class = "btn" data-ng-click ="editPassword()">Endre passord</button> </a>
 
     <div style="height:40px"></div>
 <legend>Grupper
@@ -93,5 +90,30 @@
         <div style="color:red">{{insufficient}}</div>
     </li>
     <button class="btn" data-ng-click="save()" style="background:limegreen; color:white">Lagre endringer</button>
+    <script type="text/ng-template" id ="editPw.html">
+    <div class="modal-header">
+        <Legend>Endre passord</Legend>
+        <div class="modal-body">
+            <div class="heightPad">
+                <label>Gammelt passord</label>
+                <input type="password" id="oldpass" />
+            </div>
+            <div class="heightPad">
+                <label>Nytt passord</label>
+                <input type="password" id="newpass" />
+            </div>
+            <div class="heightPad">
+                <label>Bekreft passord</label>
+                <input type="password" id="confpass" />
+            </div>
+        </div>
+        <div class="modal-footer">
+            <button class="btn" data-ng-click="changePassword()" style="background:limegreen; color:white">OK</button>
+            <button class="btn" data-ng-click="cancel()" style="background:orange; color:white">Avbryt</button>
+        </div>
+    </div>
+    </script>
+
+
 
 </div>
