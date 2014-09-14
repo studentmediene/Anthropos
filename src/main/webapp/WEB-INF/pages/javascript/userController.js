@@ -11,21 +11,51 @@ app.controller("UserCtrl", function($scope, $resource, $http, $modal, $routePara
         }
     );
     var user = tmpObj.get(
-        testing =function() {
+        userCreds =function() {
             $scope.firstName=user.firstName;
             $scope.lastName = user.lastName;
             $scope.email = user.email;
+            $scope.canEdit(false);
+            $scope.canAddGroups = false;
         }
     );
 
-
-
+    $scope.setAuthority = function(level) {
+        console.log(level);
+        if(level==2) {
+            $scope.canEdit(true);
+            $scope.canAddGroups = true;
+            document.getElementById("pwBtn").hide = false;
+        }
+        else if (level == 1) {
+            $scope.canEdit(false);
+            $scope.canAddGroups = true;
+            document.getElementById("pwBtn").hide = true;
+        }
+        else {
+            $scope.canEdit(false);
+            $scope.canAddGroups = false;
+            document.getElementById("pwBtn").hide = true;
+        }
+    }
 
 
     $scope.mailsSelected = [];
     $scope.myGroups = [];
 
     console.log($routeParams);
+
+    $scope.canEdit = function(canAdd) {
+        //TODO use user credentials to check if logged in user can reset password (ADMIN or this.user = current.user)
+        document.getElementById("email").readonly=canAdd;
+        document.getElementById("mobile").readonly=canAdd;
+    }
+
+    $scope.canChangePassword = function(param) {
+        /* TODO use user credentials to check if logged in user can reset password (ADMIN or this.user = current.user)
+        */
+        return param;
+    }
 
     var tmpObj = $resource("mailingLists.json", {}, {
             get:{
@@ -142,12 +172,6 @@ app.controller("UserCtrl", function($scope, $resource, $http, $modal, $routePara
     $scope.showExplanation = "";
     $scope.save = function() {
         $scope.insufficientList = [];
-        if ( document.getElementById('name').value.length < 2 ) {
-            $scope.insufficientList.push('Fornavn');
-        }
-        if ( document.getElementById('lastname').value.length < 2 ) {
-            $scope.insufficientList.push('Etternavn');
-        }
         if ( document.getElementById('email').value.length < 6 ) {
             $scope.insufficientList.push('Email');
         }
@@ -163,14 +187,10 @@ app.controller("UserCtrl", function($scope, $resource, $http, $modal, $routePara
             if(confirm("Er du sikker på at du vil lagre endringer?")) {
                 console.log("JA");
                 var user =  {
-
-                    "firstName":document.getElementById('name').value,
-                    "lastName":document.getElementById('lastname').value,
                     "email":document.getElementById('email').value,
                     "mobile":document.getElementById('mobile').value,
                     "groups":$scope.myGroups,
                     "mailingList":$scope.mailsSelected
-
                 };
                 <!-- TODO: send dette til backend -->
                 return $http({
@@ -222,7 +242,6 @@ app.controller("UserCtrl", function($scope, $resource, $http, $modal, $routePara
             $scope.groups.splice(index, 1);
         }
     }
-
 
     mailSort = function(mailingList) {
         mailingList.sort(function(a, b){   /** By first sorting by forname, people with same lastname will get sorted automatically #latskap **/
