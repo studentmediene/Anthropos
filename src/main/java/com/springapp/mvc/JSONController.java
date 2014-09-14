@@ -6,6 +6,7 @@ import org.json.JSONObject;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
+import javax.naming.NamingException;
 import java.util.ArrayList;
 
 /**
@@ -15,6 +16,7 @@ import java.util.ArrayList;
 @Controller
 @RequestMapping("/")
 public class JSONController {
+    private LDAP ldap = new LDAP();
     private PersonList personList = new PersonList();
 
     @RequestMapping
@@ -47,8 +49,24 @@ public class JSONController {
 
     @RequestMapping(value = "list", method = RequestMethod.GET)
     public @ResponseBody ArrayList<Person> getList() {
-        System.out.print("list");
-        return personList.getPersonList();
+        PersonList returnList = new PersonList();
+        try {
+            returnList.update(ldap.retrieve("ldap://localhost:8389", "uid=testuser,ou=System Users,dc=studentmediene,dc=no", "123qwerty", "*boye*", "*boye*", "*boye*"));
+        }
+        catch (NamingException e) {
+            System.out.print("Error");
+        }
+        for (int i = 0; i < returnList.size(); i++) {
+            ArrayList<String> groups = returnList.get(i).getGroups();
+            ArrayList<String> sections = new ArrayList<String>();
+            for (int j = 0; j < groups.size(); j++) {
+                if (groups.get(j).contains("sections")) {
+                    sections.add(groups.get(j).substring(groups.get(j).indexOf('=')+1, groups.get(j).indexOf(',')));
+                }
+            }
+            returnList.get(i).setGroups(sections);
+        }
+        return returnList;
     }
 
 
@@ -70,6 +88,19 @@ public class JSONController {
 
         }
         return retList;
+    }
+
+    @RequestMapping(value = "test", method = RequestMethod.GET)
+    public @ResponseBody Person test() {
+        Person returnPerson = new Person();
+        try {
+            //returnPerson = ldap.retrieve("ldap://localhost:8389", "uid=testuser,ou=System Users,dc=studentmediene,dc=no", "123qwerty", "*boye*", "*boye*", "*boye*");
+        }
+        catch (Exception e) {
+            System.out.print("Error");
+        }
+        System.out.print(returnPerson);
+        return returnPerson;
     }
 
     @RequestMapping(value = "/api/users", method = RequestMethod.GET)
