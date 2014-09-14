@@ -1,7 +1,7 @@
 /**
  * Created by Kristian on 12/02/14.
  */
-var app = angular.module('mdbApp',["ngResource", "ngRoute"]);
+var app = angular.module('mdbApp',["ngResource", "ngRoute","ui.bootstrap"]);
 
     app.config(['$routeProvider',
         function($routeProvider) {
@@ -11,12 +11,24 @@ var app = angular.module('mdbApp',["ngResource", "ngRoute"]);
                     controller: 'UserCtrl'
                 })
                 .when('/', {
-                    templateUrl: 'views/person.html',
+                    templateUrl: 'views/members.html',
                     controller: 'PersonCtrl'
                 })
-
+                .when('/login', {
+                    templateUrl: 'views/login.html',
+                    controller: 'LoginCtrl'
+                 })
+                .when('/memberPw', {
+                    templateUrl: 'views/editMemberPW.html',
+                    controller: 'EditPwCtrl'
+                })
+                .when('/register', {
+                    templateUrl: 'views/newUser.html',
+                    controller: 'RegisterCtrl'
+                })
                 .otherwise({
-                    redirectTo: '/'
+                    templateUrl: 'views/404.html',
+                    controller: 'pageNotFoundCtrl'
                 });
         }
     ]);
