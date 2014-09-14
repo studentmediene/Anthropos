@@ -36,11 +36,10 @@
             <div class="pull-right">
                 <button class="btn" ng-click="ting=!ting">{{ting}}</button>
                 <a href="#"> <b>Medlemmer</b></a>
-                <a href="#/user"> <b>Behandle bruker </b></a>
+                <a href="#/user/1"> <b>Behandle bruker </b></a>  <!-- TODO go to the id retrievable from user credentials -->
                 <a href="#/login"> <b>Logg inn </b></a>
                 <span ng-show="ting">
                     <a href="#/register" style="border-left:1px solid #FFF;height: 30px"> <b>Opprett bruker </b></a>
-                     <a href="#/memberPw"> <b>Endre medlems passord</b></a>
                 </span>
 
             </div>

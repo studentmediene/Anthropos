@@ -1,11 +1,69 @@
 /**
  * Created by Kristian on 05/03/14.
  */
-app.controller("UserCtrl", function($scope, $resource, $http, $modal) {
+app.controller("UserCtrl", function($scope, $resource, $http, $modal, $routeParams) {
+
+    var tmpObj = $resource("/"+$routeParams.id, {}, {
+            get:{
+                isArray:false,
+                method:"GET"
+            }
+        }
+    );
+    var user = tmpObj.get(
+        userCreds =function() {
+            $scope.firstName=user.firstName;
+            $scope.lastName = user.lastName;
+            $scope.email = user.email;
+            $scope.canAddGroups = false;
+            // TODO Find out the level of authority current user has
+
+            var level = 3;// Using test var temporarily
+
+            if(level == 3) { // Admin or logged in user's profile
+                console.log("Admin")
+                $scope.editProfile = true;
+                $scope.canAddGroups = true;
+
+                document.getElementById("name").disabled = false;
+                document.getElementById("surname").disabled = false;
+
+                $scope.authString = "ADMIN"
+            }
+            else if (level == 1) { // PL for this user
+                console.log("The user's PL")
+                $scope.editProfile = false;
+                $scope.canAddGroups = true;
+                document.getElementById("name").disabled = true;
+                document.getElementById("surname").disabled = true;
+                document.getElementById("email").disabled = true;
+                document.getElementById("mobile").disabled = true;
+                document.getElementById("pwBtn").style.display = "none";
+
+                $scope.authString = "pl"
+            }
+            else if (level == 0){ // Ordinary user
+                console.log("User")
+                $scope.editProfile = false;
+                $scope.canAddGroups = false;
+                document.getElementById("name").disabled = true;
+                document.getElementById("surname").disabled = true;
+                document.getElementById("email").disabled = true;
+                document.getElementById("mobile").disabled = true;
+                document.getElementById("pwBtn").style.display = "none";
+                document.getElementById("saveBtn").style.display = "none";
+                document.getElementById("groupBtn").style.display = "none";
+
+                $scope.authString = "user";
+            }
+        }
+    );
 
 
     $scope.mailsSelected = [];
     $scope.myGroups = [];
+
+    console.log($routeParams);
 
     var tmpObj = $resource("mailingLists.json", {}, {
             get:{
@@ -122,12 +180,6 @@ app.controller("UserCtrl", function($scope, $resource, $http, $modal) {
     $scope.showExplanation = "";
     $scope.save = function() {
         $scope.insufficientList = [];
-        if ( document.getElementById('name').value.length < 2 ) {
-            $scope.insufficientList.push('Fornavn');
-        }
-        if ( document.getElementById('lastname').value.length < 2 ) {
-            $scope.insufficientList.push('Etternavn');
-        }
         if ( document.getElementById('email').value.length < 6 ) {
             $scope.insufficientList.push('Email');
         }
@@ -143,14 +195,10 @@ app.controller("UserCtrl", function($scope, $resource, $http, $modal) {
             if(confirm("Er du sikker på at du vil lagre endringer?")) {
                 console.log("JA");
                 var user =  {
-
-                    "firstName":document.getElementById('name').value,
-                    "lastName":document.getElementById('lastname').value,
                     "email":document.getElementById('email').value,
                     "mobile":document.getElementById('mobile').value,
                     "groups":$scope.myGroups,
                     "mailingList":$scope.mailsSelected
-
                 };
                 <!-- TODO: send dette til backend -->
                 return $http({
@@ -202,7 +250,6 @@ app.controller("UserCtrl", function($scope, $resource, $http, $modal) {
             $scope.groups.splice(index, 1);
         }
     }
-
 
     mailSort = function(mailingList) {
         mailingList.sort(function(a, b){   /** By first sorting by forname, people with same lastname will get sorted automatically #latskap **/
