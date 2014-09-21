@@ -15,8 +15,6 @@ import java.util.Hashtable;
 public class LDAP {
 
     private static final String host = "ldap://ldapstaging.studentmediene.no";
-	//private static final String user = "uid=anthropos,ou=System Users,dc=studentmediene,dc=no";
-    //private static final String password = "123qwerty";
 
     private static Hashtable<String, Object> config() {
 		Hashtable<String, Object> env = new Hashtable<String, Object>();
