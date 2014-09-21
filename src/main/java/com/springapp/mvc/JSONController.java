@@ -65,13 +65,35 @@ public class JSONController {
     @RequestMapping(value = "search", method = RequestMethod.GET)
     public @ResponseBody ArrayList<Person> search(@RequestParam(value="name", required = true) String name) {
         PersonList returnList = new PersonList();
+        System.out.println("Attempting search for: " + name);
         try {
-            System.out.println("Attempting search for: " + name);
             returnList.update(LDAP.search(name));
         } catch (NamingException e) {
             System.err.println("Search error: " + e.getMessage());
         }
         return returnList;
+    }
+
+    @RequestMapping(value = "login", method = RequestMethod.GET)
+    public @ResponseBody Boolean login(@RequestParam(value="uid", required = true) String uid) {
+        try {
+            System.out.print("UID: " + uid);
+            LDAP.config(uid);
+            return true;
+        } catch (NamingException e) {
+            System.err.println("Login error: " + e.getMessage());
+            return false;
+        }
+    }
+
+    //THIS FUNCTION DOESN'T DO ANYTHING YET!
+    @RequestMapping(value = "edit", method = RequestMethod.GET)
+    public @ResponseBody void edit(@RequestParam(value = "edit", required = true)String uid) {
+        try {
+            LDAP.edit(uid, "", "");
+        } catch (NamingException e) {
+            System.err.println("Error");
+        }
     }
 
     @RequestMapping(value = "{id}", method = RequestMethod.GET)

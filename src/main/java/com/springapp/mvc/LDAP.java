@@ -24,11 +24,23 @@ public class LDAP {
 		//Connection details
 		env.put(Context.INITIAL_CONTEXT_FACTORY,"com.sun.jndi.ldap.LdapCtxFactory");
 		env.put(Context.PROVIDER_URL, host);
-		env.put(Context.SECURITY_AUTHENTICATION,"simple");
+		env.put(Context.SECURITY_AUTHENTICATION,"none");
 		//env.put(Context.SECURITY_PRINCIPAL, user);
 		//env.put(Context.SECURITY_CREDENTIALS, password);
 
         return env;
+    }
+
+    protected static void config(String uid) throws NamingException {
+        Hashtable<String, Object> env = new Hashtable<String, Object>();
+
+        env.put(Context.INITIAL_CONTEXT_FACTORY, "com.sun.jndi.ldap.LdapCtxFactory");
+        env.put(Context.PROVIDER_URL, host);
+        env.put(Context.SECURITY_AUTHENTICATION, "ssl");
+        env.put(Context.SECURITY_PRINCIPAL, uid);
+        env.put(Context.SECURITY_CREDENTIALS, "");
+
+        //DirContext ctx = new InitialDirContext(env);
     }
 
     protected static PersonList search(String search) throws NamingException {
@@ -41,17 +53,25 @@ public class LDAP {
         return getPersons(answer);
     }
 
+    protected static void edit(String uid, String field, String edit) throws NamingException {
+        Hashtable<String, Object> env = config();
+        DirContext ctx = new InitialDirContext(env);
+        Attributes orig = new BasicAttributes();
+        Attribute attr1 = new BasicAttribute(field, edit);
+        orig.put(attr1);
+        ctx.modifyAttributes(uid, DirContext.REPLACE_ATTRIBUTE, orig);
+    }
+
 	protected static PersonList retrieve() throws NamingException {
         Hashtable<String, Object> env = config();
 
 		DirContext ctx = new InitialDirContext(env);
 		
 		//Search controller
-		SearchControls ctls = new SearchControls();
-		
-		//Example filter of search on 'boye' ('*' is a wildcard character)
-		//String filter = ("(|(mail=*" + mail + "*)(cn=*" + cn + "*)(uid=*" + uid + "*))");
-		
+        SearchControls ctls = new SearchControls();
+        //String[] attrIDs = {"givenName", "sn", "gidNumber", "telephoneNumber", "mail", "memberOf", "uid", "cn"};
+        //ctls.setReturningAttributes(attrIDs);
+
 		//The actual search
 		NamingEnumeration answer = ctx.search("ou=Users,dc=studentmediene,dc=no", "(&(uid=*))", ctls);
 
@@ -79,6 +99,8 @@ public class LDAP {
                 Attribute groups = attributes.get("memberOf");
                 Attribute username = attributes.get("uid");
                 Attribute fullName = attributes.get("cn");
+
+
 
                 if (firstName != null) {
                     //System.out.println("First Name: " + firstName.get());
