@@ -12,6 +12,12 @@ import java.util.ArrayList;
 public class JSONController {
     private PersonList personList = new PersonList();
 
+    @RequestMapping("*")
+    @ResponseBody
+    public String fallbackMethod(){
+        return "fallback method";
+    }
+
     @RequestMapping
     public String defaultReturn() {
         return "index";
@@ -75,10 +81,11 @@ public class JSONController {
     }
 
     @RequestMapping(value = "login", method = RequestMethod.GET)
-    public @ResponseBody Boolean login(@RequestParam(value="uid", required = true) String uid) {
+    public @ResponseBody Boolean login(@RequestParam(value="uid", required = true) String uid, @RequestParam(value="cr", required = true) String cr) {
+        System.out.println("UID: " + uid);
+        System.out.println("PW: " + cr);
         try {
-            System.out.print("UID: " + uid);
-            LDAP.config(uid);
+            LDAP.config(uid, cr);
             return true;
         } catch (NamingException e) {
             System.err.println("Login error: " + e.getMessage());

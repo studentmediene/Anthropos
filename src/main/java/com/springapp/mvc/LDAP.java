@@ -29,16 +29,18 @@ public class LDAP {
         return env;
     }
 
-    protected static void config(String uid) throws NamingException {
+    protected static void config(String uid, String cr) throws NamingException {
         Hashtable<String, Object> env = new Hashtable<String, Object>();
 
         env.put(Context.INITIAL_CONTEXT_FACTORY, "com.sun.jndi.ldap.LdapCtxFactory");
         env.put(Context.PROVIDER_URL, host);
         env.put(Context.SECURITY_AUTHENTICATION, "ssl");
         env.put(Context.SECURITY_PRINCIPAL, uid);
-        env.put(Context.SECURITY_CREDENTIALS, "");
+        env.put(Context.SECURITY_CREDENTIALS, cr);
 
-        //DirContext ctx = new InitialDirContext(env);
+        DirContext ctx = new InitialDirContext(env);
+        NamingEnumeration answer = ctx.search("uid=" + uid, new BasicAttributes());
+        System.out.print(answer.next());
     }
 
     protected static PersonList search(String search) throws NamingException {
