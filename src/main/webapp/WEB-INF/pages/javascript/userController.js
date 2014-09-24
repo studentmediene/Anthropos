@@ -15,55 +15,47 @@ app.controller("UserCtrl", function($scope, $resource, $http, $modal, $routePara
             $scope.firstName=user.firstName;
             $scope.lastName = user.lastName;
             $scope.email = user.email;
+            $scope.canEdit(false);
             $scope.canAddGroups = false;
-            // TODO Find out the level of authority current user has
-
-            var level = 3;// Using test var temporarily
-
-            if(level == 3) { // Admin or logged in user's profile
-                console.log("Admin")
-                $scope.editProfile = true;
-                $scope.canAddGroups = true;
-
-                document.getElementById("name").disabled = false;
-                document.getElementById("surname").disabled = false;
-
-                $scope.authString = "ADMIN"
-            }
-            else if (level == 1) { // PL for this user
-                console.log("The user's PL")
-                $scope.editProfile = false;
-                $scope.canAddGroups = true;
-                document.getElementById("name").disabled = true;
-                document.getElementById("surname").disabled = true;
-                document.getElementById("email").disabled = true;
-                document.getElementById("mobile").disabled = true;
-                document.getElementById("pwBtn").style.display = "none";
-
-                $scope.authString = "pl"
-            }
-            else if (level == 0){ // Ordinary user
-                console.log("User")
-                $scope.editProfile = false;
-                $scope.canAddGroups = false;
-                document.getElementById("name").disabled = true;
-                document.getElementById("surname").disabled = true;
-                document.getElementById("email").disabled = true;
-                document.getElementById("mobile").disabled = true;
-                document.getElementById("pwBtn").style.display = "none";
-                document.getElementById("saveBtn").style.display = "none";
-                document.getElementById("groupBtn").style.display = "none";
-
-                $scope.authString = "user";
-            }
         }
     );
+
+    $scope.setAuthority = function(level) {
+        console.log(level);
+        if(level==2) {
+            $scope.canEdit(true);
+            $scope.canAddGroups = true;
+            document.getElementById("pwBtn").hide = false;
+        }
+        else if (level == 1) {
+            $scope.canEdit(false);
+            $scope.canAddGroups = true;
+            document.getElementById("pwBtn").hide = true;
+        }
+        else {
+            $scope.canEdit(false);
+            $scope.canAddGroups = false;
+            document.getElementById("pwBtn").hide = true;
+        }
+    }
 
 
     $scope.mailsSelected = [];
     $scope.myGroups = [];
 
     console.log($routeParams);
+
+    $scope.canEdit = function(canAdd) {
+        //TODO use user credentials to check if logged in user can reset password (ADMIN or this.user = current.user)
+        document.getElementById("email").readonly=canAdd;
+        document.getElementById("mobile").readonly=canAdd;
+    }
+
+    $scope.canChangePassword = function(param) {
+        /* TODO use user credentials to check if logged in user can reset password (ADMIN or this.user = current.user)
+        */
+        return param;
+    }
 
     var tmpObj = $resource("mailingLists.json", {}, {
             get:{
