@@ -1,27 +1,31 @@
 <div id="page-wrap">
     <form method="post" id="contact" name="contact">
-
         <fieldset>
-            <legend>Behandle bruker (logget inn som: {{authString}})</legend>
+            <legend>Behandle bruker</legend>
             <div class="heightPad">
                 <label for="name">Fornavn</label>
-                <input type="text" id="name" name="name" value={{firstName}} />
+                <input type="text" id="name" name="name" />
             </div>
 
             <div class="heightPad">
             <label for="surname">Etternavn</label>
-            <input type="text" id="surname" name="surname" value={{lastName}} />
+            <input type="text" id="surname" name="surname" />
+</div>
+
+            <div class="heightPad">
+            <label for="username">Brukernavn</label>
+            <input type="text" id="username" name="username" />
 </div>
             <div class="heightPad">
             <label for="email">Email</label>
-            <input type="email" id="email" name="email" value={{email}} />
+            <input type="email" id="email" name="email" />
 </div>
             <div class="heightPad">
             <label for="mobile">Mobilnummer</label>
-            <input type="text" id="mobile" name="mobile" />
+            <input type="text" id="mobile" name="mobile"/>
 </div>
 
-        <span ng-show="{{editProfile}}">
+
         <label>Velg mailgrupper</label>
         <div class="btn-group" data-ng-class="{open: openMailList}">
             <button class="btn dropdown-toggle" data-ng-click="openMailList=!openMailList">
@@ -48,17 +52,15 @@
                 </div>
             </ul>
         </div>
-</span>
+
         </fieldset>
     </form>
-    <!-- <a href = "#/pw"> -->
-    <button id="pwBtn" class = "btn" data-ng-click ="editPassword()" >Endre passord</button> </a>
 
     <div style="height:40px"></div>
 <legend>Grupper
 
     <div class="btn-group pull-right" data-ng-class="{open: openGroup}">
-        <button id="groupBtn" class="btn dropdown-toggle" data-ng-click="openGroup=!openGroup">
+        <button class="btn dropdown-toggle" data-ng-click="openGroup=!openGroup">
             Endre grupper <span class="caret"></span>
         </button>
         <ul class="dropdown-menu" aria-labelledby="dropdownMenu">
@@ -90,38 +92,6 @@
     <li ng-repeat="insufficient in insufficientList">
         <div style="color:red">{{insufficient}}</div>
     </li>
-    <button class="btn" data-ng-click="save()" style="background:limegreen; color:white" id="saveBtn" >Lagre endringer</button>
-    <script type="text/ng-template" id ="editPw.html">
-    <div class="modal-header">
-        <Legend>Endre passord</Legend>
-        <div class="modal-body">
-            <div class="heightPad">
-                <label>Gammelt passord</label>
-                <input type="password" id="oldpass" />
-            </div>
-            <div class="heightPad">
-                <label>Nytt passord</label>
-                <input type="password" id="newpass" />
-            </div>
-            <div class="heightPad">
-                <label>Bekreft passord</label>
-                <input type="password" id="confpass" />
-            </div>
-
-            <div style="width:100%; height: 1px; color:gray" ng-show="{{showPasswordError}}" ></div>
-            <div ng-show="{{showPasswordError}}">
-                <ul style="color:red">
-                    <li>Enten er gammelt passord feil, eller så stemmer ikke nytt passord med bekreftet passord</li>
-                </ul>
-            </div>
-        </div>
-        <div class="modal-footer">
-            <button class="btn" data-ng-click="changePassword()" style="background:limegreen; color:white">OK</button>
-            <button class="btn" data-ng-click="cancel()" style="background:orange; color:white">Avbryt</button>
-        </div>
-    </div>
-    </script>
-
-
+    <button class="btn" data-ng-click="save()" style="background:limegreen; color:white">Lagre endringer</button>
 
 </div>

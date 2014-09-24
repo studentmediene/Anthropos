@@ -107,13 +107,6 @@
                 <label>Bekreft passord</label>
                 <input type="password" id="confpass" />
             </div>
-
-            <div style="width:100%; height: 1px; color:gray" ng-show="{{showPasswordError}}" ></div>
-            <div ng-show="{{showPasswordError}}">
-                <ul style="color:red">
-                    <li>Enten er gammelt passord feil, eller så stemmer ikke nytt passord med bekreftet passord</li>
-                </ul>
-            </div>
         </div>
         <div class="modal-footer">
             <button class="btn" data-ng-click="changePassword()" style="background:limegreen; color:white">OK</button>
