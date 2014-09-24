@@ -1,10 +1,6 @@
 <div id="page-wrap">
     <form method="post" id="contact" name="contact">
-        <select id="authority">
-            <option  data-ng-click={{setAuthority(2)}} >Admin</option>
-            <option data-ng-click={{setAuthority(1)}} >Project leader</option>
-            <option data-ng-click={{setAuthority(0)}} >User</option>
-        </select>
+
         <fieldset>
             <legend>Behandle bruker</legend>
             <div class="heightPad">
@@ -14,7 +10,8 @@
 
             <div class="heightPad">
             <label for="surname">Etternavn</label>
-            <input type="text" id="surname" name="surname" value={{lastName}} readonly />
+
+            <input type="text" id="surname" name="surname" value={{lastName}} />
 </div>
             <div class="heightPad">
             <label for="email">Email</label>
