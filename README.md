@@ -14,7 +14,7 @@ Mail lister kan utsettes litt.<br/>
 Gjengadmin skal kunne endre på alle sine medlemmer.<br/>
 Endreettigheter på alle brukere hvor deres nivå er lavere enn eget. <br/>
 It-drift har skrivetilgang på alle.<br/>
-Sjekke for indirekte medlemsskap. <br/>
+Sjekke for indirekte medlemsskap. <br/><br/>
 **Ny ting:**<br/>
 Mange vil at de skal kunne gå inn å se om en person har bestilt og fått oblat.<br/>
 Brukere skal kunne gå inn å se om de har fått bestilt oblat til seg selv. En knapp basically du trykker. <br/>
