@@ -24,6 +24,7 @@ It-drift har skrivetilgang på alle.
 
 Sjekke for indirekte medlemsskap. 
 
+
 **Ny ting:**
 
 Mange vil at de skal kunne gå inn å se om en person har bestilt og fått oblat.
