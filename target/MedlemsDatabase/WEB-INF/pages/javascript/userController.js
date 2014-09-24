@@ -1,13 +1,70 @@
 /**
  * Created by Kristian on 05/03/14.
  */
-app.controller("UserCtrl", function($scope, $resource, $http) {
+app.controller("UserCtrl", function($scope, $resource, $http, $modal, $routeParams) {
+
+    var tmpObj = $resource("/"+$routeParams.id, {}, {
+            get:{
+                isArray:false,
+                method:"GET"
+            }
+        }
+    );
+    $scope.showPasswordError = false;
+    var user = tmpObj.get(
+        userCreds =function() {
+            $scope.firstName=user.firstName;
+            $scope.lastName = user.lastName;
+            $scope.email = user.email;
+            $scope.canAddGroups = false;
+            // TODO Find out the level of authority current user has
+
+            var level = 3;// Using test var temporarily
+
+            if(level == 3) { // Admin or logged in user's profile
+                console.log("Admin")
+                $scope.editProfile = true;
+                $scope.canAddGroups = true;
+
+                document.getElementById("name").disabled = false;
+                document.getElementById("surname").disabled = false;
+
+                $scope.authString = "ADMIN"
+            }
+            else if (level == 1) { // PL for this user
+                console.log("The user's PL")
+                $scope.editProfile = false;
+                $scope.canAddGroups = true;
+                document.getElementById("name").disabled = true;
+                document.getElementById("surname").disabled = true;
+                document.getElementById("email").disabled = true;
+                document.getElementById("mobile").disabled = true;
+                document.getElementById("pwBtn").style.display = "none";
+
+                $scope.authString = "pl"
+            }
+            else if (level == 0){ // Ordinary user
+                console.log("User")
+                $scope.editProfile = false;
+                $scope.canAddGroups = false;
+                document.getElementById("name").disabled = true;
+                document.getElementById("surname").disabled = true;
+                document.getElementById("email").disabled = true;
+                document.getElementById("mobile").disabled = true;
+                document.getElementById("pwBtn").style.display = "none";
+                document.getElementById("saveBtn").style.display = "none";
+                document.getElementById("groupBtn").style.display = "none";
+
+                $scope.authString = "user";
+            }
+        }
+    );
 
 
     $scope.mailsSelected = [];
     $scope.myGroups = [];
 
-
+    console.log($routeParams);
 
     var tmpObj = $resource("mailingLists.json", {}, {
             get:{
@@ -124,15 +181,6 @@ app.controller("UserCtrl", function($scope, $resource, $http) {
     $scope.showExplanation = "";
     $scope.save = function() {
         $scope.insufficientList = [];
-        if ( document.getElementById('name').value.length < 2 ) {
-            $scope.insufficientList.push('Fornavn');
-        }
-        if ( document.getElementById('surname').value.length < 2 ) {
-            $scope.insufficientList.push('Etternavn');
-        }
-        if ( document.getElementById('username').value.length < 2 ) {
-            $scope.insufficientList.push('Brukernavn');
-        }
         if ( document.getElementById('email').value.length < 6 ) {
             $scope.insufficientList.push('Email');
         }
@@ -148,26 +196,57 @@ app.controller("UserCtrl", function($scope, $resource, $http) {
             if(confirm("Er du sikker på at du vil lagre endringer?")) {
                 console.log("JA");
                 var user =  {
-
-                    "firstName":document.getElementById('name').value,
-                    "lastName":document.getElementById('surname').value,
-                    "userName":document.getElementById('username').value,
-                    "email":document.getElementById('email').value
-
-
+                    "email":document.getElementById('email').value,
+                    "mobile":document.getElementById('mobile').value,
+                    "groups":$scope.myGroups,
+                    "mailingList":$scope.mailsSelected
                 };
                 <!-- TODO: send dette til backend -->
                 return $http({
                     method : 'POST',
                     data : user,
                     url : 'add'
-
-
                 });
             }
         }
-
     }
+    $scope.editPassword = function() {
+        $scope.modalInstance = $modal.open({
+            templateUrl: 'editPw.html',
+            controller: 'UserCtrl'
+        });
+        $scope.modalInstance.result.then(function() {
+            console.log('Success');
+        }, function() {
+            console.log('Cancelled');
+        })['finally'](function(){
+            $scope.modalInstance = undefined  // <--- This fixes
+        });
+    }
+
+
+
+    $scope.changePassword = function() {
+        var oldpass = document.getElementById('oldpass').value;
+        var newpass = document.getElementById('newpass').value;
+        var confpass = document.getElementById('confpass').value;
+
+        if ( newpass == confpass && newpass.length >7) {
+            $scope.showPasswordError = false;
+            console.log("Equals and greater than 7");
+            modalInstance.dismiss('cancel');
+        }
+        else {
+            $scope.showPasswordError = true;
+        }
+    }
+
+
+
+    $scope.cancel = function () {
+        modalInstance.close('OK');
+
+    };
 
     $scope.remove = function(group) {
         if($scope.edit) {
@@ -176,14 +255,14 @@ app.controller("UserCtrl", function($scope, $resource, $http) {
         }
     }
 
-
     mailSort = function(mailingList) {
-        mailingList.sort(function(a, b){   /** By first sorting by forname, people with same surname will get sorted automatically #latskap **/
+        mailingList.sort(function(a, b){   /** By first sorting by forname, people with same lastname will get sorted automatically #latskap **/
             if(a.name < b.name) return -1;
             if(a.name > b.name) return 1;
             return 0;
         });
     };
+
 
 
 });

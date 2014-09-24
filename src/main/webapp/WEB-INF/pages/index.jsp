@@ -1,7 +1,8 @@
 <!DOCTYPE html>
 <html class="no-js">
 <head>
-    <title>Medlemsdatabase</title>
+
+    <title class="span">Medlemsdatabase</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta charset = "UTF-8">
 
@@ -31,25 +32,18 @@
 
 </head>
 <body  ng-app="mdbApp">
-    <div class="banner" ng-controller="mainCtrl">
-        <div>
+    <div class="banner row" ng-controller="mainCtrl">
+        <img src="../img/SM-logo.png" class="banner-icon" href="#" ng-mouseover="count=count+1" ng-init="count=0">
             <div class="pull-right">
                 <button class="btn" ng-click="ting=!ting">{{ting}}</button>
                 <a href="#"> <b>Medlemmer</b></a>
                 <a href="#/user/1"> <b>Behandle bruker </b></a>  <!-- TODO go to the id retrievable from user credentials -->
                 <a href="#/login"> <b>Logg inn </b></a>
-                <span ng-show="ting">
-                    <a href="#/register" style="border-left:1px solid #FFF;height: 30px"> <b>Opprett bruker </b></a>
-                </span>
-
+                <a href="#/register" style="border-left:1px solid #FFF;height: 30px" ng-show="ting"> <b>Opprett bruker </b></a>
             </div>
-        </div>
-        <div class="container pagination-centered">
-            <h2>Medlemsdatabase for Studentmediene</h2>
-        </div>
-        <a class="banner-icon" href="#" ng-mouseover="count=count+1" ng-init="count=0"></a>
-       <!-- <a href="https://www.youtube.com/watch?v=PGNiXGX2nLU" ng-show="easter(count)"><b><div style="color: black;  ">{{egg}}</div></b></a>
-        -->
+        <span class="header-title">Medlemsdatabase for Studentmediene</span>
+        <!-- <a href="https://www.youtube.com/watch?v=PGNiXGX2nLU" ng-show="easter(count)"><b><div style="color: black;  ">{{egg}}</div></b></a>
+         -->
     </div>
 
 

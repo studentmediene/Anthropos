@@ -10,6 +10,7 @@ app.controller("UserCtrl", function($scope, $resource, $http, $modal, $routePara
             }
         }
     );
+    $scope.showPasswordError = false;
     var user = tmpObj.get(
         userCreds =function() {
             $scope.firstName=user.firstName;
@@ -209,9 +210,8 @@ app.controller("UserCtrl", function($scope, $resource, $http, $modal, $routePara
             }
         }
     }
-    $scope.modalInstance;
     $scope.editPassword = function() {
-        modalInstance = $modal.open({
+        $scope.modalInstance = $modal.open({
             templateUrl: 'editPw.html',
             controller: 'UserCtrl'
         });
@@ -232,15 +232,19 @@ app.controller("UserCtrl", function($scope, $resource, $http, $modal, $routePara
         var confpass = document.getElementById('confpass').value;
 
         if ( newpass == confpass && newpass.length >7) {
+            $scope.showPasswordError = false;
             console.log("Equals and greater than 7");
-            modalInstance.close("OK");
+            modalInstance.dismiss('cancel');
+        }
+        else {
+            $scope.showPasswordError = true;
         }
     }
 
 
 
     $scope.cancel = function () {
-        modalInstance.dismiss('cancel');
+        modalInstance.close('OK');
 
     };
 
