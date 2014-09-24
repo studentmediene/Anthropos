@@ -25,7 +25,9 @@ It-drift har skrivetilgang på alle.
 Sjekke for indirekte medlemsskap. 
 
 **Ny ting:**
-Mange vil at de skal kunne gå inn å se om en person har bestilt og fått oblat. 
+Mange vil at de skal kunne gå inn å se om en person har bestilt og fått oblat.
+
 Brukere skal kunne gå inn å se om de har fått bestilt oblat til seg selv. En knapp basically du trykker. 
 Kun gjengadmin skal kunne endre. 
+
 Er egentlig bare en variabel "harOblat()"
