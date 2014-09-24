@@ -73,7 +73,7 @@ public class LDAP {
         //ctls.setReturningAttributes(attrIDs);
 
 		//The actual search
-		NamingEnumeration answer = ctx.search("ou=Users,dc=studentmediene,dc=no", "(&(uid=*))", ctls);
+		NamingEnumeration answer = ctx.search("ou=Users,dc=studentmediene,dc=no", "(&(memberOf=*))", ctls);
 
         return getPersons(answer);
 	}
