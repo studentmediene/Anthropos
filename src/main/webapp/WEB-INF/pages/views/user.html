@@ -1,16 +1,20 @@
 <div id="page-wrap">
     <form method="post" id="contact" name="contact">
-
+        <select id="authority">
+            <option  data-ng-click={{setAuthority(2)}} >Admin</option>
+            <option data-ng-click={{setAuthority(1)}} >Project leader</option>
+            <option data-ng-click={{setAuthority(0)}} >User</option>
+        </select>
         <fieldset>
-            <legend>Behandle bruker (logget inn som: {{authString}})</legend>
+            <legend>Behandle bruker</legend>
             <div class="heightPad">
                 <label for="name">Fornavn</label>
-                <input type="text" id="name" name="name" value={{firstName}} />
+                <input type="text" id="name" name="name" value={{firstName}} readonly />
             </div>
 
             <div class="heightPad">
             <label for="surname">Etternavn</label>
-            <input type="text" id="surname" name="surname" value={{lastName}} />
+            <input type="text" id="surname" name="surname" value={{lastName}} readonly />
 </div>
             <div class="heightPad">
             <label for="email">Email</label>
@@ -21,7 +25,7 @@
             <input type="text" id="mobile" name="mobile" />
 </div>
 
-        <span ng-show="{{editProfile}}">
+
         <label>Velg mailgrupper</label>
         <div class="btn-group" data-ng-class="{open: openMailList}">
             <button class="btn dropdown-toggle" data-ng-click="openMailList=!openMailList">
@@ -48,7 +52,7 @@
                 </div>
             </ul>
         </div>
-</span>
+
         </fieldset>
     </form>
     <!-- <a href = "#/pw"> -->
@@ -58,7 +62,7 @@
 <legend>Grupper
 
     <div class="btn-group pull-right" data-ng-class="{open: openGroup}">
-        <button id="groupBtn" class="btn dropdown-toggle" data-ng-click="openGroup=!openGroup">
+        <button class="btn dropdown-toggle" data-ng-click="openGroup=!openGroup">
             Endre grupper <span class="caret"></span>
         </button>
         <ul class="dropdown-menu" aria-labelledby="dropdownMenu">
@@ -90,7 +94,7 @@
     <li ng-repeat="insufficient in insufficientList">
         <div style="color:red">{{insufficient}}</div>
     </li>
-    <button class="btn" data-ng-click="save()" style="background:limegreen; color:white" id="saveBtn" >Lagre endringer</button>
+    <button class="btn" data-ng-click="save()" style="background:limegreen; color:white">Lagre endringer</button>
     <script type="text/ng-template" id ="editPw.html">
     <div class="modal-header">
         <Legend>Endre passord</Legend>
