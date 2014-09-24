@@ -1,23 +1,22 @@
 package com.springapp.mvc;
 
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import javax.naming.NamingException;
 import java.util.ArrayList;
 
-/**
- * Created by adrianh on 12.02.14.
- */
 
 @Controller
 @RequestMapping("/")
 public class JSONController {
-    private LDAP ldap = new LDAP();
     private PersonList personList = new PersonList();
+
+    @RequestMapping("*")
+    @ResponseBody
+    public String fallbackMethod(){
+        return "fallback method";
+    }
 
     @RequestMapping
     public String defaultReturn() {
@@ -51,69 +50,61 @@ public class JSONController {
     public @ResponseBody ArrayList<Person> getList() {
         PersonList returnList = new PersonList();
         try {
-            returnList.update(ldap.retrieve("ldap://localhost:8389", "uid=testuser,ou=System Users,dc=studentmediene,dc=no", "123qwerty", "*boye*", "*boye*", "*boye*"));
+            returnList.update(LDAP.retrieve());
         }
         catch (NamingException e) {
-            System.out.print("Error");
+            System.out.print("Error: " + e.getMessage());
         }
-        for (int i = 0; i < returnList.size(); i++) {
-            ArrayList<String> groups = returnList.get(i).getGroups();
+        for (Person p : returnList) {
+            ArrayList<String> groups = p.getGroups();
             ArrayList<String> sections = new ArrayList<String>();
-            for (int j = 0; j < groups.size(); j++) {
-                if (groups.get(j).contains("sections")) {
-                    sections.add(groups.get(j).substring(groups.get(j).indexOf('=')+1, groups.get(j).indexOf(',')));
+            for (String group : groups) {
+                if (group.contains("sections")) {
+                    sections.add(group.substring(group.indexOf('=') + 1, group.indexOf(',')));
                 }
             }
-            returnList.get(i).setGroups(sections);
+            p.setGroups(sections);
         }
         return returnList;
     }
 
+    @RequestMapping(value = "search", method = RequestMethod.GET)
+    public @ResponseBody ArrayList<Person> search(@RequestParam(value="name", required = true) String name) {
+        PersonList returnList = new PersonList();
+        System.out.println("Attempting search for: " + name);
+        try {
+            returnList.update(LDAP.search(name));
+        } catch (NamingException e) {
+            System.err.println("Search error: " + e.getMessage());
+        }
+        return returnList;
+    }
 
+    @RequestMapping(value = "login", method = RequestMethod.GET)
+    public @ResponseBody Boolean login(@RequestParam(value="uid", required = true) String uid, @RequestParam(value="cr", required = true) String cr) {
+        System.out.println("UID: " + uid);
+        System.out.println("PW: " + cr);
+        try {
+            LDAP.config(uid, cr);
+            return true;
+        } catch (NamingException e) {
+            System.err.println("Login error: " + e.getMessage());
+            return false;
+        }
+    }
+
+    //THIS FUNCTION DOESN'T DO ANYTHING YET!
+    @RequestMapping(value = "edit", method = RequestMethod.GET)
+    public @ResponseBody void edit(@RequestParam(value = "edit", required = true)String uid) {
+        try {
+            LDAP.edit(uid, "", "");
+        } catch (NamingException e) {
+            System.err.println("Error");
+        }
+    }
 
     @RequestMapping(value = "{id}", method = RequestMethod.GET)
     public @ResponseBody Person getPersonById(@PathVariable int id) {
         return personList.getPersonById(id);
-    }
-
-    @RequestMapping(value = "/memberOf/{membership}", method = RequestMethod.GET)
-    public @ResponseBody ArrayList<Person> personsByMembership(@PathVariable String groups) {
-        ArrayList<Person> retList = new ArrayList<Person>();
-        for (Person person : personList.getPersonList()) {
-           /* for (String group : person.getGroups()) {
-                if (group.compareTo(groups) == 0) {
-                    retList.add(person);
-                }
-            }*/
-
-        }
-        return retList;
-    }
-
-    @RequestMapping(value = "test", method = RequestMethod.GET)
-    public @ResponseBody Person test() {
-        Person returnPerson = new Person();
-        try {
-            //returnPerson = ldap.retrieve("ldap://localhost:8389", "uid=testuser,ou=System Users,dc=studentmediene,dc=no", "123qwerty", "*boye*", "*boye*", "*boye*");
-        }
-        catch (Exception e) {
-            System.out.print("Error");
-        }
-        System.out.print(returnPerson);
-        return returnPerson;
-    }
-
-    @RequestMapping(value = "/api/users", method = RequestMethod.GET)
-    public @ResponseBody String listUsersJson() throws JSONException {
-        JSONArray userArray = new JSONArray();
-        for (Person user : personList.getPersonList()) {
-            JSONObject userJSON = new JSONObject();
-            userJSON.put("id", user.getId());
-            userJSON.put("name", user.getFirstName());
-            userJSON.put("lastname", user.getLastName());
-            userJSON.put("email", user.getEmail());
-            userArray.put(userJSON);
-        }
-        return userArray.toString();
     }
 }
