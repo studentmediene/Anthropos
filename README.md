@@ -17,11 +17,14 @@ Kryptere passord (?) Dette må utredes.
 Mail lister kan utsettes litt.
 
 Gjengadmin skal kunne endre på alle sine medlemmer.
+
 Endreettigheter på alle brukere hvor deres nivå er lavere enn eget. 
+
 It-drift har skrivetilgang på alle.
+
 Sjekke for indirekte medlemsskap. 
 
-Ny ting:
+**Ny ting:**
 Mange vil at de skal kunne gå inn å se om en person har bestilt og fått oblat. 
 Brukere skal kunne gå inn å se om de har fått bestilt oblat til seg selv. En knapp basically du trykker. 
 Kun gjengadmin skal kunne endre. 
