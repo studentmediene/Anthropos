@@ -189,6 +189,16 @@ legend				{ font-size: 1.8em; }
     cursor:pointer;
 }
 
+.tableHeader:hover {
+    cursor:pointer;
+    background-color: lightgray;
+}
+
+.tableHeader:active {
+    cursor:pointer;
+    background-color: lightslategray;
+}
+
 
 .borderBtn {
     border-style: none;

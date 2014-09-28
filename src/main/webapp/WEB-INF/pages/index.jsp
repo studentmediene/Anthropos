@@ -5,7 +5,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta charset = "UTF-8">
 
-
     <script src='https://ajax.googleapis.com/ajax/libs/angularjs/1.2.15/angular.min.js' type="text/javascript"></script>
     <script src='//ajax.googleapis.com/ajax/libs/angularjs/1.2.12/angular-route.js' type="text/javascript"></script>
     <script src="javascript/angular-resource.min.js" type="text/javascript"></script>

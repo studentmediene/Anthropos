@@ -5,20 +5,20 @@
             <legend>Behandle bruker (logget inn som: {{authString}})</legend>
             <div class="heightPad">
                 <label for="name">Fornavn</label>
-                <input type="text" id="name" name="name" value={{firstName}} />
+                <input type="text" id="name" name="name" value={{firstName}} required="true" />
             </div>
 
             <div class="heightPad">
                 <label for="surname">Etternavn</label>
-                <input type="text" id="surname" name="surname" value={{lastName}} />
+                <input type="text" id="surname" name="surname" value={{lastName}} required="true" />
             </div> <!--Test-->
             <div class="heightPad">
                 <label for="email">Email</label>
-                <input type="email" id="email" name="email" value={{email}} />
+                <input type="email" id="email" name="email" value={{email}} required="true" />
             </div>
             <div class="heightPad">
                 <label for="mobile">Mobilnummer</label>
-                <input type="text" id="mobile" name="mobile" />
+                <input type="text" id="mobile" name="mobile" required="true" />
             </div>
 
         <span ng-show="{{editProfile}}">
