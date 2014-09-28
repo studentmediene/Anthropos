@@ -22,7 +22,7 @@
 
     <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/lodash.js/0.10.0/lodash.min.js"></script>
 
-    <link rel="shortcut icon" href="favicon.png">
+    <link rel="shortcut icon" type="image/png" href="favicon.png">
 
     <link rel="stylesheet" href="css/main.css">
     <link rel="stylesheet" href="css/bootstrap.css">
