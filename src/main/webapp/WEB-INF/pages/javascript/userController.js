@@ -19,7 +19,7 @@ app.controller("UserCtrl", function($scope, $resource, $http, $modal, $routePara
             $scope.canAddGroups = false;
             // TODO Find out the level of authority current user has
 
-            var level = 3;// Using test var temporarily
+            var level = 0;// Using test var temporarily
 
             if(level == 3) { // Admin or logged in user's profile
                 console.log("Admin")
