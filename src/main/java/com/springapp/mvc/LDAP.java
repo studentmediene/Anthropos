@@ -15,6 +15,7 @@ import java.util.Hashtable;
 public class LDAP {
 
     private static final String host = "ldap://ldapstaging.studentmediene.no";
+    private static final String name = "ou=Users,dc=studentmediene,dc=no";
 
     private static Hashtable<String, Object> config() {
 		Hashtable<String, Object> env = new Hashtable<String, Object>();
@@ -48,9 +49,19 @@ public class LDAP {
         DirContext ctx = new InitialDirContext(env);
         SearchControls ctls = new SearchControls();
         String filter = ("(|(mail=*" + search + "*)(cn=*" + search + "*)(uid=*" + search + "*))");
-        NamingEnumeration answer = ctx.search("ou=Users,dc=studentmediene,dc=no", filter, ctls);
+        NamingEnumeration answer = ctx.search(name, filter, ctls);
 
         return getPersons(answer);
+    }
+
+    protected static Person findByIdNumber(int id) throws NamingException {
+        Hashtable<String, Object> env = config();
+        DirContext ctx = new InitialDirContext(env);
+        SearchControls ctls = new SearchControls();
+        String filter = ("(|(uidNumber=" + id + "))");
+        NamingEnumeration answer = ctx.search(name, filter, ctls);
+
+        return getPerson(answer);
     }
 
     protected static void edit(String uid, String field, String edit) throws NamingException {
@@ -77,6 +88,66 @@ public class LDAP {
 
         return getPersons(answer);
 	}
+
+    private static Person getPerson(NamingEnumeration answer) {
+        Person person = null;
+        try {
+            SearchResult searchResult = (SearchResult) answer.next();
+
+            Attributes attributes = searchResult.getAttributes();
+
+            Attribute firstName = attributes.get("givenName");
+            Attribute lastName = attributes.get("sn");
+            Attribute id = attributes.get("gidNumber");
+            Attribute mobile = attributes.get("telephoneNumber");
+            Attribute email = attributes.get("mail");
+            Attribute groups = attributes.get("memberOf");
+            Attribute username = attributes.get("uid");
+            Attribute fullName = attributes.get("cn");
+
+            person = new Person();
+
+            if (firstName != null) {
+                //System.out.println("First Name: " + firstName.get());
+                person.setFirstName("" + firstName.get());
+            }
+            if (lastName != null) {
+                //System.out.println("Last Name: " + lastName.get());
+                person.setLastName("" + lastName.get());
+            }
+            if (fullName != null) {
+                //System.out.println("Full Name: " + fullName.get());
+                person.setFullName("" + fullName.get());
+            }
+            if (username != null) {
+                //System.out.println("Username: " + username.get());
+                person.setUserName("" + username.get());
+            }
+            if (email != null) {
+                //System.out.println("Email: " + email.get());
+                person.setEmail("" + email.get());
+            }
+            if (mobile != null) {
+                //System.out.println("Mobile: " + mobile.get());
+                person.setMobile(Integer.valueOf("" + mobile.get()));
+            }
+            if (groups != null) {
+                //System.out.println("Groups:");
+                for (int j = 0; j < groups.size(); j++) {
+                    //System.out.println("\t" + groups.get(i));
+                    person.groups.add("" + groups.get(j));
+                }
+            }
+            if (id != null) {
+                //System.out.println("ID: " + id.get());
+                person.setId(Integer.valueOf("" + id.get()));
+            }
+        }
+            catch (NamingException e) {
+                System.err.println("Error: " + e.getMessage());
+            }
+        return person;
+    }
 
     private static PersonList getPersons(NamingEnumeration answer) {
         PersonList returnList = new PersonList();

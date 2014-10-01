@@ -105,6 +105,12 @@ public class JSONController {
 
     @RequestMapping(value = "{id}", method = RequestMethod.GET)
     public @ResponseBody Person getPersonById(@PathVariable int id) {
-        return personList.getPersonById(id);
+        Person person = null;
+        try {
+            person = LDAP.findByIdNumber(id);
+        } catch(NamingException e) {
+            System.err.println("Error: " + e.getMessage());
+        }
+        return person;
     }
 }
