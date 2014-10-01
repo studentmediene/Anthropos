@@ -5,10 +5,12 @@ ssh boyeborg@scgw1.studentmediene.no -L8389:ldap.studentmediene.local:389
 */
 package com.springapp.mvc;
 
+import javax.naming.AuthenticationException;
 import javax.naming.Context;
 import javax.naming.NamingEnumeration;
 import javax.naming.NamingException;
 import javax.naming.directory.*;
+import java.util.ArrayList;
 import java.util.Hashtable;
 
 
@@ -24,34 +26,75 @@ public class LDAP {
 		env.put(Context.INITIAL_CONTEXT_FACTORY,"com.sun.jndi.ldap.LdapCtxFactory");
 		env.put(Context.PROVIDER_URL, host);
 		env.put(Context.SECURITY_AUTHENTICATION,"none");
-		//env.put(Context.SECURITY_PRINCIPAL, user);
-		//env.put(Context.SECURITY_CREDENTIALS, password);
 
         return env;
     }
 
-    protected static void config(String uid, String cr) throws NamingException {
+    //Recieves a DistinguishedName (i.e. uid=firstname.lastname,ou=Users,dc=studentmediene,dc=no) and a password
+    protected static Hashtable<String, Object> config(String dn, String cr) throws NamingException {
         Hashtable<String, Object> env = new Hashtable<String, Object>();
 
         env.put(Context.INITIAL_CONTEXT_FACTORY, "com.sun.jndi.ldap.LdapCtxFactory");
         env.put(Context.PROVIDER_URL, host);
         env.put(Context.SECURITY_AUTHENTICATION, "ssl");
-        env.put(Context.SECURITY_PRINCIPAL, uid);
+        env.put(Context.SECURITY_PRINCIPAL, dn);
         env.put(Context.SECURITY_CREDENTIALS, cr);
 
-        DirContext ctx = new InitialDirContext(env);
-        NamingEnumeration answer = ctx.search("uid=" + uid, new BasicAttributes());
-        System.out.print(answer.next());
+        return env;
     }
 
     protected static PersonList search(String search) throws NamingException {
         Hashtable<String, Object> env = config();
         DirContext ctx = new InitialDirContext(env);
         SearchControls ctls = new SearchControls();
-        String filter = ("(|(mail=*" + search + "*)(cn=*" + search + "*)(uid=*" + search + "*))");
+        String filter = ("(|(mail=*" + search + "*)(cn=*" + search + "*)(dn=*" + search + "*))");
         NamingEnumeration answer = ctx.search(name, filter, ctls);
 
         return getPersons(answer);
+    }
+
+    /*
+     * Used to find the rights level of the current user. Takes the dn and cr and binds to the server.
+      * 0 = Write access on your own user, otherwise read-only (Not member of any group in ou=Rights)
+      * 1 = Write access within section (Member of cn=seksjonsAdmin,ou=Rights,ou=Groups,dc=studentmediene,dc=studentmediene,dc=no)
+      * 2 = Write access level "Gjengsjef", can edti everyone except it-drift (Member of cn=gjengadmin,ou=Rights,ou=Groups,dc=studentmediene,dc=studentmediene,dc=no)
+      * 3 = IT-Drift (Member of cn=superAdmin,ou=Rights,ou=Groups,dc=studentmediene,dc=studentmediene,dc=no)
+      * */
+    protected static int checkRightsLevel(String dn, String cr) throws NamingException {
+        Hashtable<String, Object> env = config(dn, cr);
+        int rightsLevel = 0;
+        try {
+            InitialDirContext ctx = new InitialDirContext(env);
+            SearchControls ctls = new SearchControls();
+            String filter = ("(" + dn + ")");
+            NamingEnumeration answer = ctx.search(name, filter, ctls);
+
+            SearchResult searchResult = (SearchResult) answer.next();
+            Person person = getPerson(searchResult);
+            ArrayList<String> sections = new ArrayList<String>();
+            for (String group : person.getGroups()) {
+                if (group.contains("section")) {
+                    sections.add(group);
+                }
+            }
+            for (String section : sections) {
+                if (section.contains("superAdmin")) {
+                    rightsLevel = 3;
+                } else if (section.contains("gjengAdmin")) {
+                    rightsLevel = (rightsLevel < 2) ? 2 : rightsLevel;
+                } else if (section.contains("seksjonsAdmin")) {
+                    rightsLevel = (rightsLevel < 1) ? 1 : rightsLevel;
+                }
+            }
+        } catch (AuthenticationException e) {
+            System.err.println("Authentication error: " + e.getMessage());
+        }
+        return rightsLevel;
+    }
+
+    protected static String resolveUid(String uid) throws NamingException {
+        Hashtable<String, Object> env = config();
+        return null;
     }
 
     protected static Person findByIdNumber(int id) throws NamingException {
@@ -61,7 +104,12 @@ public class LDAP {
         String filter = ("(|(uidNumber=" + id + "))");
         NamingEnumeration answer = ctx.search(name, filter, ctls);
 
-        return getPerson(answer);
+        SearchResult searchResult = (SearchResult) answer.next();
+        if(answer.hasMoreElements()) {
+            System.err.println("Matched multiple users for the uidNumber: " + id);
+            return null;
+        }
+        return getPerson(searchResult);
     }
 
     protected static void edit(String uid, String field, String edit) throws NamingException {
@@ -80,7 +128,7 @@ public class LDAP {
 		
 		//Search controller
         SearchControls ctls = new SearchControls();
-        //String[] attrIDs = {"givenName", "sn", "gidNumber", "telephoneNumber", "mail", "memberOf", "uid", "cn"};
+        //String[] attrIDs = {"givenName", "sn", "gidNumber", "telephoneNumber", "mail", "memberOf", "dn", "cn"};
         //ctls.setReturningAttributes(attrIDs);
 
 		//The actual search
@@ -89,11 +137,9 @@ public class LDAP {
         return getPersons(answer);
 	}
 
-    private static Person getPerson(NamingEnumeration answer) {
+    private static Person getPerson(SearchResult searchResult) {
         Person person = null;
         try {
-            SearchResult searchResult = (SearchResult) answer.next();
-
             Attributes attributes = searchResult.getAttributes();
 
             Attribute firstName = attributes.get("givenName");
@@ -102,7 +148,7 @@ public class LDAP {
             Attribute mobile = attributes.get("telephoneNumber");
             Attribute email = attributes.get("mail");
             Attribute groups = attributes.get("memberOf");
-            Attribute username = attributes.get("uid");
+            Attribute username = attributes.get("dn");
             Attribute fullName = attributes.get("cn");
 
             person = new Person();
@@ -168,7 +214,7 @@ public class LDAP {
                 Attribute mobile = attributes.get("telephoneNumber");
                 Attribute email = attributes.get("mail");
                 Attribute groups = attributes.get("memberOf");
-                Attribute username = attributes.get("uid");
+                Attribute username = attributes.get("dn");
                 Attribute fullName = attributes.get("cn");
 
 
