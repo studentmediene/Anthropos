@@ -92,9 +92,19 @@ public class LDAP {
         return rightsLevel;
     }
 
-    protected static String resolveUid(String uid) throws NamingException {
+    protected static String getDn(String uid) throws NamingException {
         Hashtable<String, Object> env = config();
-        return null;
+        DirContext ctx = new InitialDirContext(env);
+        SearchControls ctls = new SearchControls();
+        String filter = ("uid=" + uid);
+        NamingEnumeration answer = ctx.search(name, filter, ctls);
+
+        SearchResult searchResult = (SearchResult) answer.next();
+        if (answer.hasMoreElements()) {
+            System.err.println("Matched mutliple users for the uid" + uid);
+            return null;
+        }
+        return searchResult.getNameInNamespace();
     }
 
     protected static Person findByIdNumber(int id) throws NamingException {
@@ -112,13 +122,14 @@ public class LDAP {
         return getPerson(searchResult);
     }
 
-    protected static void edit(String uid, String field, String edit) throws NamingException {
-        Hashtable<String, Object> env = config();
+    protected static void edit(String uid, String cr, String field, String value) throws NamingException {
+        Hashtable<String, Object> env = config(uid, cr);
+
         DirContext ctx = new InitialDirContext(env);
-        Attributes orig = new BasicAttributes();
-        Attribute attr1 = new BasicAttribute(field, edit);
-        orig.put(attr1);
-        ctx.modifyAttributes(uid, DirContext.REPLACE_ATTRIBUTE, orig);
+        ModificationItem[] mods = new ModificationItem[1];
+        Attribute mod = new BasicAttribute(field, value);
+        mods[0] = new ModificationItem(DirContext.REPLACE_ATTRIBUTE, mod);
+        ctx.modifyAttributes(getDn(uid), mods);
     }
 
 	protected static PersonList retrieve() throws NamingException {

@@ -49,7 +49,10 @@ public class JSONController {
     @RequestMapping(value = "list", method = RequestMethod.GET)
     public @ResponseBody ArrayList<Person> getList() {
         PersonList returnList = new PersonList();
+        System.out.print("Trying to get the list of users");
         try {
+            System.out.print(LDAP.getDn("adem.ruud"));
+            System.out.print("Trying");
             returnList.update(LDAP.retrieve());
         }
         catch (NamingException e) {
@@ -95,9 +98,9 @@ public class JSONController {
 
     //THIS FUNCTION DOESN'T DO ANYTHING YET!
     @RequestMapping(value = "edit", method = RequestMethod.GET)
-    public @ResponseBody void edit(@RequestParam(value = "edit", required = true)String uid) {
+    public @ResponseBody void edit(@RequestParam(value="uid", required = true) String uid, @RequestParam(value="cr", required = true) String cr, @RequestParam(value = "field", required = true) String field, @RequestParam(value="value", required = true) String value) {
         try {
-            LDAP.edit(uid, "", "");
+            LDAP.edit(uid, cr, field, value);
         } catch (NamingException e) {
             System.err.println("Error");
         }
