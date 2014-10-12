@@ -229,6 +229,9 @@ legend				{ font-size: 1.8em; }
     color:white;
     cursor:pointer;
 }
+.foo {
+    color:red;
+}
 
 .tableHeader:hover {
     cursor:pointer;
@@ -249,4 +252,13 @@ legend				{ font-size: 1.8em; }
 .borderBtn:hover {
     border-style:solid;
     border-color: #23A2FC;
+}
+
+.membersWrap td{
+    padding: 10px;
+}
+
+.membersWrap .table{
+    width:auto;
+    margin:auto;
 }

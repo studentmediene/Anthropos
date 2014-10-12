@@ -1,4 +1,4 @@
-<div class="tmp" ng-click="buttonAction($event)"> <!--change class style-->
+<div class="membersWrap" ng-click="buttonAction($event)"> <!--change class style-->
     <div class="navbar navbar-inner">
         <div class="span4">
             Search
@@ -32,8 +32,9 @@
         <pagination total-items="{{totalUsers}}" ng-model="bigCurrentPage" max-size="maxSize" class="pagination-sm" boundary-links="true"></pagination>
     </div>
     <div class="row-fluid">
-        <div class = "span7">
-            <table class="table table-bordered">
+        <div>
+            <img src="../img/ajax-loader.gif" ng-if="!shownPeople.length" style="margin: auto;display:block"/>
+            <table class="table table-bordered" ng-if="shownPeople.length">
                 <thead>
                 <tr>
                     <th ng-click="reverse=false;order('lastName', false)" class="tableHeader">Etternavn
