@@ -28,8 +28,7 @@ b:focus {
 .banner-icon {
     height: 60px;
     width:60px;
-    margin-top:-5px;
-    margin-left:28px;
+    margin:5px;
     -webkit-transition: all 0.5s ease;
     -moz-transition: all 0.5s ease;
     -o-transition: all 0.5s ease;
@@ -63,14 +62,37 @@ b:focus {
     border-width: 1px;
     border-color: black;
 }
-
 .header-title{
     font-size: 24pt;
     font-family: "Trebuchet MS", Helvetica, sans-serif;
     color:white;
-    line-height: 60px;
     margin:0.5cm;
- }
+}
+@media (min-width: 1180px){
+    .largeScreen{
+
+    }
+    .mediumScreen{
+        display:none;
+    }
+}
+@media (max-width: 1179px) and (min-width: 730px){
+    .largeScreen{
+        display:none;
+    }
+    .mediumScreen{
+
+    }
+}
+@media (max-width: 729px){
+    .largeScreen{
+        display:none;
+    }
+    .mediumScreen{
+        display:none;
+    }
+}
+
 
 .main-frame {
     background-color: #CEE3F6;
@@ -81,7 +103,6 @@ b:focus {
     border-radius: 5px;
     margin-top: -30px;
 }
-
 .person-info {
     list-style: none;
     margin: 10px;

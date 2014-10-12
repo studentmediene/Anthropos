@@ -29,10 +29,11 @@
 
 </head>
 <body  ng-app="mdbApp">
-<div class="banner row" ng-controller="mainCtrl">
+<div class="banner" ng-controller="mainCtrl">
     <img src="../img/SM-logo.png" class="banner-icon" href="#" ng-mouseover="count=count+1" ng-init="count=0">
-    <span class="header-title"> {{titleName}} </span>
-    <div class="pull-right ">
+    <span class="header-title largeScreen"> Medlemsdatabase for Studentmediene </span>
+    <span class="header-title mediumScreen">MDB</span>
+    <div class="pull-right">
       <!--  <button class="btn" ng-click="ting=!ting">{{ting}}</button> -->
         <a href="#"> <b>Medlemmer</b></a>
         <a href="#/user/1"> <b>Behandle bruker </b></a>  <!-- TODO go to the id retrievable from user credentials -->
