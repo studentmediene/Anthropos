@@ -229,9 +229,7 @@ legend				{ font-size: 1.8em; }
     color:white;
     cursor:pointer;
 }
-.foo {
-    color:red;
-}
+
 
 .tableHeader:hover {
     cursor:pointer;
