@@ -230,6 +230,9 @@ legend				{ font-size: 1.8em; }
     cursor:pointer;
 }
 
+.foo {
+    color:red;
+}
 
 .tableHeader:hover {
     cursor:pointer;
