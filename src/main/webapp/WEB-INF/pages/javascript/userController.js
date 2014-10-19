@@ -1,7 +1,7 @@
 /**
  * Created by Kristian on 05/03/14.
  */
-app.controller("UserCtrl", function($scope, $resource, $http, $modal, $routeParams) {
+app.controller("UserCtrl", function($scope, $resource, $http, $modal, $routeParams, $log) {
 
     var tmpObj = $resource("/"+$routeParams.id, {}, {
             get:{
@@ -19,7 +19,7 @@ app.controller("UserCtrl", function($scope, $resource, $http, $modal, $routePara
             $scope.canAddGroups = false;
             // TODO Find out the level of authority current user has
 
-            var level = 3;// Using test var temporarily
+            var level = 0;// Using test var temporarily
 
             if(level == 3) { // Admin or logged in user's profile
                 console.log("Admin")
@@ -210,43 +210,24 @@ app.controller("UserCtrl", function($scope, $resource, $http, $modal, $routePara
             }
         }
     }
+
+    $scope.items = ['item1', 'item2', 'item3'];
     $scope.editPassword = function() {
-        $scope.modalInstance = $modal.open({
+        var modalInstance = $modal.open({
             templateUrl: 'editPw.html',
-            controller: 'UserCtrl'
+            controller: 'ModalInstanceCtrl',
+            resolve: {
+                items: function () {
+                    return $scope.items;
+                }
+            }
         });
-        $scope.modalInstance.result.then(function() {
-            console.log('Success');
-        }, function() {
-            console.log('Cancelled');
-        })['finally'](function(){
-            $scope.modalInstance = undefined  // <--- This fixes
+        modalInstance.result.then(function (status) {
+            console.log(status);
+        }, function () {
+            $log.info('Modal dismissed at: ' + new Date());
         });
     }
-
-
-
-    $scope.changePassword = function() {
-        var oldpass = document.getElementById('oldpass').value;
-        var newpass = document.getElementById('newpass').value;
-        var confpass = document.getElementById('confpass').value;
-
-        if ( newpass == confpass && newpass.length >7) {
-            $scope.showPasswordError = false;
-            console.log("Equals and greater than 7");
-            modalInstance.dismiss('cancel');
-        }
-        else {
-            $scope.showPasswordError = true;
-        }
-    }
-
-
-
-    $scope.cancel = function () {
-        modalInstance.close('OK');
-
-    };
 
     $scope.remove = function(group) {
         if($scope.edit) {
@@ -265,4 +246,38 @@ app.controller("UserCtrl", function($scope, $resource, $http, $modal, $routePara
 
 
 
+});
+
+app.controller('ModalInstanceCtrl', function ($scope, $modalInstance, items) {
+    $scope.showPasswordError = false;
+    $scope.items = items;
+    $scope.selected = {
+        item: $scope.items[0]
+    };
+
+    $scope.changePassword = function() {
+        console.log("changing password");
+        var oldpass = document.getElementById('oldpass').value;
+        var newpass = document.getElementById('newpass').value;
+        var confpass = document.getElementById('confpass').value;
+
+        if ( newpass == confpass && newpass.length >7) {
+            document.getElementById("passErr").hidden = true;
+            console.log("Equals and greater than 7");
+            $scope.ok();
+        }
+        else {
+            console.log("error");
+            document.getElementById("passErr").hidden = false;
+        }
+    }
+
+
+    $scope.ok = function () {
+        $modalInstance.close('ok');
+    };
+
+    $scope.cancel = function () {
+        $modalInstance.dismiss('cancel');
+    };
 });

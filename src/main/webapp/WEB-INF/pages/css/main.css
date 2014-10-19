@@ -10,6 +10,7 @@ b {
     padding: 12px;
     color:#BDBDBD;
     text-decoration:none;
+    cursor:pointer;
 }
 
 b:hover,
@@ -21,16 +22,13 @@ b:focus {
 .banner {
     background-color: #326ca6;
     color: #FFFFFF;
-    height: 70px;
+    overflow:hidden;
 }
 
 .banner-icon {
     height: 60px;
     width:60px;
-    position:absolute;
-    background-image:url(../img/SM-logo.png) ;
-    top:4px;
-    left:8px;
+    margin:5px;
     -webkit-transition: all 0.5s ease;
     -moz-transition: all 0.5s ease;
     -o-transition: all 0.5s ease;
@@ -38,17 +36,62 @@ b:focus {
     transition: all 0.5s ease;
 }
 .banner-icon:hover {
+    cursor:pointer;
     border-radius: 50%;
     -webkit-transform: rotate(360deg);
     -moz-transform: rotate(360deg);
     -o-transform: rotate(360deg);
     -ms-transform: rotate(360deg);
     transform: rotate(360deg);
+}
 
+.banner-nav {
+    /* Thanks to the guys at www.colorzilla.com */
+    background: rgb(226,226,226); /* Old browsers */
+    background: -moz-linear-gradient(top,  rgba(226,226,226,1) 0%, rgba(219,219,219,1) 50%, rgba(209,209,209,1) 51%, rgba(254,254,254,1) 100%); /* FF3.6+ */
+    background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,rgba(226,226,226,1)), color-stop(50%,rgba(219,219,219,1)), color-stop(51%,rgba(209,209,209,1)), color-stop(100%,rgba(254,254,254,1))); /* Chrome,Safari4+ */
+    background: -webkit-linear-gradient(top,  rgba(226,226,226,1) 0%,rgba(219,219,219,1) 50%,rgba(209,209,209,1) 51%,rgba(254,254,254,1) 100%); /* Chrome10+,Safari5.1+ */
+    background: -o-linear-gradient(top,  rgba(226,226,226,1) 0%,rgba(219,219,219,1) 50%,rgba(209,209,209,1) 51%,rgba(254,254,254,1) 100%); /* Opera 11.10+ */
+    background: -ms-linear-gradient(top,  rgba(226,226,226,1) 0%,rgba(219,219,219,1) 50%,rgba(209,209,209,1) 51%,rgba(254,254,254,1) 100%); /* IE10+ */
+    background: linear-gradient(to bottom,  rgba(226,226,226,1) 0%,rgba(219,219,219,1) 50%,rgba(209,209,209,1) 51%,rgba(254,254,254,1) 100%); /* W3C */
+    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#e2e2e2', endColorstr='#fefefe',GradientType=0 ); /* IE6-9 */
 
+    /* GRADIENT END */
+    height: 100%;
+    border-left-style:solid;
+    border-width: 1px;
+    border-color: black;
+}
+.header-title{
+    font-size: 24pt;
+    font-family: "Trebuchet MS", Helvetica, sans-serif;
+    color:white;
+    display:inline-block;
+    margin:0.55cm;
+}
+@media (min-width: 1180px){
+    .largeScreen{
 
+    }
+    .mediumScreen{
+        display:none;
+    }
+}
+@media (max-width: 1179px) and (min-width: 690px){
+    .largeScreen{
+        display:none;
+    }
+    .mediumScreen{
 
-
+    }
+}
+@media (max-width: 689px){
+    .largeScreen{
+        display:none;
+    }
+    .mediumScreen{
+        display:none;
+    }
 }
 
 
@@ -61,7 +104,6 @@ b:focus {
     border-radius: 5px;
     margin-top: -30px;
 }
-
 .person-info {
     list-style: none;
     margin: 10px;
@@ -99,7 +141,6 @@ b:focus {
         background-color: white;
         color: black;
         width:100px;
-        margin-bottom: 5px;
         -moz-border-radius: 5px;
         -webkit-border-radius: 5px;
         -khtml-border-radius: 5px;
@@ -121,7 +162,6 @@ b:focus {
         background-color: white;
         color: black;
         width: 90%;
-        margin-bottom: 10px;
         margin-left: 5px;
         margin-right: 5px;
         -moz-border-radius: 5px;
@@ -156,6 +196,8 @@ b:focus {
     background-image: linear-gradient(to bottom, #0088cc, #0077b3);
     background-repeat: repeat-x;
     filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#ff0088cc', endColorstr='#ff0077b3', GradientType=0);
+    margin-top: 0px;
+    margin-bottom: 0px;
 }
 
 
@@ -190,6 +232,17 @@ legend				{ font-size: 1.8em; }
 }
 
 
+.tableHeader:hover {
+    cursor:pointer;
+    background-color: lightgray;
+}
+
+.tableHeader:active {
+    cursor:pointer;
+    background-color: lightslategray;
+}
+
+
 .borderBtn {
     border-style: none;
     border-radius: 4px;
@@ -198,4 +251,32 @@ legend				{ font-size: 1.8em; }
 .borderBtn:hover {
     border-style:solid;
     border-color: #23A2FC;
+}
+
+.membersWrap td{
+    padding: 10px;
+}
+
+.membersWrap .table{
+    width:auto;
+    margin:auto;
+}
+
+.clearBtn {
+    border-style: solid;
+    border-width: 1px;
+    border-color:#969696;
+    border-radius: 20px;
+    background-color: lightgray;
+    color: white;
+
+}
+
+.clearBtn:hover {
+    cursor:pointer;
+    background-color: #A8A8A8;
+    color: white;
+}
+.clearBtn:active{
+    box-shadow: inset 4px 4px 0px #888888;
 }
