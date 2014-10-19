@@ -30,9 +30,9 @@ public class PersonList extends ArrayList<Person> {
     }
 
     public Person getPersonById(int id) {
-        for (int i = 0; i < personList.size(); i++) {
-            if (this.personList.get(i).getId() == id) {
-                return this.personList.get(i);
+        for (Person person : personList) {
+            if (person.getId() == id) {
+                return person;
             }
         }
         throw new IllegalArgumentException("No person with that id found");

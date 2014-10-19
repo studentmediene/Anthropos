@@ -15,8 +15,10 @@ public class Person {
     private int mobile;
     protected ArrayList<String> groups = new ArrayList<String>();
     private int id;
+    private boolean harOblat;
+    private int rightsLevel;
 
-    Person(String firstName, String lastName, String email, ArrayList<String> groups, int id) {
+    Person(String firstName, String lastName, String email, ArrayList<String> groups, int id, boolean harOblat, int rightsLevel) {
         setFirstName(firstName);
         setLastName(lastName);
         setEmail(email);
