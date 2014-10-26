@@ -53,7 +53,7 @@ public class JSONController {
         System.out.print("Trying to get the list of users");
         try {
             System.out.println("Trying");
-            System.out.println(LDAP.getDn("adem.ruud"));
+            //System.out.println(LDAP.getDn("adem.ruud"));
             returnList.update(LDAP.retrieve());
         }
         catch (NamingException e) {
@@ -100,9 +100,9 @@ public class JSONController {
 
     //THIS FUNCTION DOESN'T DO ANYTHING YET!
     @RequestMapping(value = "edit", method = RequestMethod.GET)
-    public @ResponseBody void edit(@RequestParam(value="uid", required = true) String uid, @RequestParam(value="cr", required = true) String cr, @RequestParam(value = "field", required = true) String field, @RequestParam(value="value", required = true) String value) {
+    public @ResponseBody void edit(@RequestParam(value="uid", required = true) String uid, @RequestParam(value="cr", required = true) String cr, @RequestParam(value = "fields", required = true) ArrayList<String[]> fields) {
         try {
-            LDAP.edit(activeLogin, field, value);
+            LDAP.edit(activeLogin, fields);
         } catch (NamingException e) {
             System.err.println("Error");
         }
@@ -117,5 +117,20 @@ public class JSONController {
             System.err.println("Error: " + e.getMessage());
         }
         return person;
+    }
+
+    @RequestMapping(value = "logout")
+    public @ResponseBody void logout() {
+        if (activeLogin == null) {
+            System.out.println("No user is logged in");
+        } else {
+        System.out.println("Login out user: " + activeLogin.getUid());
+        activeLogin = null;
+        }
+    }
+
+    @RequestMapping(value = "forgotPassword")
+    public @ResponseBody void forgotPassword() {
+        //Code for sending new password to user here
     }
 }
