@@ -11,6 +11,7 @@ import java.util.ArrayList;
 @RequestMapping("/")
 public class JSONController {
     private PersonList personList = new PersonList();
+    private ActiveLogin activeLogin;
 
     @RequestMapping("*")
     @ResponseBody
@@ -51,8 +52,8 @@ public class JSONController {
         PersonList returnList = new PersonList();
         System.out.print("Trying to get the list of users");
         try {
-            System.out.print(LDAP.getDn("adem.ruud"));
-            System.out.print("Trying");
+            System.out.println("Trying");
+            System.out.println(LDAP.getDn("adem.ruud"));
             returnList.update(LDAP.retrieve());
         }
         catch (NamingException e) {
@@ -88,7 +89,8 @@ public class JSONController {
         System.out.println("UID: " + uid);
         System.out.println("PW: " + cr);
         try {
-            LDAP.config(uid, cr);
+            activeLogin = new ActiveLogin(uid, cr);
+            LDAP.config(activeLogin);
             return true;
         } catch (NamingException e) {
             System.err.println("Login error: " + e.getMessage());
@@ -100,7 +102,7 @@ public class JSONController {
     @RequestMapping(value = "edit", method = RequestMethod.GET)
     public @ResponseBody void edit(@RequestParam(value="uid", required = true) String uid, @RequestParam(value="cr", required = true) String cr, @RequestParam(value = "field", required = true) String field, @RequestParam(value="value", required = true) String value) {
         try {
-            LDAP.edit(uid, cr, field, value);
+            LDAP.edit(activeLogin, field, value);
         } catch (NamingException e) {
             System.err.println("Error");
         }

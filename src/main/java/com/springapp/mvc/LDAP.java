@@ -31,14 +31,14 @@ public class LDAP {
     }
 
     //Recieves a DistinguishedName (i.e. uid=firstname.lastname,ou=Users,dc=studentmediene,dc=no) and a password
-    protected static Hashtable<String, Object> config(String dn, String cr) throws NamingException {
+    protected static Hashtable<String, Object> config(ActiveLogin activeLogin) throws NamingException {
         Hashtable<String, Object> env = new Hashtable<String, Object>();
 
         env.put(Context.INITIAL_CONTEXT_FACTORY, "com.sun.jndi.ldap.LdapCtxFactory");
         env.put(Context.PROVIDER_URL, host);
         env.put(Context.SECURITY_AUTHENTICATION, "ssl");
-        env.put(Context.SECURITY_PRINCIPAL, dn);
-        env.put(Context.SECURITY_CREDENTIALS, cr);
+        env.put(Context.SECURITY_PRINCIPAL, activeLogin.getUid());
+        env.put(Context.SECURITY_CREDENTIALS, activeLogin.getCr());
 
         return env;
     }
@@ -61,7 +61,7 @@ public class LDAP {
       * 3 = IT-Drift (Member of cn=superAdmin,ou=Rights,ou=Groups,dc=studentmediene,dc=studentmediene,dc=no)
       * */
     protected static int checkRightsLevel(String dn, String cr) throws NamingException {
-        Hashtable<String, Object> env = config(dn, cr);
+        Hashtable<String, Object> env = config(new ActiveLogin(dn, cr));
         int rightsLevel = 0;
         try {
             InitialDirContext ctx = new InitialDirContext(env);
@@ -86,9 +86,46 @@ public class LDAP {
                     rightsLevel = (rightsLevel < 1) ? 1 : rightsLevel;
                 }
             }
+            ctx.close();
         } catch (AuthenticationException e) {
             System.err.println("Authentication error: " + e.getMessage());
         }
+        return rightsLevel;
+    }
+
+    protected static int checkRightsLevelSimple(String uid) throws NamingException {
+        Hashtable<String, Object> env = config();
+        int rightsLevel = 0;
+        try {
+            InitialDirContext ctx = new InitialDirContext(env);
+            SearchControls ctls = new SearchControls();
+            String filter = "uid=" + uid;
+            NamingEnumeration answer = ctx.search(name, filter, ctls);
+
+            SearchResult user = (SearchResult) answer.next();
+            Attributes attributes = user.getAttributes();
+            Attribute groups = attributes.get("groups");
+            ArrayList<String> sections = new ArrayList<String>();
+            if (groups != null) {
+                for (int j = 0; j < groups.size(); j++) {
+                    //System.out.println("\t" + groups.get(i));
+                    sections.add("" + groups.get(j));
+                }
+
+                for (String section : sections) {
+                    if (section.contains("superAdmin")) {
+                        rightsLevel = 3;
+                    } else if (section.contains("gjengAdmin")) {
+                        rightsLevel = (rightsLevel < 2) ? 2 : rightsLevel;
+                    } else if (section.contains("seksjonsAdmin")) {
+                        rightsLevel = (rightsLevel < 1) ? 1 : rightsLevel;
+                    }
+                }
+            }
+        } catch (AuthenticationException e) {
+            System.err.println("Authentication error: " + e.getMessage());
+        }
+        //System.out.println(rightsLevel);
         return rightsLevel;
     }
 
@@ -104,6 +141,7 @@ public class LDAP {
             System.err.println("Matched mutliple users for the uid" + uid);
             return null;
         }
+        ctx.close();
         return searchResult.getNameInNamespace();
     }
 
@@ -119,17 +157,18 @@ public class LDAP {
             System.err.println("Matched multiple users for the uidNumber: " + id);
             return null;
         }
+        ctx.close();
         return getPerson(searchResult);
     }
 
-    protected static void edit(String uid, String cr, String field, String value) throws NamingException {
-        Hashtable<String, Object> env = config(uid, cr);
+    protected static void edit(ActiveLogin activeLogin, String field, String value) throws NamingException {
+        Hashtable<String, Object> env = config(activeLogin);
 
         DirContext ctx = new InitialDirContext(env);
         ModificationItem[] mods = new ModificationItem[1];
         Attribute mod = new BasicAttribute(field, value);
         mods[0] = new ModificationItem(DirContext.REPLACE_ATTRIBUTE, mod);
-        ctx.modifyAttributes(getDn(uid), mods);
+        ctx.modifyAttributes(getDn(activeLogin.getUid()), mods);
     }
 
 	protected static PersonList retrieve() throws NamingException {
@@ -145,6 +184,7 @@ public class LDAP {
 		//The actual search
 		NamingEnumeration answer = ctx.search("ou=Users,dc=studentmediene,dc=no", "(&(memberOf=*))", ctls);
 
+        ctx.close();
         return getPersons(answer);
 	}
 
@@ -155,11 +195,11 @@ public class LDAP {
 
             Attribute firstName = attributes.get("givenName");
             Attribute lastName = attributes.get("sn");
-            Attribute id = attributes.get("gidNumber");
+            Attribute id = attributes.get("uidNumber");
             Attribute mobile = attributes.get("telephoneNumber");
             Attribute email = attributes.get("mail");
             Attribute groups = attributes.get("memberOf");
-            Attribute username = attributes.get("dn");
+            Attribute username = attributes.get("uid");
             Attribute fullName = attributes.get("cn");
 
             person = new Person();
@@ -178,7 +218,7 @@ public class LDAP {
             }
             if (username != null) {
                 //System.out.println("Username: " + username.get());
-                person.setUserName("" + username.get());
+                person.setUid("" + username.get());
             }
             if (email != null) {
                 //System.out.println("Email: " + email.get());
@@ -206,73 +246,76 @@ public class LDAP {
         return person;
     }
 
-    private static PersonList getPersons(NamingEnumeration answer) {
-        PersonList returnList = new PersonList();
-        try {
-            //Find the next person with while(answer.hasMore())
-            while(answer.hasMore()) {
-                Person returnperson = new Person();
-                //Get the next result
-                SearchResult searchResult = (SearchResult) answer.next();
+private static PersonList getPersons(NamingEnumeration answer) {
+    PersonList returnList = new PersonList();
+    try {
+        //Find the next person with while(answer.hasMore())
+        while(answer.hasMore()) {
+            Person returnperson = new Person();
+            //Get the next result
+            SearchResult searchResult = (SearchResult) answer.next();
 
-                //Getting the attributes of the result
-                Attributes attributes = searchResult.getAttributes();
+            //Getting the attributes of the result
+            Attributes attributes = searchResult.getAttributes();
 
-                //Storing each attribute
-                Attribute firstName = attributes.get("givenName");
-                Attribute lastName = attributes.get("sn");
-                Attribute id = attributes.get("gidNumber");
-                Attribute mobile = attributes.get("telephoneNumber");
-                Attribute email = attributes.get("mail");
-                Attribute groups = attributes.get("memberOf");
-                Attribute username = attributes.get("dn");
-                Attribute fullName = attributes.get("cn");
+            //Storing each attribute
+            Attribute firstName = attributes.get("givenName");
+            Attribute lastName = attributes.get("sn");
+            Attribute id = attributes.get("gidNumber");
+            Attribute mobile = attributes.get("telephoneNumber");
+            Attribute email = attributes.get("mail");
+            Attribute groups = attributes.get("memberOf");
+            Attribute fullName = attributes.get("cn");
+            Attribute uid = attributes.get("uid");
+            String dn = searchResult.getNameInNamespace();
 
 
-
-                if (firstName != null) {
-                    //System.out.println("First Name: " + firstName.get());
-                    returnperson.setFirstName("" + firstName.get());
-                }
-                if (lastName != null) {
-                    //System.out.println("Last Name: " + lastName.get());
-                    returnperson.setLastName("" + lastName.get());
-                }
-                if (fullName != null) {
-                    //System.out.println("Full Name: " + fullName.get());
-                    returnperson.setFullName("" + fullName.get());
-                }
-                if (username != null) {
-                    //System.out.println("Username: " + username.get());
-                    returnperson.setUserName("" + username.get());
-                }
-                if (email != null) {
-                    //System.out.println("Email: " + email.get());
-                    returnperson.setEmail("" + email.get());
-                }
-                if (mobile != null) {
-                    //System.out.println("Mobile: " + mobile.get());
-                    returnperson.setMobile(Integer.valueOf("" + mobile.get()));
-                }
-                if (groups != null) {
-                    //System.out.println("Groups:");
-                    for (int j = 0; j < groups.size(); j++) {
-                        //System.out.println("\t" + groups.get(i));
-                        returnperson.groups.add("" + groups.get(j));
-                    }
-                }
-                if (id != null) {
-                    //System.out.println("ID: " + id.get());
-                    returnperson.setId(Integer.valueOf("" + id.get()));
-                }
-
-                returnList.add(returnperson);
-                //System.out.print("added " + returnperson);
+            if (firstName != null) {
+                //System.out.println("First Name: " + firstName.get());
+                returnperson.setFirstName("" + firstName.get());
             }
-        } catch(NamingException e) {
-            System.err.println("Error: " + e.getMessage());
+            if (lastName != null) {
+                //System.out.println("Last Name: " + lastName.get());
+                returnperson.setLastName("" + lastName.get());
+            }
+            if (fullName != null) {
+                //System.out.println("Full Name: " + fullName.get());
+                returnperson.setFullName("" + fullName.get());
+            }
+            if (uid != null) {
+                //System.out.println("Username: " + username.get());
+                returnperson.setUid("" + uid.get());
+            }
+            if (email != null) {
+                //System.out.println("Email: " + email.get());
+                returnperson.setEmail("" + email.get());
+            }
+            if (mobile != null) {
+                //System.out.println("Mobile: " + mobile.get());
+                returnperson.setMobile(Integer.valueOf("" + mobile.get()));
+            }
+            if (groups != null) {
+                //System.out.println("Groups:");
+                for (int j = 0; j < groups.size(); j++) {
+                    //System.out.println("\t" + groups.get(i));
+                    returnperson.groups.add("" + groups.get(j));
+                }
+            }
+            if (id != null) {
+                //System.out.println("ID: " + id.get());
+                returnperson.setId(Integer.valueOf("" + id.get()));
+            }
+            if (dn != null) {
+                returnperson.setDn(dn);
+            }
+            returnperson.setRightsLevel(checkRightsLevelSimple((String) uid.get()));
+            returnList.add(returnperson);
+            //System.out.println(returnperson);
         }
-        return returnList;
+    } catch(NamingException e) {
+        System.err.println("Error: " + e.getMessage());
     }
+    return returnList;
+}
 	
 }
