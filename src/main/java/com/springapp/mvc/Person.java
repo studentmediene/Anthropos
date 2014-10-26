@@ -10,19 +10,24 @@ public class Person {
     private String firstName;
     private String lastName;
     private String fullName;
-    private String userName;
+    private String uid;
     private String email;
     private int mobile;
     protected ArrayList<String> groups = new ArrayList<String>();
     private int id;
+    private String dn;
     private boolean harOblat;
     private int rightsLevel;
 
-    Person(String firstName, String lastName, String email, ArrayList<String> groups, int id, boolean harOblat, int rightsLevel) {
+    Person(String firstName, String lastName, String email, ArrayList<String> groups, int id, String dn, String userName, boolean harOblat, int rightsLevel) {
         setFirstName(firstName);
         setLastName(lastName);
         setEmail(email);
         setId(id);
+        setDn(dn);
+        setRightsLevel(rightsLevel);
+        setHarOblat(harOblat);
+        setUid(userName);
         setGroups(groups);
     }
 
@@ -50,12 +55,17 @@ public class Person {
         return this.id;
     }
 
+    public String getDn() {
+        return dn;
+    }
+
+
     public ArrayList<String> getGroups() {
         return this.groups;
     }
 
-    public String getUserName() {
-        return userName;
+    public String getUid() {
+        return uid;
     }
 
     public int getMobile() { return mobile; }
@@ -72,8 +82,8 @@ public class Person {
         this.fullName = fullName;
     }
 
-    public void setUserName(String userName) {
-        this.userName = userName;
+    public void setUid(String uid) {
+        this.uid = uid;
     }
 
     public void setEmail(String email) {
@@ -82,13 +92,37 @@ public class Person {
 
     public void setId(int id) { this.id = id; }
 
+    public void setDn(String dn) {
+        this.dn = dn;
+    }
+
     public void setMobile(int mobile) { this.mobile = mobile; }
 
     public void setGroups(ArrayList<String> groups) {
         this.groups = groups;
     }
 
-    public String toString(Person person) {
-        return "{'firstname':'" + person.getFirstName() + "','lastname':" + person.getLastName() + "','username':" + person.getUserName() + "','email':" + person.getEmail() + "',''mobile':" + person.getMobile() + "','id':" + person.getId() + "'}";
+    public void setRightsLevel(int rightsLevel) {
+        this.rightsLevel = rightsLevel;
     }
+    public void setHarOblat(boolean harOblat) {
+        this.harOblat = harOblat;
+    }
+
+    @Override
+    public String toString() {
+        return "Person{" +
+                "firstName='" + firstName + '\'' +
+                ", lastName='" + lastName + '\'' +
+                ", fullName='" + fullName + '\'' +
+                ", uid='" + uid + '\'' +
+                ", email='" + email + '\'' +
+                ", mobile=" + mobile +
+                ", groups=" + groups +
+                ", id=" + id +
+                ", harOblat=" + harOblat +
+                ", rightsLevel=" + rightsLevel +
+                '}';
+    }
+
 }
