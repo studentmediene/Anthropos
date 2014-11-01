@@ -38,7 +38,7 @@ public class LDAP {
             ArrayList<String[]> editList = new ArrayList<String[]>();
             String[] list = {"telephoneNumber", "97292149"};
             editList.add(0, list);
-            edit(activeLogin, editList);
+            edit(activeLogin, activeLogin.getDn(), editList);
 
         } catch(NamingException e) {
             System.err.println("NamingException: " + e.getMessage());
@@ -69,7 +69,7 @@ public class LDAP {
         env.put(Context.INITIAL_CONTEXT_FACTORY, "com.sun.jndi.ldap.LdapCtxFactory");
         env.put(Context.PROVIDER_URL, host);
         env.put(Context.SECURITY_AUTHENTICATION, "simple");
-        env.put(Context.SECURITY_PRINCIPAL, activeLogin.getUid());
+        env.put(Context.SECURITY_PRINCIPAL, activeLogin.getDn());
         env.put(Context.SECURITY_CREDENTIALS, activeLogin.getCr());
 
         return env;
@@ -92,13 +92,13 @@ public class LDAP {
       * 2 = Write access level "Gjengsjef", can edit everyone except it-drift (Member of cn=gjengadmin,ou=Rights,ou=Groups,dc=studentmediene,dc=studentmediene,dc=no)
       * 3 = IT-Drift (Member of cn=superAdmin,ou=Rights,ou=Groups,dc=studentmediene,dc=studentmediene,dc=no)
       * */
-    protected static int checkRightsLevel(String dn, String cr) throws NamingException {
-        Hashtable<String, Object> env = config(new ActiveLogin(dn, cr));
+    protected static int checkRightsLevel(ActiveLogin activeLogin, String editDn) {
         int rightsLevel = 0;
         try {
+            Hashtable<String, Object> env = config(activeLogin);
             InitialDirContext ctx = new InitialDirContext(env);
             SearchControls ctls = new SearchControls();
-            String filter = ("(" + dn + ")");
+            String filter = ("(" + activeLogin.getDn() + ")");
             NamingEnumeration answer = ctx.search(name, filter, ctls);
 
             SearchResult searchResult = (SearchResult) answer.next();
@@ -121,43 +121,9 @@ public class LDAP {
             ctx.close();
         } catch (AuthenticationException e) {
             System.err.println("Authentication error: " + e.getMessage());
+        } catch (NamingException e) {
+            System.err.println("NamingException: " + e.getMessage());
         }
-        return rightsLevel;
-    }
-
-    protected static int checkRightsLevelSimple(String uid) throws NamingException {
-        Hashtable<String, Object> env = config();
-        int rightsLevel = 0;
-        try {
-            InitialDirContext ctx = new InitialDirContext(env);
-            SearchControls ctls = new SearchControls();
-            String filter = "uid=" + uid;
-            NamingEnumeration answer = ctx.search(name, filter, ctls);
-
-            SearchResult user = (SearchResult) answer.next();
-            Attributes attributes = user.getAttributes();
-            Attribute groups = attributes.get("groups");
-            ArrayList<String> sections = new ArrayList<String>();
-            if (groups != null) {
-                for (int j = 0; j < groups.size(); j++) {
-                    //System.out.println("\t" + groups.get(i));
-                    sections.add("" + groups.get(j));
-                }
-
-                for (String section : sections) {
-                    if (section.contains("superAdmin")) {
-                        rightsLevel = 3;
-                    } else if (section.contains("gjengAdmin")) {
-                        rightsLevel = (rightsLevel < 2) ? 2 : rightsLevel;
-                    } else if (section.contains("seksjonsAdmin")) {
-                        rightsLevel = (rightsLevel < 1) ? 1 : rightsLevel;
-                    }
-                }
-            }
-        } catch (AuthenticationException e) {
-            System.err.println("Authentication error: " + e.getMessage());
-        }
-        //System.out.println(rightsLevel);
         return rightsLevel;
     }
 
@@ -200,7 +166,10 @@ public class LDAP {
         return SearchProcessing.getPerson(searchResult);
     }
 
-    protected static void edit(ActiveLogin activeLogin, ArrayList<String[]> fields) throws NamingException {
+    protected static void edit(ActiveLogin activeLogin, String editDn, ArrayList<String[]> fields) throws NamingException {
+        if (canEdit(activeLogin, editDn)) {
+
+        }
         Hashtable<String, Object> env = config(activeLogin);
 
         DirContext ctx = new InitialDirContext(env);
@@ -210,18 +179,20 @@ public class LDAP {
             Attribute mod = new BasicAttribute(field[0], field[1]);
             mods[fields.indexOf(field)] = new ModificationItem(DirContext.REPLACE_ATTRIBUTE, mod);
         }
-        ctx.modifyAttributes(activeLogin.getUid(), mods);
+        ctx.modifyAttributes(activeLogin.getDn(), mods);
     }
 
-	protected static PersonList retrieve() throws NamingException {
+    private static boolean canEdit(ActiveLogin activeLogin, String editDn) {
+        return checkRightsLevel(activeLogin, activeLogin.getDn()) >= checkRightsLevel(activeLogin, editDn) ? true : false;
+    }
+
+    protected static PersonList retrieve() throws NamingException {
         Hashtable<String, Object> env = config();
 
 		DirContext ctx = new InitialDirContext(env);
 		
 		//Search controller
         SearchControls ctls = new SearchControls();
-        //String[] attrIDs = {"givenName", "sn", "gidNumber", "telephoneNumber", "mail", "memberOf", "dn", "cn"};
-        //ctls.setReturningAttributes(attrIDs);
 
 		//The actual search
 		NamingEnumeration answer = ctx.search("ou=Users,dc=studentmediene,dc=no", "(&(memberOf=*))", ctls);

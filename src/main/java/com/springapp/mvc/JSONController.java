@@ -84,28 +84,26 @@ public class JSONController {
         return returnList;
     }
 
-    @RequestMapping(value = "login", method = RequestMethod.GET)
-    public @ResponseBody String login(@RequestParam(value="uid", required = true) String uid, @RequestParam(value="cr", required = true) String cr) {
+    @RequestMapping(value = "login", method = RequestMethod.POST)
+    public @ResponseBody void login(@RequestParam(value="uid", required = true) String uid, @RequestParam(value="cr", required = true) String cr) {
         System.out.println("UID: " + uid);
         System.out.println("PW: " + cr);
         try {
             activeLogin = new ActiveLogin(LDAP.getDn(uid), cr);
-            if (activeLogin.getUid() != null) {
+            if (activeLogin.getDn() != null) {
                 LDAP.config(activeLogin);
-                return "Success";
-            } else {
-                return "Failed";
+                //return "Success";
             }
         } catch (NamingException e) {
             System.err.println("Login error: " + e.getMessage());
-            return "Failed";
+            //return "Failed";
         }
     }
 
     @RequestMapping(value = "edit", method = RequestMethod.GET)
     public @ResponseBody void edit(@RequestParam(value="uid", required = true) String uid, @RequestParam(value = "fields", required = true) ArrayList<String[]> fields) {
         try {
-            LDAP.edit(activeLogin, fields);
+            LDAP.edit(activeLogin, uid, fields);
         } catch (NamingException e) {
             System.err.println("Error");
         }
@@ -127,7 +125,7 @@ public class JSONController {
         if (activeLogin == null) {
             System.out.println("No user is logged in");
         } else {
-        System.out.println("Login out user: " + activeLogin.getUid());
+        System.out.println("Login out user: " + activeLogin.getDn());
         activeLogin = null;
         }
     }

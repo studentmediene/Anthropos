@@ -130,7 +130,6 @@ public class SearchProcessing {
                 if (dn != null) {
                     returnperson.setDn(dn);
                 }
-                returnperson.setRightsLevel(LDAP.checkRightsLevelSimple((String) uid.get()));
                 returnList.add(returnperson);
                 //System.out.println(returnperson);
             }
