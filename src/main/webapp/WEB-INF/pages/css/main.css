@@ -280,3 +280,10 @@ legend				{ font-size: 1.8em; }
 .clearBtn:active{
     box-shadow: inset 4px 4px 0px #888888;
 }
+
+.notEditable{
+    color: darkgray;
+}
+.test{
+    color:blue;
+}

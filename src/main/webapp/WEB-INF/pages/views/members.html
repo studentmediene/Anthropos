@@ -1,5 +1,5 @@
 <div class="membersWrap" ng-click="buttonAction($event)"> <!--change class style-->
-    <div class="navbar-inner">
+    <div class="navbar-inner" style="position:fixed; z-index:1; width: 100%; margin-top: 70px;">
         <div class="span4">
             <input placeholder="Søk..." type="text" ng-model="searchText" class="searchBox" style="margin-bottom:0px">
         </div>
@@ -31,7 +31,7 @@
         <button class="btn" style="margin-top:5px; border-radius:20px" ng-show="groupsSelected.length > 0" data-ng-click="uncheck()">X</button>
     </div>
     <div class="row-fluid">
-        <div>
+        <div style="margin-top: 130px">
             <img src="../img/ajax-loader.gif" ng-if="!shownPeople.length" style="margin: auto;display:block"/>
             <table class="table table-bordered" ng-if="shownPeople.length">
                 <thead>
