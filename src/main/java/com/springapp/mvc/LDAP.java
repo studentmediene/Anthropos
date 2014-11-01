@@ -27,10 +27,19 @@ public class LDAP {
     private static final String name = "ou=Users,dc=studentmediene,dc=no";
 
     public static void main(String[] args) {
+        ActiveLogin activeLogin = null;
         try {
-            ActiveLogin activeLogin = new ActiveLogin(getDn("birgith.do"), "overrated rapid machine");
+            activeLogin = new ActiveLogin(getDn("birgith.do"), "overrated rapid machine");
             Hashtable<String, Object> env = config(activeLogin);
             System.out.println(env.values());
+
+
+            //Old phone number: 48181928
+            ArrayList<String[]> editList = new ArrayList<String[]>();
+            String[] list = {"telephoneNumber", "97292149"};
+            editList.add(0, list);
+            edit(activeLogin, editList);
+
         } catch(NamingException e) {
             System.err.println("NamingException: " + e.getMessage());
         }
@@ -201,7 +210,7 @@ public class LDAP {
             Attribute mod = new BasicAttribute(field[0], field[1]);
             mods[fields.indexOf(field)] = new ModificationItem(DirContext.REPLACE_ATTRIBUTE, mod);
         }
-        ctx.modifyAttributes(getDn(activeLogin.getUid()), mods);
+        ctx.modifyAttributes(activeLogin.getUid(), mods);
     }
 
 	protected static PersonList retrieve() throws NamingException {
