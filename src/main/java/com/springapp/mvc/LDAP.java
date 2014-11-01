@@ -26,6 +26,17 @@ public class LDAP {
     private static final String host = "ldap://ldapstaging.studentmediene.no";
     private static final String name = "ou=Users,dc=studentmediene,dc=no";
 
+    public static void main(String[] args) {
+        try {
+            ActiveLogin activeLogin = new ActiveLogin(getDn("birgith.do"), "overrated rapid machine");
+            Hashtable<String, Object> env = config(activeLogin);
+            System.out.println(env.values());
+        } catch(NamingException e) {
+            System.err.println("NamingException: " + e.getMessage());
+        }
+    }
+
+
     private static Hashtable<String, Object> config() {
 		Hashtable<String, Object> env = new Hashtable<String, Object>();
 
@@ -36,8 +47,8 @@ public class LDAP {
 
         //Optional for testing purposes
         //env.put(Context.SECURITY_AUTHENTICATION, "simple");
-        //env.put(Context.SECURITY_PRINCIPAL, "uid=USERNAME HERE,ou=System Users,dc=studentmeidene,dc=no");
-        //env.put(Context.SECURITY_CREDENTIALS, "PASSWORD");
+        //env.put(Context.SECURITY_PRINCIPAL, "uid=birgith.do,ou=System Users,dc=studentmeidene,dc=no");
+        //env.put(Context.SECURITY_CREDENTIALS, "overrated rapid machine");
 
         return env;
     }
@@ -148,7 +159,14 @@ public class LDAP {
         String filter = ("uid=" + uid);
         NamingEnumeration answer = ctx.search(name, filter, ctls);
 
-        SearchResult searchResult = (SearchResult) answer.next();
+        SearchResult searchResult;
+
+        if (answer.hasMoreElements()) {
+            searchResult = (SearchResult) answer.next();
+        } else {
+            System.out.println("Found no user by that name");
+            return null;
+        }
         if (answer.hasMoreElements()) {
             System.err.println("Matched mutliple users for the uid" + uid);
             return null;

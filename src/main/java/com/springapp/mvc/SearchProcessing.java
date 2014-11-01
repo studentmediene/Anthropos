@@ -67,6 +67,7 @@ public class SearchProcessing {
         }
         return person;
     }
+
     protected static PersonList getPersons(NamingEnumeration answer) {
         PersonList returnList = new PersonList();
         try {

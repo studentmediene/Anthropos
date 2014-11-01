@@ -53,7 +53,7 @@ public class JSONController {
         System.out.print("Trying to get the list of users");
         try {
             System.out.println("Trying");
-            //System.out.println(LDAP.getDn("adem.ruud"));
+            System.out.println(LDAP.getDn("adem.ruud"));
             returnList.update(LDAP.retrieve());
         }
         catch (NamingException e) {
@@ -85,22 +85,25 @@ public class JSONController {
     }
 
     @RequestMapping(value = "login", method = RequestMethod.GET)
-    public @ResponseBody Boolean login(@RequestParam(value="uid", required = true) String uid, @RequestParam(value="cr", required = true) String cr) {
+    public @ResponseBody String login(@RequestParam(value="uid", required = true) String uid, @RequestParam(value="cr", required = true) String cr) {
         System.out.println("UID: " + uid);
         System.out.println("PW: " + cr);
         try {
-            activeLogin = new ActiveLogin(uid, cr);
-            LDAP.config(activeLogin);
-            return true;
+            activeLogin = new ActiveLogin(LDAP.getDn(uid), cr);
+            if (activeLogin.getUid() != null) {
+                LDAP.config(activeLogin);
+                return "Success";
+            } else {
+                return "Failed";
+            }
         } catch (NamingException e) {
             System.err.println("Login error: " + e.getMessage());
-            return false;
+            return "Failed";
         }
     }
 
-    //THIS FUNCTION DOESN'T DO ANYTHING YET!
     @RequestMapping(value = "edit", method = RequestMethod.GET)
-    public @ResponseBody void edit(@RequestParam(value="uid", required = true) String uid, @RequestParam(value="cr", required = true) String cr, @RequestParam(value = "fields", required = true) ArrayList<String[]> fields) {
+    public @ResponseBody void edit(@RequestParam(value="uid", required = true) String uid, @RequestParam(value = "fields", required = true) ArrayList<String[]> fields) {
         try {
             LDAP.edit(activeLogin, fields);
         } catch (NamingException e) {
@@ -130,7 +133,8 @@ public class JSONController {
     }
 
     @RequestMapping(value = "forgotPassword")
-    public @ResponseBody void forgotPassword() {
+    public @ResponseBody String forgotPassword() {
         //Code for sending new password to user here
+        return "index";
     }
 }
