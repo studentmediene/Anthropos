@@ -10,16 +10,18 @@ app.controller("UserCtrl", function($scope, $resource, $http, $modal, $routePara
             }
         }
     );
+    $scope.allGroups = tmpObj.get();
+
     $scope.showPasswordError = false;
     var user = tmpObj.get(
-        userCreds =function() {
+        function() {
             $scope.firstName=user.firstName;
             $scope.lastName = user.lastName;
             $scope.email = user.email;
             $scope.canAddGroups = false;
             // TODO Find out the level of authority current user has
 
-            var level = 0;// Using test var temporarily
+            var level = 3;// Using test var temporarily
 
             if(level == 3) { // Admin or logged in user's profile
                 console.log("Admin")
@@ -57,32 +59,41 @@ app.controller("UserCtrl", function($scope, $resource, $http, $modal, $routePara
 
                 $scope.authString = "user";
             }
+            $scope.groups = [];
+            $scope.myGroups = [];
+            $scope.permGroups = [];
+            var active = false;
+           angular.forEach(user.groups, function(group){
+
+               var str = group.substring(group.indexOf("cn=")+3, group.indexOf(","));
+               str = str.charAt(0).toLocaleUpperCase() + str.slice(1);
+               $scope.groups.push(str);
+               if(_.contains(group, "sections") && !_.contains(group, "active")) {
+                   $scope.myGroups.push(str);
+               } else{
+                   $scope.permGroups.push(str);
+               }
+            });
+            // $scope.myGroups = $scope.permGroups.concat();
         }
     );
 
+    $scope.editStyle = function(editable) {
+        if(editable) {
+            return "tableSelection"
+        }return "notEditable";
+    }
+
+
+    $scope.addGroupList = [];
 
     $scope.mailsSelected = [];
-    $scope.myGroups = [];
 
     console.log($routeParams);
 
-    var tmpObj = $resource("mailingLists.json", {}, {
-            get:{
-                isArray:true,
-                method:"GET"
-            }
-        }
-    );
-    $scope.mailingList = tmpObj.get();
+    //TODO: mailinglist
 
-    var tmpObj = $resource("groups.json", {}, {
-            get:{
-                isArray:true,
-                method:"GET"
-            }
-        }
-    );
-    $scope.allGroups = tmpObj.get();
+
 
 
 
@@ -116,24 +127,46 @@ app.controller("UserCtrl", function($scope, $resource, $http, $modal, $routePara
     /** ADD GROUPS **/
 
     $scope.groupIsChecked = function(group) {
-        if (_.contains($scope.myGroups, group)) {
+        if (!_.contains($scope.myGroups, group) && _.contains($scope.addGroupList, group)) {
             return 'icon-ok pull-right';
         }
         return false;
     };
 
     $scope.groupSelection = function(group) {
-        if(!_.contains($scope.myGroups, group)) {
-            $scope.myGroups.push(group);
+        if(!_.contains($scope.myGroups, group) && !_.contains($scope.addGroupList, group)) {
+            $scope.addGroupList.push(group);
         }
         else {
-            var index = $scope.myGroups.indexOf(group);
+            var index = $scope.addGroupList.indexOf(group);
+            $scope.addGroupList.splice(index, 1);
+    }
+    }
+
+    $scope.addGroups = function() {
+        angular.forEach($scope.addGroupList, function(group){
+            $scope.myGroups.push(group);
+        });
+        dropdownGroups();
+        $scope.addGroupList = [];
+    }
+
+    $scope.removeMyGroup = function(myGroup, editable) {
+        if(editable) {
+            var index = $scope.myGroups.indexOf(myGroup);
             $scope.myGroups.splice(index, 1);
         }
     }
 
+    dropdownGroups = function() {
+        $scope.permGroups = [];
+        angular.forEach($scope.groups, function(group){
+           if(!_.contains($scope.myGroups, group))
+                $scope.permGroups.push(group);
+        });
+    }
+
     $scope.hoverable = false;
-    $scope.test = "HEI";
 
     $scope.editGroups = function() {
         if(!$scope.edit) {
@@ -177,23 +210,23 @@ app.controller("UserCtrl", function($scope, $resource, $http, $modal, $routePara
     }
 
 
-    $scope.explanation = "Følgende felter er ikke utfylt: "
+    $scope.explanation = "Vennligst fyll inn: "
     $scope.showExplanation = "";
     $scope.save = function() {
         $scope.insufficientList = [];
         if ( document.getElementById('email').value.length < 6 ) {
             $scope.insufficientList.push('Email');
         }
-        if ( document.getElementById('mobile').value.length < 8 ) {
+        /*if ( document.getElementById('mobile').value.length < 8 ) {
             $scope.insufficientList.push('Mobilnummer');
-        }
+        }*/
         if($scope.insufficientList.length > 0) {
             $scope.showExplanation = $scope.explanation;
         }
         else {
             $scope.showExplanation = "";
             <!-- TODO: create json and send to backend -->
-            if(confirm("Er du sikker på at du vil lagre endringer?")) {
+            if(confirm("Lagre endringer?")) {
                 console.log("JA");
                 var user =  {
                     "email":document.getElementById('email').value,
