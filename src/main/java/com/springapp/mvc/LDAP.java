@@ -88,34 +88,63 @@ public class LDAP {
     /*
      * Used to find the rights level of the current user. Takes the dn and cr and binds to the server.
       * 0 = Write access on your own user, otherwise read-only (Not member of any group in ou=Rights)
-      * 1 = Write access within section (Member of cn=seksjonsAdmin,ou=Rights,ou=Groups,dc=studentmediene,dc=studentmediene,dc=no)
+      * 1 = Write access within right (Member of cn=seksjonsAdmin,ou=Rights,ou=Groups,dc=studentmediene,dc=studentmediene,dc=no)
       * 2 = Write access level "Gjengsjef", can edit everyone except it-drift (Member of cn=gjengadmin,ou=Rights,ou=Groups,dc=studentmediene,dc=studentmediene,dc=no)
       * 3 = IT-Drift (Member of cn=superAdmin,ou=Rights,ou=Groups,dc=studentmediene,dc=studentmediene,dc=no)
       * */
     protected static int checkRightsLevel(ActiveLogin activeLogin, String editDn) {
-        int rightsLevel = 0;
         try {
             Hashtable<String, Object> env = config(activeLogin);
             InitialDirContext ctx = new InitialDirContext(env);
             SearchControls ctls = new SearchControls();
+
             String filter = ("(" + activeLogin.getDn() + ")");
             NamingEnumeration answer = ctx.search(name, filter, ctls);
-
             SearchResult searchResult = (SearchResult) answer.next();
             Person person = SearchProcessing.getPerson(searchResult);
             ArrayList<String> sections = new ArrayList<String>();
+            ArrayList<String> rights = new ArrayList<String>();
             for (String group : person.getGroups()) {
                 if (group.contains("section")) {
                     sections.add(group);
+                } else if (group.contains("Rights")) {
+                    rights.add(group);
                 }
             }
-            for (String section : sections) {
-                if (section.contains("superAdmin")) {
-                    rightsLevel = 3;
-                } else if (section.contains("gjengAdmin")) {
-                    rightsLevel = (rightsLevel < 2) ? 2 : rightsLevel;
-                } else if (section.contains("seksjonsAdmin")) {
-                    rightsLevel = (rightsLevel < 1) ? 1 : rightsLevel;
+
+            filter = ("(" + editDn + ")");
+            answer = ctx.search(name, filter, ctls);
+            searchResult = (SearchResult) answer.next();
+            Person editPerson = SearchProcessing.getPerson(searchResult);
+            ArrayList<String> editSections = new ArrayList<String>();
+            ArrayList<String> editRights = new ArrayList<String>();
+            for (String group : editPerson.getGroups()) {
+                if (group.contains("section")) {
+                    editSections.add(group);
+                } else if (group.contains("Rights")) {
+                    editRights.add(group);
+                }
+            }
+
+            for (String right : rights) {
+                if (right.contains("superAdmin")) {
+                    return 3;
+                } else if(right.contains("gjengAdmin")) {
+                    for (String editRight : editRights) {
+                        if (editRight.contains("superAdmin")) {
+                            return 0;
+                        } else {
+                            return 2;
+                        }
+                    }
+                } else if(right.contains("seksjonsAdmin")) {
+                    for (String section : sections) {
+                        for (String editSection : editSections) {
+                            if (section.equals(editSection)) {
+                                return 1;
+                            }
+                        }
+                    }
                 }
             }
             ctx.close();
@@ -124,7 +153,7 @@ public class LDAP {
         } catch (NamingException e) {
             System.err.println("NamingException: " + e.getMessage());
         }
-        return rightsLevel;
+        return 0;
     }
 
     protected static String getDn(String uid) throws NamingException {
