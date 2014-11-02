@@ -7,9 +7,19 @@ import javax.naming.directory.Attributes;
 import javax.naming.directory.SearchResult;
 
 /**
- * Created by adrianh on 26.10.14.
+ * This class is used for creating a more manageable way to access users on the LDAP server.
+ * Has two functions for multiple users and single users.
+ * @author Adrian Hundseth
  */
 public class SearchProcessing {
+    /**
+     * Receives a <code>SearchResult</code> object and extracts the fields of the user within.
+     * <p>
+     *     If the user does not contain certain attributes, the function prints an error.
+     * </p>
+     * @param searchResult The result of a search on the LDAP server
+     * @return Returns a {@link com.springapp.mvc.Person} object
+     */
     protected static Person getPerson(SearchResult searchResult) {
         Person person = null;
         try {
@@ -68,6 +78,14 @@ public class SearchProcessing {
         return person;
     }
 
+    /**
+     * Receives a <code>NamingEnumeration</code> object and extracts the fields of all the users within.
+     * <p>
+     *     If the user does not contain certain attributes, the function prints an error.
+     * </p>
+     * @param answer A <code>NamingEnumeration</code> that contains the result of an LDAP search
+     * @return Returns a {@link com.springapp.mvc.PersonList} of {@link com.springapp.mvc.Person} objects
+     */
     protected static PersonList getPersons(NamingEnumeration answer) {
         PersonList returnList = new PersonList();
         try {
