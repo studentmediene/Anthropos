@@ -29,7 +29,7 @@
 
 </head>
 <body  ng-app="mdbApp">
-<div class="banner" ng-controller="mainCtrl" style="position:fixed; z-index:1; width: 100%; margin-bottom: 70px;">
+<div class="banner" ng-controller="mainCtrl">
     <span class="header-title largeScreen"> Medlemsdatabase for Studentmediene </span>
     <img src="../img/SM-logo.png" class="banner-icon" style="float:left" href="#" ng-mouseover="count=count+1" ng-init="count=0">
     <span class="header-title mediumScreen">MDB</span>
