@@ -21,7 +21,11 @@ public class JSONController {
 
     @RequestMapping
     public String defaultReturn() {
-        return "index";
+        //if (activeLogin == null) {
+          //  return "login";
+        //} else {
+            return "index";
+        //}
     }
 
     @RequestMapping(value="add", method=RequestMethod.POST)
@@ -50,7 +54,7 @@ public class JSONController {
     @RequestMapping(value = "list", method = RequestMethod.GET)
     public @ResponseBody ArrayList<Person> getList() {
         PersonList returnList = new PersonList();
-        System.out.print("Trying to get the list of users");
+        System.out.print("Trying to get the list of users: ");
         try {
             System.out.println("Trying");
             System.out.println(LDAP.getDn("adem.ruud"));
@@ -84,20 +88,22 @@ public class JSONController {
         return returnList;
     }
 
+    //public @ResponseBody void login(@RequestParam(value="uid", required = false) String uid, @RequestParam(value="cr", required = false) String cr) {
     @RequestMapping(value = "login", method = RequestMethod.POST)
-    public @ResponseBody void login(@RequestParam(value="uid", required = true) String uid, @RequestParam(value="cr", required = true) String cr) {
-        System.out.println("UID: " + uid);
-        System.out.println("PW: " + cr);
+    public @ResponseBody ActiveLogin login(@RequestBody final ActiveLogin login) {
+        System.out.println("UID: " + login.getDn());
+        System.out.println("PW: " + login.getCr());
         try {
-            activeLogin = new ActiveLogin(LDAP.getDn(uid), cr);
+            //this.activeLogin = new ActiveLogin(LDAP.getDn(uid), cr);
+            this.activeLogin = login;
             if (activeLogin.getDn() != null) {
                 LDAP.config(activeLogin);
-                //return "Success";
+                return activeLogin;
             }
         } catch (NamingException e) {
             System.err.println("Login error: " + e.getMessage());
-            //return "Failed";
         }
+        return activeLogin;
     }
 
     @RequestMapping(value = "edit", method = RequestMethod.GET)

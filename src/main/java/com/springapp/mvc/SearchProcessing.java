@@ -107,6 +107,7 @@ public class SearchProcessing {
                 Attribute groups = attributes.get("memberOf");
                 Attribute fullName = attributes.get("cn");
                 Attribute uid = attributes.get("uid");
+                Attribute harOblat = attributes.get("harOblat");
                 String dn = searchResult.getNameInNamespace();
 
 
@@ -147,6 +148,9 @@ public class SearchProcessing {
                 }
                 if (dn != null) {
                     returnperson.setDn(dn);
+                }
+                if (harOblat != null) {
+                    returnperson.setHarOblat(Boolean.getBoolean("" + harOblat.get()));
                 }
                 returnList.add(returnperson);
                 //System.out.println(returnperson);

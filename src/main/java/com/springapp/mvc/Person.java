@@ -17,15 +17,13 @@ public class Person {
     private int id;
     private String dn;
     private boolean harOblat;
-    private int rightsLevel;
 
-    Person(String firstName, String lastName, String email, ArrayList<String> groups, int id, String dn, String userName, boolean harOblat, int rightsLevel) {
+    Person(String firstName, String lastName, String email, ArrayList<String> groups, int id, String dn, String userName, boolean harOblat) {
         setFirstName(firstName);
         setLastName(lastName);
         setEmail(email);
         setId(id);
         setDn(dn);
-        setRightsLevel(rightsLevel);
         setHarOblat(harOblat);
         setUid(userName);
         setGroups(groups);
@@ -102,9 +100,6 @@ public class Person {
         this.groups = groups;
     }
 
-    public void setRightsLevel(int rightsLevel) {
-        this.rightsLevel = rightsLevel;
-    }
     public void setHarOblat(boolean harOblat) {
         this.harOblat = harOblat;
     }
@@ -121,7 +116,6 @@ public class Person {
                 ", groups=" + groups +
                 ", id=" + id +
                 ", harOblat=" + harOblat +
-                ", rightsLevel=" + rightsLevel +
                 '}';
     }
 
