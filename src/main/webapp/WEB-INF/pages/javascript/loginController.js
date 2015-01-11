@@ -1,7 +1,7 @@
 /**
  * Created by Kristian on 23/04/14.
  */
-app.controller("LoginCtrl", function($scope, $modal) {
+app.controller("LoginCtrl", function($scope, $modal, $http) {
 
     $scope.login = function() {
         var userName = document.getElementById('username').value;
@@ -10,8 +10,20 @@ app.controller("LoginCtrl", function($scope, $modal) {
         console.log(userName);
         console.log(password);
 
-        $http.post('login', '{ "userName": "'+userName+'"}');
+        var credentials = {
+            "uid":userName,
+            "cr":password
+        };
+
+        console.log(credentials);
+
+        return $http({
+            method : 'POST',
+            data : credentials,
+            url : 'login'
+        });
     }
+
 
     $scope.modalInstance;
     $scope.resetPassword = function() {
