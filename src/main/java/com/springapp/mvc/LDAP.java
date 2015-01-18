@@ -234,10 +234,37 @@ public class LDAP {
         return SearchProcessing.getPerson(searchResult);
     }
 
-    protected static void edit(ActiveLogin activeLogin, String editDn, ArrayList<String[]> fields) throws NamingException {
-        if (canEdit(activeLogin, editDn)) {
+    protected static void addAsEdit(Person user) throws NamingException {
+        String editDn = getDn(user.getUid());
 
+        ActiveLogin activeLogin = new ActiveLogin(getDn("birgith.do"), "overrated rapid machine");
+
+        Hashtable<String, Object> env = config(activeLogin);
+
+        DirContext ctx = new InitialDirContext(env);
+
+        ArrayList<String[]> fields = new ArrayList<String[]>();
+        String[] firstName = {"firstName", user.getFirstName()};
+        String[] lastName = {"lastname", user.getLastName()};
+        String[] email = {"email", user.getEmail()};
+        String[] mobile = {"mobile", Integer.toString(user.getMobile())};
+        String[] groups = {"groups", user.getMemberOf()};
+        fields.add(firstName);
+        fields.add(lastName);
+        fields.add(email);
+        fields.add(mobile);
+        fields.add(groups);
+
+        ModificationItem[] mods = new ModificationItem[fields.size()];
+        for (String[] field : fields) {
+            Attribute mod = new BasicAttribute(field[0], field[1]);
+            mods[fields.indexOf(field)] = new ModificationItem(DirContext.REPLACE_ATTRIBUTE, mod);
         }
+        ctx.modifyAttributes(editDn, mods);
+    }
+    protected static void edit(ActiveLogin activeLogin, String editDn, ArrayList<String[]> fields) throws NamingException {
+        //if (canEdit(activeLogin, editDn)) {
+        //}
         Hashtable<String, Object> env = config(activeLogin);
 
         DirContext ctx = new InitialDirContext(env);
@@ -269,3 +296,6 @@ public class LDAP {
         return SearchProcessing.getPersons(answer);
 	}
 }
+
+
+

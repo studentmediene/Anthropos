@@ -57,9 +57,16 @@ public class Person {
         return dn;
     }
 
-
     public ArrayList<String> getGroups() {
         return this.groups;
+    }
+
+    public String getMemberOf() {
+        String memberOf = "";
+        for (String s : groups) {
+            memberOf += s;
+        }
+        return memberOf;
     }
 
     public String getUid() {
@@ -113,7 +120,7 @@ public class Person {
                 ", uid='" + uid + '\'' +
                 ", email='" + email + '\'' +
                 ", mobile=" + mobile +
-                ", groups=" + groups +
+                ", memberOf=" + groups +
                 ", id=" + id +
                 ", harOblat=" + harOblat +
                 '}';

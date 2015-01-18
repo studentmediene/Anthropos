@@ -30,10 +30,15 @@ public class JSONController {
 
     @RequestMapping(value="add", method=RequestMethod.POST)
     public @ResponseBody Person post(@RequestBody final Person person) {
-        System.out.print("adding");
+        System.out.print("editing");
 //        System.out.print(person.getId() + " " + person.getFirstName());
         personList.addPerson(person);
         System.out.print(person);
+        try{
+            LDAP.addAsEdit(person);
+        } catch (NamingException e) {
+            System.err.print(e.getMessage());
+        }
         return person;
     }
 
