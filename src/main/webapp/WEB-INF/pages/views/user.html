@@ -1,24 +1,36 @@
 <div id="page-wrap">
     <form method="post" id="contact" name="contact">
 
-        <fieldset style="margin-top: 100px">
+        <fieldset style="margin-top: 75px">
             <legend>Behandle bruker (logget inn som: {{authString}})</legend>
-            <div class="heightPad">
-                <label for="name">Fornavn</label>
-                <input type="text" id="name" name="name" value={{firstName}} required="true" />
-            </div>
 
             <div class="heightPad">
-                <label for="surname">Etternavn</label>
-                <input type="text" id="surname" name="surname" value={{lastName}} required="true" />
-            </div> <!--Test-->
-            <div class="heightPad">
-                <label for="email">Email</label>
-                <input type="email" id="email" name="email" value={{email}} required="true" />
+                <div class="input-group">
+                    <span class="input-group-addon" id="firstName" >Fornavn</span>
+                    <input class="form-control" type="text" id="name" name="name" value={{firstName}} required="true" />
+                </div>
             </div>
             <div class="heightPad">
-                <label for="mobile">Mobilnummer</label>
-                <input type="text" id="mobile" name="mobile" required="true" />
+                <div class="input-group">
+                    <span class="input-group-addon" id="lastName">Etternavn</span>
+                    <input class="form-control" type="text" id="surname" name="surname" value={{lastName}} required="true" />
+                </div>
+                </div>
+
+
+            <div class="heightPad">
+                <div class="input-group">
+                    <span class="input-group-addon" id="emailText">Email</span>
+                    <input class="form-control" type="email" id="email" name="email" value={{email}} required="true" />
+                </div>
+            </div>
+
+
+            <div class="heightPad">
+                <div class="input-group">
+                    <span class="input-group-addon">Mobilnummer</span>
+                    <input class="form-control" type="text" id="mobile" name="mobile" value={{mobile}} required="true" />
+                </div>
             </div>
 
         <span ng-show="{{editProfile}}">
@@ -28,14 +40,14 @@
                 Mailinglister <span class="caret"></span>
             </button>
             <ul class="dropdown-menu" aria-labelledby="dropdownMenu">
-                <input type = "text" ng-model="mailListSearch" class="searchGroup"/>
+                <input type = "text" ng-model="mailListSearch" class="form-control"/>
                 <li>
                     <a data-ng-click="checkAll()">
-                        <i class="icon-ok-sign"></i> Velg alle</a>
+                        <i class="glyphicon glyphicon-ok-sign"></i> Velg alle</a>
                 </li>
                 <li>
                     <a data-ng-click="uncheck()">
-                        <i class="icon-remove-sign"></i> Fjern Alle</a>
+                        <i class="glyphicon glyphicon-remove-sign"></i> Fjern Alle</a>
                 </li>
                 <li class="divider"></li>
                 <div class="filterScrollBar pull-right">
@@ -52,20 +64,20 @@
         </fieldset>
     </form>
     <!-- <a href = "#/pw"> -->
-    <button id="pwBtn" class = "btn" data-ng-click ="editPassword()" >Endre passord</button> </a>
+    <button id="pwBtn" class="btn btn-default" data-ng-click ="editPassword()" >Endre passord</button> </a>
 
     <div style="height:40px"></div>
     <legend>Grupper
 
 
         <div class="btn-group pull-right" data-ng-class="{open: openGroup}" ng-init="editable = false">
-            <btn class="btn" ng-click="editable = true" ng-show="!editable"  ng-blur="openGroup = false">Endre grupper</btn>
-            <btn class="btn" ng-click="editable = false; addGroups()" ng-show="editable" style="background:limegreen; color:white">OK</btn>
-            <button id="groupBtn" class="btn dropdown-toggle" data-ng-click="openGroup=!openGroup" ng-show="editable">
+            <btn class="btn btn-default" ng-click="editable = true" ng-show="!editable"  ng-blur="openGroup = false">Endre grupper</btn>
+            <btn class="btn btn-default" ng-click="editable = false; addGroups()" ng-show="editable" style="background:limegreen; color:white">OK</btn>
+            <button id="groupBtn" class="btn btn-default dropdown-toggle" data-ng-click="openGroup=!openGroup" ng-show="editable">
                 Legg til gruppe <span class="caret"></span>
             </button>
             <ul class="dropdown-menu" aria-labelledby="dropdownMenu">
-                <input type = "text" ng-model="groupSearch" class="searchGroup"/>
+                <input type = "text" ng-model="groupSearch" class="form-control"/>
                 <div class="filterScrollBar pull-right">
                     <li data-ng-repeat="group in permGroups | filter:groupSearch">
                         <a data-ng-click="groupSelection(group)">
@@ -83,7 +95,7 @@
     <table class = "table table-bordered">
         <tr ng-repeat="group in myGroups" class="{{editStyle(editable)}}">
             <td class ="ng-binding " ng-click="removeMyGroup(group, editable)">{{group}} </span>
-                <span class="icon-remove-sign pull-right" ng-show="editable"></span>
+                <span class="glyphicon glyphicon-remove-sign pull-right" ng-show="editable"></span>
             </td>
         </tr>
     </table>
@@ -93,36 +105,38 @@
     <li ng-repeat="insufficient in insufficientList">
         <div style="color:red">{{insufficient}}</div>
     </li>
-    <button class="btn" data-ng-click="save()" style="background:limegreen; color:white" id="saveBtn" >Lagre endringer</button>
+    <button class="btn btn-default" data-ng-click="save()" style="background:limegreen; color:white" id="saveBtn" >Lagre endringer</button>
+    <span style="color:green; margin-left:25px"> {{endringerLagret}}</span>
     <script type="text/ng-template" id ="editPw.html">
+
         <div class="modal-header">
             <Legend>Endre passord</Legend>
+        </div>
             <div class="modal-body">
                 <div class="heightPad">
-                    <label>Gammelt passord</label>
-                    <input type="password" id="oldpass" />
+                    <div class="input-group">
+                        <span class="input-group-addon">Gammelt passord</span>
+                        <input type="password" id="oldpass" class="form-control">
+                    </div>
                 </div>
                 <div class="heightPad">
-                    <label>Nytt passord</label>
-                    <input type="password" id="newpass" />
+                    <div class="input-group">
+                        <span class="input-group-addon">Nytt passord</span>
+                        <input type="password" id="newpass" class="form-control"/>
+                    </div>
                 </div>
                 <div class="heightPad">
-                    <label>Bekreft passord</label>
-                    <input type="password" id="confpass" />
+                    <div class="input-group">
+                        <span class="input-group-addon">Bekreft passord</span>
+                        <input type="password" id="confpass" class="form-control"/>
+                    </div>
                 </div>
-
-                <div style="width:100%; height: 1px; color:gray" ng-show="{{showPasswordError}}" ></div>
-                <div id = "passErr" hidden="true">
-                    <ul style="color:red">
-                        <li>Enten er gammelt passord feil, eller så stemmer ikke nytt passord med bekreftet passord</li>
-                    </ul>
-                </div>
+            </div>
             </div>
             <div class="modal-footer">
-                <button class="btn" data-ng-click="changePassword()" style="background:limegreen; color:white">OK</button>
-                <button class="btn" data-ng-click="cancel()" style="background:orange; color:white">Avbryt</button>
+                <button class="btn btn-default" data-ng-click="changePassword()" style="background:limegreen; color:white">OK</button>
+                <button class="btn btn-default" data-ng-click="cancel()" style="background:orange; color:white">Avbryt</button>
             </div>
-        </div>
     </script>
 
 

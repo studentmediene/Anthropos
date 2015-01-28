@@ -17,6 +17,7 @@
     <script src="javascript/registerController.js" type = "text/javascript"></script>
     <script src="javascript/maincontroller.js" type = "text/javascript"></script>
 
+
     <script src="javascript/ui-bootstrap-tpls-0.11.2.min.js" type = "text/javascript"></script>
 
     <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/lodash.js/0.10.0/lodash.min.js"></script>
@@ -25,6 +26,7 @@
 
     <link rel="stylesheet" href="css/main.css">
     <link rel="stylesheet" href="css/bootstrap.css">
+    <link rel="stylesheet" href="css/bootstrap-theme.css">
 
 
 </head>
@@ -33,7 +35,7 @@
     <span class="header-title largeScreen"> Medlemsdatabase for Studentmediene </span>
     <img src="../img/SM-logo.png" class="banner-icon" style="float:left" href="#" ng-mouseover="count=count+1" ng-init="count=0">
     <span class="header-title mediumScreen">MDB</span>
-    <div class="pull-right" style="margin-top: 20px;">
+    <div class="pull-right" style="margin-top: 30px;">
       <!--  <button class="btn" ng-click="ting=!ting">{{ting}}</button> -->
         <a href="#"> <b>Medlemmer</b></a>
         <a href="#/user/1"> <b>Behandle bruker </b></a>  <!-- TODO go to the id retrievable from user credentials -->
