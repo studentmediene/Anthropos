@@ -136,12 +136,7 @@ public class JSONController {
 
     @RequestMapping(value = "logout")
     public @ResponseBody void logout() {
-        if (activeLogin == null) {
-            System.out.println("No user is logged in");
-        } else {
-        System.out.println("Login out user: " + activeLogin.getDn());
-        activeLogin = null;
-        }
+        userLoginService.logout();
     }
 
     @RequestMapping(value = "forgotPassword")
