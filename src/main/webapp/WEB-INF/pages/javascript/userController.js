@@ -17,8 +17,10 @@ app.controller("UserCtrl", function($scope, $resource, $http, $modal, $routePara
         function() {
             $scope.firstName=user.firstName;
             $scope.lastName = user.lastName;
+            $scope.mobile = user.mobile;
             $scope.email = user.email;
             $scope.canAddGroups = false;
+            $scope.id = user.id;
             // TODO Find out the level of authority current user has
 
             var level = 3;// Using test var temporarily
@@ -108,7 +110,7 @@ app.controller("UserCtrl", function($scope, $resource, $http, $modal, $routePara
 
         if (_.contains($scope.mailsSelected, mail)) {
             console.log("HEI");
-            return 'icon-ok pull-right';
+            return 'glyphicon glyphicon-ok pull-right';
         }
         return false;
     };
@@ -128,7 +130,7 @@ app.controller("UserCtrl", function($scope, $resource, $http, $modal, $routePara
 
     $scope.groupIsChecked = function(group) {
         if (!_.contains($scope.myGroups, group) && _.contains($scope.addGroupList, group)) {
-            return 'icon-ok pull-right';
+            return 'glyphicon glyphicon-ok pull-right';
         }
         return false;
     };
@@ -210,12 +212,20 @@ app.controller("UserCtrl", function($scope, $resource, $http, $modal, $routePara
     }
 
 
+    $scope.endringerLagret = "";
+
     $scope.explanation = "Vennligst fyll inn: "
     $scope.showExplanation = "";
     $scope.save = function() {
         $scope.insufficientList = [];
         if ( document.getElementById('email').value.length < 6 ) {
             $scope.insufficientList.push('Email');
+        }
+        if ( document.getElementById('name').value.length < 2 ) {
+            $scope.insufficientList.push('Fornavn');
+        }
+        if ( document.getElementById('surname').value.length < 2 ) {
+            $scope.insufficientList.push('Etternavn');
         }
         /*if ( document.getElementById('mobile').value.length < 8 ) {
             $scope.insufficientList.push('Mobilnummer');
@@ -228,16 +238,21 @@ app.controller("UserCtrl", function($scope, $resource, $http, $modal, $routePara
             <!-- TODO: create json and send to backend -->
             if(confirm("Lagre endringer?")) {
                 console.log("JA");
-                var user =  {
+                $scope.endringerLagret = "Endringer lagret"
+                var userRet =  {
+                    "firstName":document.getElementById('name').value,
+                    "lastName":document.getElementById('surname').value,
+                    "uid":user.uid,
+                    "id":user.id,
                     "email":document.getElementById('email').value,
                     "mobile":document.getElementById('mobile').value,
-                    "groups":$scope.myGroups,
-                    "mailingList":$scope.mailsSelected
+                    "groups":$scope.myGroups
+                   // "mailingList":$scope.mailsSelected
                 };
                 <!-- TODO: send dette til backend -->
                 return $http({
                     method : 'POST',
-                    data : user,
+                    data : userRet,
                     url : 'add'
                 });
             }
@@ -249,6 +264,7 @@ app.controller("UserCtrl", function($scope, $resource, $http, $modal, $routePara
         var modalInstance = $modal.open({
             templateUrl: 'editPw.html',
             controller: 'ModalInstanceCtrl',
+            size: 'lg',
             resolve: {
                 items: function () {
                     return $scope.items;

@@ -62,9 +62,10 @@ b:focus {
     border-width: 1px;
     border-color: black;
 }
+
 .header-title{
     font-size: 24pt;
-    font-family: "Trebuchet MS", Helvetica, sans-serif;
+    font-family: "Trebuchet MS", Helvetica, serif;
     color:white;
     display:inline-block;
     margin:0.55cm;
@@ -137,10 +138,11 @@ b:focus {
 
     .searchBox {
         margin-top: 5px;
-        line-height: 50px;
+        line-height: 30px;
         background-color: white;
         color: black;
         width:100px;
+        padding-left: 5px;
         -moz-border-radius: 5px;
         -webkit-border-radius: 5px;
         -khtml-border-radius: 5px;
