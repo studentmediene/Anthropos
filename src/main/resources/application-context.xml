@@ -27,7 +27,7 @@
 
 
     <!-- Instantiation of our auth classes -->
-    <bean id="tokenEntryPoint" class="com.springapp.mvc.TokenEntryPoint"/>
+    <bean id="tokenEntryPoint" class="com.springapp.mvc.authentication.TokenEntryPoint"/>
 
 
     <bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">

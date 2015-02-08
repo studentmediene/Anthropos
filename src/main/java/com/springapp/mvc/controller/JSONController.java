@@ -1,5 +1,14 @@
-package com.springapp.mvc;
+package com.springapp.mvc.controller;
 
+import com.springapp.mvc.PersonList;
+import com.springapp.mvc.authentication.ActiveLogin;
+import com.springapp.mvc.authentication.LdapUserPwd;
+import com.springapp.mvc.authentication.UserLoginService;
+import com.springapp.mvc.ldap.LDAP;
+import com.springapp.mvc.model.Person;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
@@ -12,6 +21,11 @@ import java.util.ArrayList;
 public class JSONController {
     private PersonList personList = new PersonList();
     private ActiveLogin activeLogin;
+
+    @Autowired
+    private UserLoginService userLoginService;
+
+    private Logger logger = LoggerFactory.getLogger(getClass());
 
     @RequestMapping("*")
     @ResponseBody
@@ -28,8 +42,15 @@ public class JSONController {
         //}
     }
 
+    @RequestMapping(value = "/login", method = RequestMethod.POST)
+    public @ResponseBody void login(@RequestBody LdapUserPwd ldapUserPwd) {
+        logger.debug("Login try with: {}", ldapUserPwd);
+        userLoginService.login(ldapUserPwd);
+    }
+
     @RequestMapping(value="add", method=RequestMethod.POST)
-    public @ResponseBody Person post(@RequestBody final Person person) {
+    public @ResponseBody
+    Person post(@RequestBody final Person person) {
         System.out.print("editing");
 //        System.out.print(person.getUidNumber() + " " + person.getGivenName());
         personList.addPerson(person);
@@ -91,24 +112,6 @@ public class JSONController {
             System.err.println("Search error: " + e.getMessage());
         }
         return returnList;
-    }
-
-    //public @ResponseBody void login(@RequestParam(value="uid", required = false) String uid, @RequestParam(value="cr", required = false) String cr) {
-    @RequestMapping(value = "login", method = RequestMethod.POST)
-    public @ResponseBody ActiveLogin login(@RequestBody final ActiveLogin login) {
-        System.out.println("UID: " + login.getDn());
-        System.out.println("PW: " + login.getCr());
-        try {
-            //this.activeLogin = new ActiveLogin(LDAP.getDn(uid), cr);
-            this.activeLogin = login;
-            if (activeLogin.getDn() != null) {
-                LDAP.config(activeLogin);
-                return activeLogin;
-            }
-        } catch (NamingException e) {
-            System.err.println("Login error: " + e.getMessage());
-        }
-        return activeLogin;
     }
 
     @RequestMapping(value = "edit", method = RequestMethod.GET)

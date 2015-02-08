@@ -1,5 +1,6 @@
-package com.springapp.mvc;
+package com.springapp.mvc.authentication;
 
+import com.springapp.mvc.model.Person;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 

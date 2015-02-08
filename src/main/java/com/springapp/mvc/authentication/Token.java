@@ -1,4 +1,4 @@
-package com.springapp.mvc;
+package com.springapp.mvc.authentication;
 
 import org.springframework.security.authentication.AbstractAuthenticationToken;
 import org.springframework.security.core.userdetails.UserDetails;

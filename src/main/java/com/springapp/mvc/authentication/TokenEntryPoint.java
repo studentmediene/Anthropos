@@ -1,4 +1,4 @@
-package com.springapp.mvc;
+package com.springapp.mvc.authentication;
 
 import org.springframework.security.web.AuthenticationEntryPoint;
 import org.springframework.security.core.AuthenticationException;

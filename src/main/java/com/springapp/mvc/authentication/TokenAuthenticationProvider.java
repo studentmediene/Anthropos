@@ -1,5 +1,8 @@
-package com.springapp.mvc;
+package com.springapp.mvc.authentication;
 
+import com.springapp.mvc.PersonList;
+import com.springapp.mvc.RestException;
+import com.springapp.mvc.model.Person;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;

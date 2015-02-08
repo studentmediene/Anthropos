@@ -1,4 +1,4 @@
-package com.springapp.mvc;
+package com.springapp.mvc.model;
 
 import java.util.ArrayList;
 
@@ -13,12 +13,12 @@ public class Person {
     private String uid;
     private String mail;
     private int telephoneNumber;
-    protected ArrayList<String> memberOf = new ArrayList<String>();
+    public ArrayList<String> memberOf = new ArrayList<String>();
     private Long uidNumber;
     private String dn;
     private boolean harOblat;
 
-    Person(String givenName, String sn, String mail, ArrayList<String> memberOf, Long uidNumber, String dn, String uid, boolean harOblat) {
+    public Person(String givenName, String sn, String mail, ArrayList<String> memberOf, Long uidNumber, String dn, String uid, boolean harOblat) {
         setGivenName(givenName);
         setSn(sn);
         setMail(mail);
@@ -29,7 +29,7 @@ public class Person {
         setMemberOf(memberOf);
     }
 
-    Person(){
+    public Person(){
         return;
     }
 

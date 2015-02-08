@@ -1,5 +1,7 @@
 package com.springapp.mvc;
 
+import com.springapp.mvc.model.Person;
+
 import java.util.ArrayList;
 
 /**
@@ -8,7 +10,7 @@ import java.util.ArrayList;
 public class PersonList extends ArrayList<Person> {
     ArrayList<Person> personList = new ArrayList<Person>();
 
-    PersonList() {
+    public PersonList() {
         /*String[] smint = {"smint"};
         String[] it = {"it"};
         Person test = new Person("Test", "Testerson", "test@test.test", new ArrayList<String>(), 1);
