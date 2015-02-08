@@ -31,11 +31,20 @@ public class PersonList extends ArrayList<Person> {
 
     public Person getPersonById(int id) {
         for (Person person : personList) {
-            if (person.getId() == id) {
+            if (person.getUidNumber() == id) {
                 return person;
             }
         }
         throw new IllegalArgumentException("No person with that id found");
+    }
+
+    public Person getPersonByUid(String uid) {
+        for (Person person : personList) {
+            if (person.getUid().equals(uid)) {
+                return person;
+            }
+        }
+        return null;
     }
 
     public void update(PersonList updateList) {

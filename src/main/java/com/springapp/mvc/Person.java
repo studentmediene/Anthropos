@@ -7,104 +7,106 @@ import java.util.ArrayList;
  */
 
 public class Person {
-    private String firstName;
-    private String lastName;
-    private String fullName;
+    private String givenName;
+    private String sn;
+    private String cn;
     private String uid;
-    private String email;
-    private int mobile;
-    protected ArrayList<String> groups = new ArrayList<String>();
-    private int id;
+    private String mail;
+    private int telephoneNumber;
+    protected ArrayList<String> memberOf = new ArrayList<String>();
+    private Long uidNumber;
     private String dn;
     private boolean harOblat;
-    private int rightsLevel;
 
-    Person(String firstName, String lastName, String email, ArrayList<String> groups, int id, String dn, String userName, boolean harOblat, int rightsLevel) {
-        setFirstName(firstName);
-        setLastName(lastName);
-        setEmail(email);
-        setId(id);
+    Person(String givenName, String sn, String mail, ArrayList<String> memberOf, Long uidNumber, String dn, String uid, boolean harOblat) {
+        setGivenName(givenName);
+        setSn(sn);
+        setMail(mail);
+        setUidNumber(uidNumber);
         setDn(dn);
-        setRightsLevel(rightsLevel);
         setHarOblat(harOblat);
-        setUid(userName);
-        setGroups(groups);
+        setUid(uid);
+        setMemberOf(memberOf);
     }
 
     Person(){
         return;
     }
 
-    public String getFirstName() {
-        return this.firstName;
+    public String getGivenName() {
+        return this.givenName;
     }
 
-    public String getLastName() {
-        return this.lastName;
+    public String getSn() {
+        return this.sn;
     }
 
-    public String getEmail() {
-        return this.email;
+    public String getMail() {
+        return this.mail;
     }
 
-    public String getFullName() {
-        return this.fullName;
+    public String getCn() {
+        return this.cn;
     }
 
-    public int getId() {
-        return this.id;
+    public Long getUidNumber() {
+        return this.uidNumber;
     }
 
     public String getDn() {
         return dn;
     }
 
+    public ArrayList<String> getMemberOf() {
+        return memberOf;
+    }
 
-    public ArrayList<String> getGroups() {
-        return this.groups;
+    public String getMemberOfAsString() {
+        String memberOf = "";
+        for (String s : this.memberOf) {
+            memberOf += s;
+        }
+        return memberOf;
     }
 
     public String getUid() {
         return uid;
     }
 
-    public int getMobile() { return mobile; }
+    public int getTelephoneNumber() { return telephoneNumber; }
 
-    public void setFirstName(String firstName) {
-        this.firstName = firstName;
+    public void setGivenName(String givenName) {
+        this.givenName = givenName;
     }
 
-    public void setLastName(String lastName) {
-        this.lastName = lastName;
+    public void setSn(String sn) {
+        this.sn = sn;
     }
 
-    public void setFullName(String fullName) {
-        this.fullName = fullName;
+    public void setCn(String cn) {
+        this.cn = cn;
     }
 
     public void setUid(String uid) {
         this.uid = uid;
     }
 
-    public void setEmail(String email) {
-        this.email = email;
+    public void setMail(String mail) {
+        this.mail = mail;
     }
 
-    public void setId(int id) { this.id = id; }
+    public void setUidNumber(Long uidNumber) { this.uidNumber = uidNumber; }
 
     public void setDn(String dn) {
         this.dn = dn;
     }
 
-    public void setMobile(int mobile) { this.mobile = mobile; }
+    public void setTelephoneNumber(int telephoneNumber) { this.telephoneNumber = telephoneNumber; }
 
-    public void setGroups(ArrayList<String> groups) {
-        this.groups = groups;
+    public void setMemberOf(ArrayList<String> memberOf) {
+        this.memberOf = memberOf;
     }
 
-    public void setRightsLevel(int rightsLevel) {
-        this.rightsLevel = rightsLevel;
-    }
     public void setHarOblat(boolean harOblat) {
         this.harOblat = harOblat;
     }
@@ -112,16 +114,15 @@ public class Person {
     @Override
     public String toString() {
         return "Person{" +
-                "firstName='" + firstName + '\'' +
-                ", lastName='" + lastName + '\'' +
-                ", fullName='" + fullName + '\'' +
+                "givenName='" + givenName + '\'' +
+                ", sn='" + sn + '\'' +
+                ", cn='" + cn + '\'' +
                 ", uid='" + uid + '\'' +
-                ", email='" + email + '\'' +
-                ", mobile=" + mobile +
-                ", groups=" + groups +
-                ", id=" + id +
+                ", mail='" + mail + '\'' +
+                ", telephoneNumber=" + telephoneNumber +
+                ", memberOf=" + memberOf +
+                ", uidNumber=" + uidNumber +
                 ", harOblat=" + harOblat +
-                ", rightsLevel=" + rightsLevel +
                 '}';
     }
 

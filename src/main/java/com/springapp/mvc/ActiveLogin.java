@@ -5,11 +5,11 @@ package com.springapp.mvc;
  */
 public class ActiveLogin {
 
-    private String dn;
+    private String uid;
     private String cr;
 
     public ActiveLogin(String uid, String cr) {
-        this.dn = uid;
+        this.uid = uid;
         this.cr = cr;
     }
 
@@ -18,6 +18,6 @@ public class ActiveLogin {
     }
 
     public String getDn() {
-        return this.dn;
+        return this.uid;
     }
 }

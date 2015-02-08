@@ -9,14 +9,8 @@
 
     <properties>
         <spring.version>3.2.0.RELEASE</spring.version>
+        <spring.security.version>3.2.5.RELEASE</spring.security.version>
     </properties>
-
-    <repositories>
-        <repository>
-            <id>xuggle repo</id>
-            <url>http://xuggle.googlecode.com/svn/trunk/repo/share/java/</url>
-        </repository>
-    </repositories>
 
     <dependencies>
         <dependency>
@@ -76,10 +70,28 @@
             <version>1.1.2</version>
         </dependency>
 
+
+       <!-- Security (authentication and authorization) -->
         <dependency>
-            <groupId>xuggle</groupId>
-            <artifactId>xuggle-xuggler</artifactId>
-            <version>5.2</version>
+            <groupId>org.springframework.security</groupId>
+            <artifactId>spring-security-core</artifactId>
+            <version>${spring.security.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.security</groupId>
+            <artifactId>spring-security-config</artifactId>
+            <version>${spring.security.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.security</groupId>
+            <artifactId>spring-security-web</artifactId>
+            <version>${spring.security.version}</version>
+        </dependency>
+        <!-- Spring LDAP -->
+        <dependency>
+            <groupId>org.springframework.ldap</groupId>
+            <artifactId>spring-ldap-core</artifactId>
+            <version>2.0.2.RELEASE</version>
         </dependency>
 
 
@@ -94,6 +106,13 @@
             <artifactId>json</artifactId>
             <version>20080701</version>
         </dependency>
+
+
+        <dependency>
+            <groupId>org.slf4j</groupId>
+            <artifactId>slf4j-simple</artifactId>
+            <version>1.6.1</version>
+        </dependency>
     </dependencies>
 
     <build>
@@ -104,6 +123,20 @@
                 <configuration>
                     <source>1.6</source>
                     <target>1.6</target>
+                </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.mortbay.jetty</groupId>
+                <artifactId>jetty-maven-plugin</artifactId>
+                <version>8.1.9.v20130131</version>
+                <configuration>
+                    <connectors>
+                        <!-- Using BIO because of file locking on Windows -->
+                        <!--<connector implementation="org.eclipse.jetty.server.nio.SelectChannelConnector">-->
+                        <connector implementation="org.eclipse.jetty.server.bio.SocketConnector">
+                            <port>8080</port>
+                        </connector>
+                    </connectors>
                 </configuration>
             </plugin>
             <plugin>
