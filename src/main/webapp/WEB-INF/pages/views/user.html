@@ -6,22 +6,22 @@
 
             <div class="heightPad">
                 <div class="input-group">
-                    <span class="input-group-addon" id="firstName" >Fornavn</span>
-                    <input class="form-control" type="text" id="name" name="name" value={{firstName}} required="true" />
+                    <span class="input-group-addon" id="name" >Fornavn</span>
+                    <input class="form-control" type="text" id="givenName" name="name" value={{givenName}} required="true" />
                 </div>
             </div>
             <div class="heightPad">
                 <div class="input-group">
                     <span class="input-group-addon" id="lastName">Etternavn</span>
-                    <input class="form-control" type="text" id="surname" name="surname" value={{lastName}} required="true" />
+                    <input class="form-control" type="text" id="sn" name="sn" value={{sn}} required="true" />
                 </div>
                 </div>
 
 
             <div class="heightPad">
                 <div class="input-group">
-                    <span class="input-group-addon" id="emailText">Email</span>
-                    <input class="form-control" type="email" id="email" name="email" value={{email}} required="true" />
+                    <span class="input-group-addon" id="mailText">mail</span>
+                    <input class="form-control" type="mail" id="mail" name="mail" value={{mail}} required="true" />
                 </div>
             </div>
 
@@ -29,7 +29,7 @@
             <div class="heightPad">
                 <div class="input-group">
                     <span class="input-group-addon">Mobilnummer</span>
-                    <input class="form-control" type="text" id="mobile" name="mobile" value={{mobile}} required="true" />
+                    <input class="form-control" type="text" id="telephoneNumber" name="telephoneNumber" value={{telephoneNumber}} required="true" />
                 </div>
             </div>
 
@@ -53,7 +53,7 @@
                 <div class="filterScrollBar pull-right">
                     <li data-ng-repeat="mail in mailingList | filter:mailListSearch">
                         <a data-ng-click="mailSelection(mail)">
-                            {{mail.Name}}
+                            {{mail.givenName}}
                             <span data-ng-class="isChecked(mail)"></span>
                         </a>
                     </li>

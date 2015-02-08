@@ -15,10 +15,10 @@ app.controller("UserCtrl", function($scope, $resource, $http, $modal, $routePara
     $scope.showPasswordError = false;
     var user = tmpObj.get(
         function() {
-            $scope.firstName=user.firstName;
-            $scope.lastName = user.lastName;
-            $scope.mobile = user.mobile;
-            $scope.email = user.email;
+            $scope.givenName=user.givenName;
+            $scope.sn = user.sn;
+            $scope.telephoneNumber = user.telephoneNumber;
+            $scope.mail = user.mail;
             $scope.canAddGroups = false;
             $scope.id = user.id;
             // TODO Find out the level of authority current user has
@@ -30,8 +30,8 @@ app.controller("UserCtrl", function($scope, $resource, $http, $modal, $routePara
                 $scope.editProfile = true;
                 $scope.canAddGroups = true;
 
-                document.getElementById("name").disabled = false;
-                document.getElementById("surname").disabled = false;
+                document.getElementById("givenName").disabled = false;
+                document.getElementById("sn").disabled = false;
 
                 $scope.authString = "ADMIN"
             }
@@ -39,10 +39,10 @@ app.controller("UserCtrl", function($scope, $resource, $http, $modal, $routePara
                 console.log("The user's PL")
                 $scope.editProfile = false;
                 $scope.canAddGroups = true;
-                document.getElementById("name").disabled = true;
-                document.getElementById("surname").disabled = true;
-                document.getElementById("email").disabled = true;
-                document.getElementById("mobile").disabled = true;
+                document.getElementById("givenName").disabled = true;
+                document.getElementById("sn").disabled = true;
+                document.getElementById("mail").disabled = true;
+                document.getElementById("telephoneNumber").disabled = true;
                 document.getElementById("pwBtn").style.display = "none";
 
                 $scope.authString = "pl"
@@ -51,10 +51,10 @@ app.controller("UserCtrl", function($scope, $resource, $http, $modal, $routePara
                 console.log("User")
                 $scope.editProfile = false;
                 $scope.canAddGroups = false;
-                document.getElementById("name").disabled = true;
-                document.getElementById("surname").disabled = true;
-                document.getElementById("email").disabled = true;
-                document.getElementById("mobile").disabled = true;
+                document.getElementById("givenName").disabled = true;
+                document.getElementById("sn").disabled = true;
+                document.getElementById("mail").disabled = true;
+                document.getElementById("telephoneNumber").disabled = true;
                 document.getElementById("pwBtn").style.display = "none";
                 document.getElementById("saveBtn").style.display = "none";
                 document.getElementById("groupBtn").style.display = "none";
@@ -65,7 +65,7 @@ app.controller("UserCtrl", function($scope, $resource, $http, $modal, $routePara
             $scope.myGroups = [];
             $scope.permGroups = [];
             var active = false;
-           angular.forEach(user.groups, function(group){
+           angular.forEach(user.memberOf, function(group){
 
                var str = group.substring(group.indexOf("cn=")+3, group.indexOf(","));
                str = str.charAt(0).toLocaleUpperCase() + str.slice(1);
@@ -197,12 +197,12 @@ app.controller("UserCtrl", function($scope, $resource, $http, $modal, $routePara
 
     $scope.validateNumber = function() {
         console.log("val");
-        var fieldInput = document.getElementById('mobile').value;
+        var fieldInput = document.getElementById('telephoneNumber').value;
         console.log(fieldInput);
         for (var i = 0; i < fieldInput.length; i++) {
             if (fieldInput.charCodeAt(i) < 47 || fieldInput.charCodeAt(i) > 58) {
                 console.log("Ikke gyldig input");
-                document.getElementById('mobile').value = document.getElementById('mobile').value.substring(0, fieldInput.length-1);
+                document.getElementById('telephoneNumber').value = document.getElementById('telephoneNumber').value.substring(0, fieldInput.length-1);
                 return false;
             }
             else {
@@ -218,16 +218,16 @@ app.controller("UserCtrl", function($scope, $resource, $http, $modal, $routePara
     $scope.showExplanation = "";
     $scope.save = function() {
         $scope.insufficientList = [];
-        if ( document.getElementById('email').value.length < 6 ) {
-            $scope.insufficientList.push('Email');
+        if ( document.getElementById('mail').value.length < 6 ) {
+            $scope.insufficientList.push('mail');
         }
-        if ( document.getElementById('name').value.length < 2 ) {
+        if ( document.getElementById('givenName').value.length < 2 ) {
             $scope.insufficientList.push('Fornavn');
         }
-        if ( document.getElementById('surname').value.length < 2 ) {
+        if ( document.getElementById('sn').value.length < 2 ) {
             $scope.insufficientList.push('Etternavn');
         }
-        /*if ( document.getElementById('mobile').value.length < 8 ) {
+        /*if ( document.getElementById('telephoneNumber').value.length < 8 ) {
             $scope.insufficientList.push('Mobilnummer');
         }*/
         if($scope.insufficientList.length > 0) {
@@ -240,13 +240,12 @@ app.controller("UserCtrl", function($scope, $resource, $http, $modal, $routePara
                 console.log("JA");
                 $scope.endringerLagret = "Endringer lagret"
                 var userRet =  {
-                    "firstName":document.getElementById('name').value,
-                    "lastName":document.getElementById('surname').value,
-                    "uid":user.uid,
-                    "id":user.id,
-                    "email":document.getElementById('email').value,
-                    "mobile":document.getElementById('mobile').value,
-                    "groups":$scope.myGroups
+                    "givenName":document.getElementById('givenName').value,
+                    "sn":document.getElementById('sn').value,
+                    "uidNumber":user.uidNumber,
+                    "mail":document.getElementById('mail').value,
+                    "telephoneNumber":document.getElementById('telephoneNumber').value,
+                    "memberOf":$scope.myGroups
                    // "mailingList":$scope.mailsSelected
                 };
                 <!-- TODO: send dette til backend -->
@@ -286,9 +285,9 @@ app.controller("UserCtrl", function($scope, $resource, $http, $modal, $routePara
     }
 
     mailSort = function(mailingList) {
-        mailingList.sort(function(a, b){   /** By first sorting by forname, people with same lastname will get sorted automatically #latskap **/
-            if(a.name < b.name) return -1;
-            if(a.name > b.name) return 1;
+        mailingList.sort(function(a, b){   /** By first sorting by forgivenName, people with same sn will get sorted automatically #latskap **/
+            if(a.givenName < b.givenName) return -1;
+            if(a.givenName > b.givenName) return 1;
             return 0;
         });
     };

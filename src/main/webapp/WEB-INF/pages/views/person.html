@@ -45,13 +45,13 @@
                 </thead>
                 <tbody>
                 <tr ng-repeat ="person in shownPeople | filter:searchText" class="ng-scope">
-                    <td class ="ng-binding tableSelection">{{person.lastName}}</td>
-                    <td class ="ng-binding">{{person.firstName}}</td>
-                    <td class ="ng-binding">{{person.username}}</td>
-                    <td class ="ng-binding">{{person.email}}</td>
-                    <td class ="ng-binding">{{person.mobile}}</td>
+                    <td class ="ng-binding tableSelection">{{person.sn}}</td>
+                    <td class ="ng-binding">{{person.givenName}}</td>
+                    <td class ="ng-binding">{{person.uid}}</td>
+                    <td class ="ng-binding">{{person.mail}}</td>
+                    <td class ="ng-binding">{{person.telephoneNumber}}</td>
                     <td class ="ng-binding">
-                        <div ng-repeat = "group in person.groups">{{group}}</div></td>    <!-- TODO: add the groups individually through ng-repeat or sth.-->
+                        <div ng-repeat = "group in person.memberOf">{{group}}</div></td>    <!-- TODO: add the groups individually through ng-repeat or sth.-->
                 </tr>
                 </tbody>
             </table>
