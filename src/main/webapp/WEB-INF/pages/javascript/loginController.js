@@ -7,15 +7,10 @@ app.controller("LoginCtrl", function($scope, $modal, $http) {
         var userName = document.getElementById('username').value;
         var password = document.getElementById('pass').value;
 
-        console.log(userName);
-        console.log(password);
-
         var credentials = {
-            "uid":userName,
-            "cr":password
+            "username":userName,
+            "password":password
         };
-
-        console.log(credentials);
 
         return $http({
             method : 'POST',

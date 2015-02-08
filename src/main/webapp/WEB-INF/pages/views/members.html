@@ -35,16 +35,16 @@
             <table class="table table-bordered" ng-if="shownPeople.length">
                 <thead>
                 <tr>
-                    <th ng-click="orderField = (orderField == 'lastName' ? '-':'') + 'lastName'" class="tableHeader">Etternavn
-                    <span class="pull-right">{{orderField == 'lastName' ? '&and;':'&or;'}}</span></th>
-                    <th ng-click="orderField = (orderField == 'firstName' ? '-':'') + 'firstName'" class="tableHeader">Fornavn
-                        <span class="pull-right">{{orderField == 'firstName' ? '&and;':'&or;'}}</span></th></th>
-                    <th ng-click="orderField = (orderField == 'userName' ? '-':'') + 'userName'" class="tableHeader">Brukernavn
-                        <span class="pull-right">{{orderField == 'userName' ? '&and;':'&or;'}}</span></th></th>
+                    <th ng-click="orderField = (orderField == 'sn' ? '-':'') + 'sn'" class="tableHeader">Etternavn
+                    <span class="pull-right">{{orderField == 'sn' ? '&and;':'&or;'}}</span></th>
+                    <th ng-click="orderField = (orderField == 'givenName' ? '-':'') + 'givenName'" class="tableHeader">Fornavn
+                        <span class="pull-right">{{orderField == 'givenName' ? '&and;':'&or;'}}</span></th></th>
+                    <th ng-click="orderField = (orderField == 'uid' ? '-':'') + 'uid'" class="tableHeader">Brukernavn
+                        <span class="pull-right">{{orderField == 'uid' ? '&and;':'&or;'}}</span></th></th>
                     <th ng-click="orderField = (orderField == 'email' ? '-':'') + 'email'" class="tableHeader">Mailadresse
                         <span class="pull-right">{{orderField == 'email' ? '&and;':'&or;'}}</span></th></th>
-                    <th ng-click="orderField = (orderField == 'mobile' ? '-':'') + 'mobile'" class="tableHeader">Mobilnummer
-                        <span class="pull-right">{{orderField == 'mobile' ? '&and;':'&or;'}}</span></th></th>
+                    <th ng-click="orderField = (orderField == 'telephoneNumber' ? '-':'') + 'telephoneNumber'" class="tableHeader">Mobilnummer
+                        <span class="pull-right">{{orderField == 'telephoneNumber' ? '&and;':'&or;'}}</span></th></th>
                     <th>Grupper</th>
                 </tr>
                 </thead>
