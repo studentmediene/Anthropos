@@ -39,7 +39,7 @@
       <!--  <button class="btn" ng-click="ting=!ting">{{ting}}</button> -->
         <a href="#"> <b>Medlemmer</b></a>
         <a href="#/user/1"> <b>Behandle bruker </b></a>  <!-- TODO go to the id retrievable from user credentials -->
-        <a href="#/login"> <b>Logg inn </b></a>
+        <a href="#/login" data-ng-click=""> <b>Logg ut </b></a>
         <a href="#/register" style="border-left:1px solid #FFF;height: 30px" ng-show="ting"> <b>Opprett bruker </b></a>
     </div>
     <!-- <a href="https://www.youtube.com/watch?v=PGNiXGX2nLU" ng-show="easter(count)"><b><div style="color: black;  ">{{egg}}</div></b></a>
