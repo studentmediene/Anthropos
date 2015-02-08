@@ -25,51 +25,51 @@ public class SearchProcessing {
         try {
             Attributes attributes = searchResult.getAttributes();
 
-            Attribute firstName = attributes.get("givenName");
-            Attribute lastName = attributes.get("sn");
-            Attribute id = attributes.get("uidNumber");
-            Attribute mobile = attributes.get("telephoneNumber");
-            Attribute email = attributes.get("mail");
-            Attribute groups = attributes.get("memberOf");
-            Attribute username = attributes.get("uid");
-            Attribute fullName = attributes.get("cn");
+            Attribute givenName = attributes.get("givenName");
+            Attribute sn = attributes.get("sn");
+            Attribute uidNumber = attributes.get("uidNumber");
+            Attribute telephoneNumber = attributes.get("telephoneNumber");
+            Attribute mail = attributes.get("mail");
+            Attribute memberOf = attributes.get("memberOf");
+            Attribute uid = attributes.get("uid");
+            Attribute cn = attributes.get("cn");
 
             person = new Person();
 
-            if (firstName != null) {
+            if (givenName != null) {
                 //System.out.println("First Name: " + firstName.get());
-                person.setFirstName("" + firstName.get());
+                person.setGivenName("" + givenName.get());
             }
-            if (lastName != null) {
+            if (sn != null) {
                 //System.out.println("Last Name: " + lastName.get());
-                person.setLastName("" + lastName.get());
+                person.setSn("" + sn.get());
             }
-            if (fullName != null) {
+            if (cn != null) {
                 //System.out.println("Full Name: " + fullName.get());
-                person.setFullName("" + fullName.get());
+                person.setCn("" + cn.get());
             }
-            if (username != null) {
+            if (uid != null) {
                 //System.out.println("Username: " + username.get());
-                person.setUid("" + username.get());
+                person.setUid("" + uid.get());
             }
-            if (email != null) {
+            if (mail != null) {
                 //System.out.println("Email: " + email.get());
-                person.setEmail("" + email.get());
+                person.setMail("" + mail.get());
             }
-            if (mobile != null) {
+            if (telephoneNumber != null) {
                 //System.out.println("Mobile: " + mobile.get());
-                person.setMobile(Integer.valueOf("" + mobile.get()));
+                person.setTelephoneNumber(Integer.valueOf("" + telephoneNumber.get()));
             }
-            if (groups != null) {
+            if (memberOf != null) {
                 //System.out.println("Groups:");
-                for (int j = 0; j < groups.size(); j++) {
-                    //System.out.println("\t" + groups.get(i));
-                    person.groups.add("" + groups.get(j));
+                for (int j = 0; j < memberOf.size(); j++) {
+                    //System.out.println("\t" + memberOf.get(i));
+                    person.memberOf.add("" + memberOf.get(j));
                 }
             }
-            if (id != null) {
+            if (uidNumber != null) {
                 //System.out.println("ID: " + id.get());
-                person.setId(Integer.valueOf("" + id.get()));
+                person.setUidNumber(Long.valueOf("" + uidNumber.get()));
             }
         }
         catch (NamingException e) {
@@ -113,15 +113,15 @@ public class SearchProcessing {
 
                 if (firstName != null) {
                     //System.out.println("First Name: " + firstName.get());
-                    returnperson.setFirstName("" + firstName.get());
+                    returnperson.setGivenName("" + firstName.get());
                 }
                 if (lastName != null) {
                     //System.out.println("Last Name: " + lastName.get());
-                    returnperson.setLastName("" + lastName.get());
+                    returnperson.setSn("" + lastName.get());
                 }
                 if (fullName != null) {
                     //System.out.println("Full Name: " + fullName.get());
-                    returnperson.setFullName("" + fullName.get());
+                    returnperson.setCn("" + fullName.get());
                 }
                 if (uid != null) {
                     //System.out.println("Username: " + username.get());
@@ -129,22 +129,22 @@ public class SearchProcessing {
                 }
                 if (email != null) {
                     //System.out.println("Email: " + email.get());
-                    returnperson.setEmail("" + email.get());
+                    returnperson.setMail("" + email.get());
                 }
                 if (mobile != null) {
                     //System.out.println("Mobile: " + mobile.get());
-                    returnperson.setMobile(Integer.valueOf("" + mobile.get()));
+                    returnperson.setTelephoneNumber(Integer.valueOf("" + mobile.get()));
                 }
                 if (groups != null) {
                     //System.out.println("Groups:");
                     for (int j = 0; j < groups.size(); j++) {
-                        //System.out.println("\t" + groups.get(i));
-                        returnperson.groups.add("" + groups.get(j));
+                        //System.out.println("\t" + memberOf.get(i));
+                        returnperson.memberOf.add("" + groups.get(j));
                     }
                 }
                 if (id != null) {
                     //System.out.println("ID: " + id.get());
-                    returnperson.setId(Integer.valueOf("" + id.get()));
+                    returnperson.setUidNumber(Long.valueOf("" + id.get()));
                 }
                 if (dn != null) {
                     returnperson.setDn(dn);

@@ -31,7 +31,7 @@ public class JSONController {
     @RequestMapping(value="add", method=RequestMethod.POST)
     public @ResponseBody Person post(@RequestBody final Person person) {
         System.out.print("editing");
-//        System.out.print(person.getId() + " " + person.getFirstName());
+//        System.out.print(person.getUidNumber() + " " + person.getGivenName());
         personList.addPerson(person);
         System.out.print(person);
         try{
@@ -69,14 +69,14 @@ public class JSONController {
             System.out.print("Error: " + e.getMessage());
         }
         for (Person p : returnList) {
-            ArrayList<String> groups = p.getGroups();
+            ArrayList<String> groups = p.getMemberOf();
             ArrayList<String> sections = new ArrayList<String>();
             for (String group : groups) {
                 if (group.contains("sections")) {
                     sections.add(group.substring(group.indexOf('=') + 1, group.indexOf(',')));
                 }
             }
-            p.setGroups(sections);
+            p.setMemberOf(sections);
         }
         return returnList;
     }

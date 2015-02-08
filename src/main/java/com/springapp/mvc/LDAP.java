@@ -143,7 +143,7 @@ public class LDAP {
             Person person = SearchProcessing.getPerson(searchResult);
             ArrayList<String> sections = new ArrayList<String>();
             ArrayList<String> rights = new ArrayList<String>();
-            for (String group : person.getGroups()) {
+            for (String group : person.getMemberOf()) {
                 if (group.contains("section")) {
                     sections.add(group);
                 } else if (group.contains("Rights")) {
@@ -157,7 +157,7 @@ public class LDAP {
             Person editPerson = SearchProcessing.getPerson(searchResult);
             ArrayList<String> editSections = new ArrayList<String>();
             ArrayList<String> editRights = new ArrayList<String>();
-            for (String group : editPerson.getGroups()) {
+            for (String group : editPerson.getMemberOf()) {
                 if (group.contains("section")) {
                     editSections.add(group);
                 } else if (group.contains("Rights")) {
@@ -244,16 +244,16 @@ public class LDAP {
         DirContext ctx = new InitialDirContext(env);
 
         ArrayList<String[]> fields = new ArrayList<String[]>();
-        String[] firstName = {"firstName", user.getFirstName()};
-        String[] lastName = {"lastname", user.getLastName()};
-        String[] email = {"email", user.getEmail()};
-        String[] mobile = {"mobile", Integer.toString(user.getMobile())};
-        String[] groups = {"groups", user.getMemberOf()};
-        fields.add(firstName);
-        fields.add(lastName);
-        fields.add(email);
-        fields.add(mobile);
-        fields.add(groups);
+        String[] givenName = {"givenName", user.getGivenName()};
+        String[] sn = {"sn", user.getSn()};
+        String[] mail = {"mail", user.getMail()};
+        String[] mobile = {"telephoneNumber", Integer.toString(user.getTelephoneNumber())};
+        //String[] groups = {"memberOf", user.getMemberOf()};
+        //fields.add(givenName);
+        //fields.add(sn);
+        fields.add(mail);
+        //fields.add(telephoneNumber);
+        //fields.add(memberOf);
 
         ModificationItem[] mods = new ModificationItem[fields.size()];
         for (String[] field : fields) {

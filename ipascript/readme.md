@@ -11,7 +11,7 @@ python ipascript.py [options]
 		Promts for all necessery information if no file is provided.
 		If a file is provided, all users in the file will be added with the information provided in the file.
 		Each user in the file has to be an seperate lines, and in the following format:
-		<username>;<fist name>;<lastname>;<mail>;<mobile>;<group>
+		<username>;<fist name>;<lastname>;<mail>;<telephoneNumber>;<group>
 		The group-option is optional.
 	
 	add-group "<group name>" "<description>"
