@@ -32,7 +32,7 @@ app.controller("mainCtrl", function($scope, $window, $resource, $http) {
         }
     }
 
-    logout = function() {
+    $scope.logout = function() {
         return $http({
             url : 'logout'
         });
