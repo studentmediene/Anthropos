@@ -6,11 +6,11 @@ var app = angular.module('mdbApp',["ngResource", "ngRoute","ui.bootstrap"]);
     app.config(['$routeProvider',
         function($routeProvider) {
             $routeProvider
-                .when('/api/user/:id', {
+                .when('/user/:id', {
                     templateUrl: 'views/user.html',
                     controller: 'UserCtrl'
                 })
-                .when('/api/', {
+                .when('/', {
                     templateUrl: 'views/members.html',
                     controller: 'PersonCtrl'
                 })
@@ -18,11 +18,11 @@ var app = angular.module('mdbApp',["ngResource", "ngRoute","ui.bootstrap"]);
                     templateUrl: 'views/login.html',
                     controller: 'LoginCtrl'
                  })
-                .when('/api/memberPw', {
+                .when('/memberPw', {
                     templateUrl: 'views/editMemberPW.html',
                     controller: 'EditPwCtrl'
                 })
-                .when('/api/register', {
+                .when('/register', {
                     templateUrl: 'views/newUser.html',
                     controller: 'RegisterCtrl'
                 })

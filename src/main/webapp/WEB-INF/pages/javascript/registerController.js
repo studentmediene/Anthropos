@@ -9,7 +9,7 @@ app.controller("RegisterCtrl", function($scope, $resource, $http) {
     $scope.explanation = "Følgende felter er ikke utfylt: "
     $scope.showExplanation = "";
 
-    var tmpObj = $resource("mailingLists.json", {}, {
+    var tmpObj = $resource("api/mailingLists.json", {}, {
             get:{
                 isArray:true,
                 method:"GET"
@@ -18,7 +18,7 @@ app.controller("RegisterCtrl", function($scope, $resource, $http) {
     );
     $scope.mailingList = tmpObj.get();
 
-    var tmpObj = $resource("groups.json", {}, {
+    var tmpObj = $resource("api/groups.json", {}, {
             get:{
                 isArray:true,
                 method:"GET"
@@ -153,7 +153,7 @@ app.controller("RegisterCtrl", function($scope, $resource, $http) {
                 return $http({
                     method : 'POST',
                     data : user,
-                    url : 'add'
+                    url : 'api/add'
                 });
 
             }

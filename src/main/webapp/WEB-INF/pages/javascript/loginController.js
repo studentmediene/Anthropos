@@ -15,7 +15,7 @@ app.controller("LoginCtrl", function($scope, $modal, $http) {
         return $http({
             method : 'POST',
             data : credentials,
-            url : 'login'
+            url : 'api/login'
         });
     }
 

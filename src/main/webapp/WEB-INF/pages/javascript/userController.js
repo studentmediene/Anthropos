@@ -3,7 +3,7 @@
  */
 app.controller("UserCtrl", function($scope, $resource, $http, $modal, $routeParams, $log) {
 
-    var tmpObj = $resource("/"+$routeParams.id, {}, {
+    var tmpObj = $resource("/api/"+$routeParams.id, {}, {
             get:{
                 isArray:false,
                 method:"GET"
@@ -252,7 +252,7 @@ app.controller("UserCtrl", function($scope, $resource, $http, $modal, $routePara
                 return $http({
                     method : 'POST',
                     data : userRet,
-                    url : 'add'
+                    url : 'api/add'
                 });
             }
         }

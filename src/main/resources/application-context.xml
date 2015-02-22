@@ -11,7 +11,7 @@
     <!-- SECURITY -->
     <security:http entry-point-ref="tokenEntryPoint" use-expressions="true">
         <security:intercept-url pattern="/login" access="permitAll" />
-        <security:intercept-url pattern="/api/**" access="isFullyAuthenticated()" />
+        <security:intercept-url pattern="/api/**" access="permitAll" />
         <!--<security:intercept-url pattern="/**" access="isFullyAuthenticated()" />-->
     </security:http>
 
