@@ -34,7 +34,7 @@ app.controller("mainCtrl", function($scope, $window, $resource, $http) {
 
     $scope.logout = function() {
         return $http({
-            url : 'logout'
+            url : 'api/logout'
         });
     }
 

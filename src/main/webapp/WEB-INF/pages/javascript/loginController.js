@@ -4,8 +4,11 @@
 app.controller("LoginCtrl", function($scope, $modal, $http) {
 
     $scope.login = function() {
+
         var userName = document.getElementById('username').value;
         var password = document.getElementById('pass').value;
+
+        $scope.errorDuringLogin = "";
 
         var credentials = {
             "username":userName,
@@ -16,7 +19,17 @@ app.controller("LoginCtrl", function($scope, $modal, $http) {
             method : 'POST',
             data : credentials,
             url : 'api/login'
+        }).success(function(data, status, headers, config) {
+            window.location.href="/";
+            //You logged inn successfully
+
+        }).error(function(data, status, headers, config) {
+            $scope.errorDuringLogin = "Feil brukernavn eller passord";
+            //Display error message during login
         });
+
+
+
     }
 
 
