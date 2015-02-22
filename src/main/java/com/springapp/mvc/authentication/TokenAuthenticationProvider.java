@@ -2,6 +2,7 @@ package com.springapp.mvc.authentication;
 
 import com.springapp.mvc.PersonList;
 import com.springapp.mvc.RestException;
+import com.springapp.mvc.ldap.LDAP;
 import com.springapp.mvc.model.Person;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -13,6 +14,7 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.stereotype.Service;
 
+import javax.naming.NamingException;
 import javax.servlet.http.HttpServletResponse;
 
 /**
@@ -22,7 +24,8 @@ import javax.servlet.http.HttpServletResponse;
 public class TokenAuthenticationProvider implements AuthenticationProvider {
     Logger logger = LoggerFactory.getLogger(getClass());
 
-    private PersonList personList;
+    private PersonList personList = new PersonList();
+
 
     @Autowired
     LdapTemplate ldapTemplate;
@@ -47,6 +50,7 @@ public class TokenAuthenticationProvider implements AuthenticationProvider {
         return authentication.equals(Token.class);
     }
 
+
     private boolean validateLogin(LdapUserPwd ldapUserPwd) {
 
         boolean authenticate = ldapTemplate.authenticate("ou=Users", "(uid=" + ldapUserPwd.getUsername() + ")" , ldapUserPwd.getPassword());
@@ -61,7 +65,13 @@ public class TokenAuthenticationProvider implements AuthenticationProvider {
     }
 
     private Person getLoggedInUser(String username) {
-        Person person = personList.getPersonByUid(username);
+        System.out.println(username);
+        Person person = new Person();
+        try {
+            person = LDAP.search(username).get(0);
+        } catch (NamingException e) {
+            e.printStackTrace();
+        }
         if (person == null) {
             throw new RestException("User was logged in, but not found in our database!", HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
         }

@@ -35,18 +35,14 @@ public class JSONController {
 
     @RequestMapping
     public String defaultReturn() {
-        //if (activeLogin == null) {
-          //  return "login";
-        //} else {
             return "index";
-        //}
     }
 
     @RequestMapping(value = "/login", method = RequestMethod.POST)
-    public @ResponseBody void login(@RequestBody LdapUserPwd ldapUserPwd) {
+    public @ResponseBody boolean login(@RequestBody LdapUserPwd ldapUserPwd) {
         System.out.println("login");
         logger.debug("Login try with: {}", ldapUserPwd);
-        userLoginService.login(ldapUserPwd);
+        return userLoginService.login(ldapUserPwd);
     }
 
     @RequestMapping(value="add", method=RequestMethod.POST)
@@ -117,12 +113,6 @@ public class JSONController {
         return person;
     }
 
-    @RequestMapping(value = "logout")
-    public @ResponseBody void logout() {
-        System.out.println("logout");
-        userLoginService.logout();
-    }
-
     @RequestMapping(value = "forgotPassword")
     public @ResponseBody String forgotPassword() {
         //Code for sending new password to user here
@@ -145,5 +135,11 @@ public class JSONController {
     public String test(String s) {
         System.out.print("Streng: " + s);
         return "/";
+    }
+
+    @RequestMapping(value = "logout")
+    public @ResponseBody void logout() {
+        System.out.println("logout");
+        userLoginService.logout();
     }
 }

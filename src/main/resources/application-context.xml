@@ -8,10 +8,15 @@
        xmlns:task="http://www.springframework.org/schema/task" xmlns:ldap="http://www.springframework.org/schema/ldap"
        xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd http://www.springframework.org/schema/security http://www.springframework.org/schema/security/spring-security.xsd http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx.xsd http://www.springframework.org/schema/data/jpa http://www.springframework.org/schema/data/jpa/spring-jpa.xsd http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc.xsd http://www.springframework.org/schema/task http://www.springframework.org/schema/task/spring-task.xsd http://www.springframework.org/schema/ldap http://www.springframework.org/schema/ldap/spring-ldap.xsd">
 
+
+    <!-- Load the momus.properties file, can use the values like ${property.name} -->
+    <context:property-placeholder location="classpath*:anthropos.properties" />
+
     <!-- SECURITY -->
     <security:http entry-point-ref="tokenEntryPoint" use-expressions="true">
         <security:intercept-url pattern="/login" access="permitAll" />
-        <security:intercept-url pattern="/api/**" access="permitAll" />
+        <security:intercept-url pattern="/api/login" access="permitAll" />
+        <security:intercept-url pattern="/api/**" access="isFullyAuthenticated()" />
         <!--<security:intercept-url pattern="/**" access="isFullyAuthenticated()" />-->
     </security:http>
 
@@ -54,9 +59,9 @@
     <!-- LDAP -->
     <ldap:context-source
             url="ldap://ldapstaging.studentmediene.no"
-            base="ou=Users,dc=studentmediene,dc=no"
-            username="birgith.do"
-            password="overrated rapid machine"
+            base="dc=studentmediene,dc=no"
+            username="${ldap.username}"
+            password="${ldap.password}"
             />
 
     <ldap:ldap-template id="ldapTemplate"/>
