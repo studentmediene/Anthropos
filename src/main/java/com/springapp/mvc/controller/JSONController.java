@@ -17,7 +17,7 @@ import java.util.ArrayList;
 
 
 @Controller
-@RequestMapping("/")
+@RequestMapping("/api")
 public class JSONController {
     private PersonList personList = new PersonList();
     private ActiveLogin activeLogin;
@@ -64,12 +64,6 @@ public class JSONController {
         return person;
     }
 
-    @RequestMapping(value="/streng", method = RequestMethod.POST)
-    public String test(String s) {
-        System.out.print("Streng: " + s);
-        return "/";
-    }
-
     @RequestMapping(value = "/addList", method = RequestMethod.POST)
     public @ResponseBody ArrayList<Person> listPost(@RequestBody final ArrayList<Person> list) {
         for (Person person : list) {
@@ -99,18 +93,6 @@ public class JSONController {
                 }
             }
             p.setMemberOf(sections);
-        }
-        return returnList;
-    }
-
-    @RequestMapping(value = "search", method = RequestMethod.GET)
-    public @ResponseBody ArrayList<Person> search(@RequestParam(value="name", required = true) String name) {
-        PersonList returnList = new PersonList();
-        System.out.println("Attempting search for: " + name);
-        try {
-            returnList.update(LDAP.search(name));
-        } catch (NamingException e) {
-            System.err.println("Search error: " + e.getMessage());
         }
         return returnList;
     }
@@ -145,5 +127,23 @@ public class JSONController {
     public @ResponseBody String forgotPassword() {
         //Code for sending new password to user here
         return "index";
+    }
+
+    @RequestMapping(value = "search", method = RequestMethod.GET)
+    public @ResponseBody ArrayList<Person> search(@RequestParam(value="name", required = true) String name) {
+        PersonList returnList = new PersonList();
+        System.out.println("Attempting search for: " + name);
+        try {
+            returnList.update(LDAP.search(name));
+        } catch (NamingException e) {
+            System.err.println("Search error: " + e.getMessage());
+        }
+        return returnList;
+    }
+
+    @RequestMapping(value="/streng", method = RequestMethod.POST)
+    public String test(String s) {
+        System.out.print("Streng: " + s);
+        return "/";
     }
 }
