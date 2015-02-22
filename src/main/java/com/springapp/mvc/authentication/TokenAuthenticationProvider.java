@@ -37,7 +37,7 @@ public class TokenAuthenticationProvider implements AuthenticationProvider {
 
         if (validateLogin(ldapUserPwd)) {
             try {
-            Person loggedInUser = LDAP.search(ldapUserPwd.getUsername()).get(0));
+            Person loggedInUser = LDAP.search(ldapUserPwd.getUsername()).get(0);
             AuthUserDetails authUserDetails = new AuthUserDetails(loggedInUser);
 
             // Return an updated token with the right user details
