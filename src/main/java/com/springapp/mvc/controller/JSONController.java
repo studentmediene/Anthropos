@@ -44,6 +44,7 @@ public class JSONController {
 
     @RequestMapping(value = "/login", method = RequestMethod.POST)
     public @ResponseBody void login(@RequestBody LdapUserPwd ldapUserPwd) {
+        System.out.println("login");
         logger.debug("Login try with: {}", ldapUserPwd);
         userLoginService.login(ldapUserPwd);
     }
@@ -136,6 +137,7 @@ public class JSONController {
 
     @RequestMapping(value = "logout")
     public @ResponseBody void logout() {
+        System.out.println("logout");
         userLoginService.logout();
     }
 
