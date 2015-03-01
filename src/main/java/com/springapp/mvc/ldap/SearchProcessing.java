@@ -14,6 +14,7 @@ import javax.naming.directory.SearchResult;
  * Has two functions for multiple users and single users.
  * @author Adrian Hundseth
  */
+@Deprecated
 public class SearchProcessing {
     /**
      * Receives a <code>SearchResult</code> object and extracts the fields of the user within.
@@ -61,7 +62,7 @@ public class SearchProcessing {
             }
             if (telephoneNumber != null) {
                 //System.out.println("Mobile: " + mobile.get());
-                person.setTelephoneNumber(Integer.valueOf("" + telephoneNumber.get()));
+                person.setTelephoneNumber((String) telephoneNumber.get());
             }
             if (memberOf != null) {
                 //System.out.println("Groups:");
@@ -136,7 +137,7 @@ public class SearchProcessing {
                 }
                 if (mobile != null) {
                     //System.out.println("Mobile: " + mobile.get());
-                    returnperson.setTelephoneNumber(Integer.valueOf("" + mobile.get()));
+                    returnperson.setTelephoneNumber((String) mobile.get());
                 }
                 if (groups != null) {
                     //System.out.println("Groups:");

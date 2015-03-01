@@ -17,7 +17,7 @@
         <security:intercept-url pattern="/login" access="permitAll" />
         <security:intercept-url pattern="/api/login" access="permitAll" />
         <security:intercept-url pattern="/api/**" access="isFullyAuthenticated()" />
-        <!--<security:intercept-url pattern="/**" access="isFullyAuthenticated()" />-->
+        <!--<security:intercept-url pattern="/**" access="permitAll" />-->
     </security:http>
 
     <!-- Activate @PreAuthorize annotation for more fine-grained method access -->
@@ -57,13 +57,24 @@
 
 
     <!-- LDAP -->
-    <ldap:context-source
+    <!--<ldap:context-source
             url="ldap://ldapstaging.studentmediene.no"
             base="dc=studentmediene,dc=no"
             username="${ldap.username}"
             password="${ldap.password}"
             />
 
-    <ldap:ldap-template id="ldapTemplate"/>
+    <ldap:ldap-template id="ldapTemplate"/>-->
+
+    <bean id="contextSource"
+          class="org.springframework.ldap.core.support.LdapContextSource">
+        <property name="url" value="${ldap.url}" />
+        <property name="base" value="${ldap.base}" />
+        <property name="userDn" value="${ldap.username}" />
+        <property name="password" value="${ldap.password}" />
+    </bean>
+    <bean id="ldapTemplate" class="org.springframework.ldap.core.LdapTemplate">
+        <constructor-arg ref="contextSource" />
+    </bean>
 
 </beans>

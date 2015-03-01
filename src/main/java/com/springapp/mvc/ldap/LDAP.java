@@ -5,9 +5,15 @@ ssh boyeborg@scgw1.studentmediene.no -L8389:ldap.studentmediene.local:389
 */
 package com.springapp.mvc.ldap;
 
-import com.springapp.mvc.authentication.ActiveLogin;
 import com.springapp.mvc.PersonList;
+import com.springapp.mvc.authentication.ActiveLogin;
 import com.springapp.mvc.model.Person;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.ldap.core.AttributesMapper;
+import org.springframework.ldap.core.LdapTemplate;
+import org.springframework.stereotype.Service;
 
 import javax.naming.AuthenticationException;
 import javax.naming.Context;
@@ -16,13 +22,55 @@ import javax.naming.NamingException;
 import javax.naming.directory.*;
 import java.util.ArrayList;
 import java.util.Hashtable;
+import java.util.List;
 
 
 /**
  * This class is a collection of static functions used to interact with the LDAP server.
  * @author Adrian Hundseth
  */
+@Service
+@Deprecated
 public class LDAP {
+
+    @Autowired
+    LdapTemplate ldapTemplate;
+
+    Logger logger = LoggerFactory.getLogger(getClass());
+
+    public PersonList getUsers() {
+        final int[] activeCount = {0};
+        PersonList personList = new PersonList();
+        logger.info("ldapTemplate context source: " + ldapTemplate.getContextSource());
+        List<Person> persons = ldapTemplate.search("ou=Users", "(objectClass=person)", new AttributesMapper<Person>() {
+            @Override
+            public Person mapFromAttributes(Attributes attributes) throws NamingException {
+                Long uidNumber = Long.valueOf((String) attributes.get("uidNumber").get());
+                String givenName = attributes.get("givenName") != null ? (String) attributes.get("givenName").get() : "";
+                String cn = attributes.get("cn") != null ? (String) attributes.get("cn").get() : "";
+                String uid = attributes.get("uid") != null ? (String) attributes.get("uid").get() : "";
+                String mail = attributes.get("mail") != null ? (String) attributes.get("mail").get() : "";
+                String telephoneNumber = attributes.get("telephoneNumber") != null ? (String) attributes.get("telephoneNumber").get() : "";
+                boolean isActive = false;
+
+                Attribute memberOf1 = attributes.get("memberOf");
+                ArrayList<String> memberOf = new ArrayList<String>();
+                if (memberOf1 != null) {
+                    NamingEnumeration<?> memberOf2 = memberOf1.getAll();
+                    while (memberOf2.hasMore()) {
+                        memberOf.add((String) memberOf2.next());
+                    }
+                }
+
+                return new Person(givenName, cn, mail, memberOf, telephoneNumber, uidNumber, uid, false);
+            }
+        });
+        logger.info("Number of users from LDAP: {}", persons.size());
+        logger.info("Number of active: {}", activeCount[0]);
+
+        personList.update(persons);
+        return personList;
+    }
 
     //private static final String host = "ldap://localhost:8389"; //For testing on the real server. Must tunnel to scgwl.studentmediene.no
     /*
@@ -33,25 +81,6 @@ public class LDAP {
 
     private static final String host = "ldap://ldapstaging.studentmediene.no";
     private static final String name = "ou=Users,dc=studentmediene,dc=no";
-
-    public static void main(String[] args) {
-        ActiveLogin activeLogin = null;
-        try {
-            activeLogin = new ActiveLogin(getDn("birgith.do"), "overrated rapid machine");
-            Hashtable<String, Object> env = config(activeLogin);
-            System.out.println(env.values());
-
-
-            //Old phone number: 48181928
-            ArrayList<String[]> editList = new ArrayList<String[]>();
-            String[] list = {"telephoneNumber", "97292149"};
-            editList.add(0, list);
-            edit(activeLogin, activeLogin.getDn(), editList);
-
-        } catch(NamingException e) {
-            System.err.println("NamingException: " + e.getMessage());
-        }
-    }
 
     /**
      * Binds anonymously to the LDAP server. Returns a <code>Hashtable</code> to use for searching etc.
@@ -251,7 +280,7 @@ public class LDAP {
         String[] givenName = {"givenName", user.getGivenName()};
         String[] sn = {"sn", user.getSn()};
         String[] mail = {"mail", user.getMail()};
-        String[] mobile = {"telephoneNumber", Integer.toString(user.getTelephoneNumber())};
+        String[] mobile = {"telephoneNumber", (String)user.getTelephoneNumber()};
         //String[] groups = {"memberOf", user.getMemberOf()};
         //fields.add(givenName);
         //fields.add(sn);

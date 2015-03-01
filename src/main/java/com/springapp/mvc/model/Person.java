@@ -12,20 +12,21 @@ public class Person {
     private String cn;
     private String uid;
     private String mail;
-    private int telephoneNumber;
+    private String telephoneNumber;
     public ArrayList<String> memberOf = new ArrayList<String>();
     private Long uidNumber;
     private String dn;
     private boolean harOblat;
 
-    public Person(String givenName, String sn, String mail, ArrayList<String> memberOf, Long uidNumber, String dn, String uid, boolean harOblat) {
+    public Person(String givenName, String sn, String mail, ArrayList<String> memberOf, String telephoneNumber, Long uidNumber, String uid, boolean harOblat) {
         setGivenName(givenName);
         setSn(sn);
         setMail(mail);
         setUidNumber(uidNumber);
-        setDn(dn);
         setHarOblat(harOblat);
+        setTelephoneNumber(telephoneNumber);
         setUid(uid);
+        setUidNumber(uidNumber);
         setMemberOf(memberOf);
     }
 
@@ -73,7 +74,7 @@ public class Person {
         return uid;
     }
 
-    public int getTelephoneNumber() { return telephoneNumber; }
+    public String getTelephoneNumber() { return telephoneNumber; }
 
     public void setGivenName(String givenName) {
         this.givenName = givenName;
@@ -101,7 +102,7 @@ public class Person {
         this.dn = dn;
     }
 
-    public void setTelephoneNumber(int telephoneNumber) { this.telephoneNumber = telephoneNumber; }
+    public void setTelephoneNumber(String telephoneNumber) { this.telephoneNumber = telephoneNumber; }
 
     public void setMemberOf(ArrayList<String> memberOf) {
         this.memberOf = memberOf;

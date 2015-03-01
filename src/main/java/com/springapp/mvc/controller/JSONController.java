@@ -5,6 +5,7 @@ import com.springapp.mvc.authentication.ActiveLogin;
 import com.springapp.mvc.authentication.LdapUserPwd;
 import com.springapp.mvc.authentication.UserLoginService;
 import com.springapp.mvc.ldap.LDAP;
+import com.springapp.mvc.ldap.LdapUtil;
 import com.springapp.mvc.model.Person;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -21,6 +22,7 @@ import java.util.ArrayList;
 public class JSONController {
     private PersonList personList = new PersonList();
     private ActiveLogin activeLogin;
+    LdapUtil ldapUtil = new LdapUtil();
 
     @Autowired
     private UserLoginService userLoginService;
@@ -75,7 +77,7 @@ public class JSONController {
         try {
             System.out.println("Trying");
             System.out.println(LDAP.getDn("adem.ruud"));
-            returnList.update(LDAP.retrieve());
+            returnList.update(ldapUtil.getUsers());
         }
         catch (NamingException e) {
             System.out.print("Error: " + e.getMessage());

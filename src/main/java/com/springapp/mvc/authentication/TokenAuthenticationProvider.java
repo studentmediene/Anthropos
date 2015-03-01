@@ -26,7 +26,6 @@ public class TokenAuthenticationProvider implements AuthenticationProvider {
 
     private PersonList personList = new PersonList();
 
-
     @Autowired
     LdapTemplate ldapTemplate;
 
@@ -57,6 +56,7 @@ public class TokenAuthenticationProvider implements AuthenticationProvider {
 
     private boolean validateLogin(LdapUserPwd ldapUserPwd) {
 
+        logger.info("LdapTemplate context source: " + ldapTemplate.getContextSource(), ldapTemplate.getContextSource());
         boolean authenticate = ldapTemplate.authenticate("ou=Users", "(uid=" + ldapUserPwd.getUsername() + ")" , ldapUserPwd.getPassword());
 
         if (authenticate) {

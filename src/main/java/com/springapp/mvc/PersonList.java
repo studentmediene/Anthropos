@@ -3,6 +3,7 @@ package com.springapp.mvc;
 import com.springapp.mvc.model.Person;
 
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by adrianh on 16.02.14.
@@ -52,6 +53,12 @@ public class PersonList extends ArrayList<Person> {
     public void update(PersonList updateList) {
         for (int i = 0; i < updateList.size(); i++) {
             this.add(updateList.get(i));
+        }
+    }
+
+    public void update(List<Person> list) {
+        for (Person person : list) {
+            this.add(person);
         }
     }
 
