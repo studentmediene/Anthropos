@@ -32,6 +32,17 @@
                 <button class="btn btn-default" style="margin-top:5px; border-radius:20px" ng-show="groupsSelected.length > 0" data-ng-click="uncheck()">X</button>
             </div>
             <img src="../img/ajax-loader.gif" ng-if="!shownPeople.length" style="margin: auto;display:block"/>
+
+	        <div style="margin-left: 45%; margin-bottom: 20px" ng-if="shownPeople.length" id="tmp_test">
+		        <button class="nav-button-left" ng-disabled="currentPage == 0" ng-click="currentPage=currentPage-1">
+			        Forrige
+		        </button>
+		        {{currentPage+1}} av {{numberOfPages()}}
+		        <button class=" nav-button-right" ng-disabled="currentPage >= shownPeople.length/pageSize - 1" ng-click="currentPage=currentPage+1">
+			        Neste
+		        </button>
+	        </div>
+
             <table class="table table-bordered" ng-if="shownPeople.length">
                 <thead>
                 <tr>
@@ -49,8 +60,8 @@
                 </tr>
                 </thead>
                 <tbody>
-                <tr ng-repeat ="person in shownPeople | filter:searchText | orderBy:orderField" class="ng-scope tableSelection"
-                    data-ng-click="navToUser(person)">
+                <tr ng-repeat ="person in shownPeople | filter:searchText | orderBy:orderField | startFrom:currentPage*pageSize | limitTo:pageSize" class="ng-scope tableSelection"
+                    >
                     <td class ="ng-binding">{{person.sn}}</td>
                     <td class ="ng-binding">{{person.givenName}}</td>
                     <td class ="ng-binding">{{person.uid}}</td>
