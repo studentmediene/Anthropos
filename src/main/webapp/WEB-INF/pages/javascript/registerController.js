@@ -9,6 +9,12 @@ app.controller("RegisterCtrl", function($scope, $resource, $http) {
     $scope.explanation = "Følgende felter er ikke utfylt: "
     $scope.showExplanation = "";
 
+
+    $scope.showUserContainer = false;
+    $scope.showFileContainer = false;
+    $scope.dropbox = document.getElementById("dropbox");
+    $scope.dropText = "Slipp fil her..."
+
     var tmpObj = $resource("api/mailingLists.json", {}, {
             get:{
                 isArray:true,
@@ -177,5 +183,53 @@ app.controller("RegisterCtrl", function($scope, $resource, $http) {
     };
 
 
+    $scope.selectCreateUser = function(){
+        $scope.showUserContainer = true;
+        $scope.showFileContainer = false;
+       // document.getElementById("simpleUserContainer").refresh;
+    }
+    $scope.selectCreateCSV = function() {
+        $scope.showFileContainer = true;
+        $scope.showUserContainer = false;
+    }
+
+    $scope.setFile = function() {
+        console.log("select file");
+    }
+
+    function dragEnterLeave(evt) {
+        evt.stopPropagation()
+        evt.preventDefault()
+        console.log("enter/leave")
+        $scope.$apply(function(){
+            $scope.dropText = "Slipp fil her"
+            $scope.dropClass = ''
+        })
+    }
+    $scope.dropbox.addEventListener("dragenter", dragEnterLeave, false)
+    $scope.dropbox.addEventListener("dragleave", dragEnterLeave, false)
+    $scope.dropbox.addEventListener("dragover", function(evt) {
+        evt.stopPropagation()
+        evt.preventDefault()
+        var clazz = 'not-available'
+        console.log(evt.dataTransfer.types);
+        var ok = evt.dataTransfer && evt.dataTransfer.types && evt.dataTransfer.types.indexOf('Files') > 0
+        $scope.$apply(function(){
+            $scope.dropText = ok ? 'Slipp fil her...' : 'Kun .csv-filer tillatt'
+            $scope.dropClass = ok ? 'over' : 'not-available'
+        })
+    }, false)
+    $scope.dropbox.addEventListener("drop", function(evt) {
+        console.log('drop evt:', JSON.parse(JSON.stringify(evt.dataTransfer)))
+        evt.stopPropagation()
+        evt.preventDefault()
+        $scope.$apply(function(){
+            $scope.dropText = 'Drop files here...'
+            $scope.dropClass = ''
+        })
+        $scope.file = evt.dataTransfer.files
+
+    }, false)
 
 });
+//<!-- http://jsfiddle.net/danielzen/utp7j/ -->

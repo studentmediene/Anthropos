@@ -291,3 +291,34 @@ legend				{ font-size: 1.8em; }
 .test{
     color:blue;
 }
+
+.dropbox{
+    width: 10em;
+    height: 2em;
+    border: 2px dashed #DBDACC;
+    border-radius: 8px;
+    background-color: #F0EFDF;
+    color: #BBB;
+    font-family: FontAwesome;
+    font-size: 2em;
+}
+.dropbox.over {
+    background-color: #bfb;
+}
+.dropbox.not-available {
+    background-color: #F88;
+}
+.section-choose {
+    padding: 1em;
+    width: 12em;
+    height: 12em;
+    border: 2px solid #808080;
+    border-radius: 8px;
+    background-color: lightgrey;
+    font-family: FontAwesome;
+    font-size: 1em;
+}
+.section-choose:hover {
+    background-color: #BFD7F2;
+    cursor:pointer;
+}
