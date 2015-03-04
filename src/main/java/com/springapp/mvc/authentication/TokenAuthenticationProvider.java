@@ -2,7 +2,7 @@ package com.springapp.mvc.authentication;
 
 import com.springapp.mvc.PersonList;
 import com.springapp.mvc.RestException;
-import com.springapp.mvc.ldap.LDAP;
+import com.springapp.mvc.ldap.LdapUtil;
 import com.springapp.mvc.model.Person;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -25,6 +25,7 @@ public class TokenAuthenticationProvider implements AuthenticationProvider {
     Logger logger = LoggerFactory.getLogger(getClass());
 
     private PersonList personList = new PersonList();
+    private LdapUtil ldapUtil = new LdapUtil();
 
     @Autowired
     LdapTemplate ldapTemplate;
@@ -36,7 +37,7 @@ public class TokenAuthenticationProvider implements AuthenticationProvider {
 
         if (validateLogin(ldapUserPwd)) {
             try {
-            Person loggedInUser = LDAP.search(ldapUserPwd.getUsername()).get(0);
+            Person loggedInUser = ldapUtil.search(ldapUserPwd.getUsername()).get(0);
             AuthUserDetails authUserDetails = new AuthUserDetails(loggedInUser);
 
             // Return an updated token with the right user details
@@ -72,7 +73,7 @@ public class TokenAuthenticationProvider implements AuthenticationProvider {
         System.out.println(username);
         Person person = new Person();
         try {
-            person = LDAP.search(username).get(0);
+            person = ldapUtil.search(username).get(0);
         } catch (NamingException e) {
             e.printStackTrace();
         }

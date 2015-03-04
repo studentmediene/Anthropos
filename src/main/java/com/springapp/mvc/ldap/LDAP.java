@@ -6,7 +6,6 @@ ssh boyeborg@scgw1.studentmediene.no -L8389:ldap.studentmediene.local:389
 package com.springapp.mvc.ldap;
 
 import com.springapp.mvc.PersonList;
-import com.springapp.mvc.authentication.ActiveLogin;
 import com.springapp.mvc.model.Person;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -101,14 +100,14 @@ public class LDAP {
         return env;
     }
 
-    /**
+/*    *//**
      * Receives a <code>DistinguishedName</code> in the form of an <code>ActiveLogin</code> object (i.e. uid=firstname.lastname,ou=Users,dc=studentmediene,dc=no) and a password.
      * It then binds the provided username to the server. It returns the bind in the form of a <code>Hashtable</code>.
      * Throws a <code>NamingException</code> if the username is not found on the server.
      * @param activeLogin An object containing the <code>DistinguishedName</code> and the credentials
      * @return Returns a <code>Hashtable</code> of the binding to the server.
      * @throws NamingException Thrown if the <code>DistinguishedName</code> is not found on the server
-     */
+     *//*
     public static Hashtable<String, Object> config(ActiveLogin activeLogin) throws NamingException {
         Hashtable<String, Object> env = new Hashtable<String, Object>();
 
@@ -119,7 +118,7 @@ public class LDAP {
         env.put(Context.SECURITY_CREDENTIALS, activeLogin.getCr());
 
         return env;
-    }
+    }*/
 
     /**
      * Searches the server for the supplied <code>String</code>. Searches mail, name and <code>DistinguishedName</code>.
@@ -136,7 +135,7 @@ public class LDAP {
      * @see SearchProcessing
      * @see com.springapp.mvc.PersonList
      */
-    public static PersonList search(String search) throws NamingException {
+    /*public static PersonList search(String search) throws NamingException {
         Hashtable<String, Object> env = config();
         DirContext ctx = new InitialDirContext(env);
         SearchControls ctls = new SearchControls();
@@ -144,7 +143,7 @@ public class LDAP {
         NamingEnumeration answer = ctx.search(name, filter, ctls);
 
         return SearchProcessing.getPersons(answer);
-    }
+    }*/
 
     /**
      * Used to find the rights level of the current user. Takes the dn and cr and binds to the server.
@@ -164,7 +163,7 @@ public class LDAP {
      * @param editDn The <code>DistinguishedName</code> of the user that is being edited
      * @return Returns the rights level between the two supplied users
      */
-     public static int checkRightsLevel(ActiveLogin activeLogin, String editDn) {
+     /*public static int checkRightsLevel(ActiveLogin activeLogin, String editDn) {
         try {
             Hashtable<String, Object> env = config(activeLogin);
             InitialDirContext ctx = new InitialDirContext(env);
@@ -226,7 +225,7 @@ public class LDAP {
             System.err.println("NamingException: " + e.getMessage());
         }
         return 0;
-    }
+    }*/
 
     public static String getDn(String uid) throws NamingException {
         Hashtable<String, Object> env = config();
@@ -267,36 +266,8 @@ public class LDAP {
         return SearchProcessing.getPerson(searchResult);
     }
 
-    public static void addAsEdit(Person user) throws NamingException {
-        String editDn = getDn(user.getUid());
 
-        ActiveLogin activeLogin = new ActiveLogin(getDn("birgith.do"), "overrated rapid machine");
-
-        Hashtable<String, Object> env = config(activeLogin);
-
-        DirContext ctx = new InitialDirContext(env);
-
-        ArrayList<String[]> fields = new ArrayList<String[]>();
-        String[] givenName = {"givenName", user.getGivenName()};
-        String[] sn = {"sn", user.getSn()};
-        String[] mail = {"mail", user.getMail()};
-        String[] mobile = {"telephoneNumber", (String)user.getTelephoneNumber()};
-        //String[] groups = {"memberOf", user.getMemberOf()};
-        //fields.add(givenName);
-        //fields.add(sn);
-        fields.add(mail);
-        //fields.add(telephoneNumber);
-        //fields.add(memberOf);
-
-        ModificationItem[] mods = new ModificationItem[fields.size()];
-        for (String[] field : fields) {
-            Attribute mod = new BasicAttribute(field[0], field[1]);
-            mods[fields.indexOf(field)] = new ModificationItem(DirContext.REPLACE_ATTRIBUTE, mod);
-        }
-        ctx.modifyAttributes(editDn, mods);
-    }
-
-    public static void edit(ActiveLogin activeLogin, String editDn, ArrayList<String[]> fields) throws NamingException {
+    /*public static void edit(ActiveLogin activeLogin, String editDn, ArrayList<String[]> fields) throws NamingException {
         //if (canEdit(activeLogin, editDn)) {
         //}
         Hashtable<String, Object> env = config(activeLogin);
@@ -309,11 +280,11 @@ public class LDAP {
             mods[fields.indexOf(field)] = new ModificationItem(DirContext.REPLACE_ATTRIBUTE, mod);
         }
         ctx.modifyAttributes(activeLogin.getDn(), mods);
-    }
+    }*/
 
-    private static boolean canEdit(ActiveLogin activeLogin, String editDn) {
+    /*private static boolean canEdit(ActiveLogin activeLogin, String editDn) {
         return checkRightsLevel(activeLogin, editDn) >= 0;
-    }
+    }*/
 
     public static PersonList retrieve() throws NamingException {
         Hashtable<String, Object> env = config();

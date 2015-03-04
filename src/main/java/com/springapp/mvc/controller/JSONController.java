@@ -1,7 +1,6 @@
 package com.springapp.mvc.controller;
 
 import com.springapp.mvc.PersonList;
-import com.springapp.mvc.authentication.ActiveLogin;
 import com.springapp.mvc.authentication.LdapUserPwd;
 import com.springapp.mvc.authentication.UserLoginService;
 import com.springapp.mvc.ldap.LDAP;
@@ -21,7 +20,6 @@ import java.util.ArrayList;
 @RequestMapping("/api")
 public class JSONController {
     private PersonList personList = new PersonList();
-    private ActiveLogin activeLogin;
     LdapUtil ldapUtil = new LdapUtil();
 
     @Autowired
@@ -50,16 +48,7 @@ public class JSONController {
     @RequestMapping(value="add", method=RequestMethod.POST)
     public @ResponseBody
     Person post(@RequestBody final Person person) {
-        System.out.print("editing");
-//        System.out.print(person.getUidNumber() + " " + person.getGivenName());
-        personList.addPerson(person);
-        System.out.print(person);
-        try{
-            LDAP.addAsEdit(person);
-        } catch (NamingException e) {
-            System.err.print(e.getMessage());
-        }
-        return person;
+        return null;
     }
 
     @RequestMapping(value = "/addList", method = RequestMethod.POST)
@@ -97,11 +86,7 @@ public class JSONController {
 
     @RequestMapping(value = "edit", method = RequestMethod.GET)
     public @ResponseBody void edit(@RequestParam(value="uid", required = true) String uid, @RequestParam(value = "fields", required = true) ArrayList<String[]> fields) {
-        try {
-            LDAP.edit(activeLogin, uid, fields);
-        } catch (NamingException e) {
-            System.err.println("Error");
-        }
+
     }
 
     @RequestMapping(value = "{id}", method = RequestMethod.GET)
@@ -124,12 +109,12 @@ public class JSONController {
     @RequestMapping(value = "search", method = RequestMethod.GET)
     public @ResponseBody ArrayList<Person> search(@RequestParam(value="name", required = true) String name) {
         PersonList returnList = new PersonList();
-        System.out.println("Attempting search for: " + name);
+/*        System.out.println("Attempting search for: " + name);
         try {
             returnList.update(LDAP.search(name));
         } catch (NamingException e) {
             System.err.println("Search error: " + e.getMessage());
-        }
+        }*/
         return returnList;
     }
 

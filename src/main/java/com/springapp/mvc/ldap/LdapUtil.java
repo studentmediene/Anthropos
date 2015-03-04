@@ -7,9 +7,14 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.ldap.core.LdapTemplate;
 import org.springframework.ldap.core.support.LdapContextSource;
+import org.springframework.ldap.query.LdapQuery;
 import org.springframework.stereotype.Service;
 
+import javax.naming.NamingException;
+import javax.naming.directory.SearchControls;
 import java.util.List;
+
+import static org.springframework.ldap.query.LdapQueryBuilder.query;
 
 /**
  * Created by adrianh on 01.03.15.
@@ -56,6 +61,18 @@ public class LdapUtil {
 
     public Person getUser(String dn) {
         return tmpl.lookup(dn, new PersonAttributesMapper());
+    }
+
+    public PersonList search(String search) throws NamingException {
+        PersonList personList = new PersonList();
+        SearchControls ctls = new SearchControls();
+        LdapQuery query = query()
+                .where("objectclass").is("person")
+                .and("uid").is(search);
+        List<Person> persons = tmpl.search(query, new PersonAttributesMapper());
+
+        personList.update(persons);
+        return personList;
     }
 }
 

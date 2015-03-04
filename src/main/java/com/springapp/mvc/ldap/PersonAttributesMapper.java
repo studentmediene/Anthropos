@@ -12,6 +12,7 @@ import java.util.ArrayList;
  * Created by adrianh on 01.03.15.
  */
 public class PersonAttributesMapper implements AttributesMapper<Person> {
+
         public Person mapFromAttributes(Attributes attributes) throws NamingException {
             Person person = new Person();
             person.setUidNumber(Long.valueOf((String) attributes.get("uidNumber").get()));
