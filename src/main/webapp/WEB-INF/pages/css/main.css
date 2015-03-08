@@ -349,3 +349,14 @@ legend				{ font-size: 1.8em; }
 .nav-button-right:active {
     background-color: #437FBA;
 }
+
+.nav-buttons {
+    height: 3em;
+    width: 2em;
+    color: black;
+    border: 1px solid dimgrey;
+}
+.nav-buttons:active {
+    background-color: #326CA6;
+    color: white;
+}

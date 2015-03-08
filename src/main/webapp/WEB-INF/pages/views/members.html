@@ -31,17 +31,34 @@
                 </div>
                 <button class="btn btn-default" style="margin-top:5px; border-radius:20px" ng-show="groupsSelected.length > 0" data-ng-click="uncheck()">X</button>
             </div>
+
+
+
             <img src="../img/ajax-loader.gif" ng-if="!shownPeople.length" style="margin: auto;display:block"/>
 
-	        <div style="margin-left: 45%; margin-bottom: 20px" ng-if="shownPeople.length" id="tmp_test">
-		        <button class="nav-button-left" ng-disabled="currentPage == 0" ng-click="currentPage=currentPage-1">
+	        <div style="margin-left: 45%; margin-bottom: 20px" ng-if="shownPeople.length">
+		        <button type="button" class="nav-button-left" ng-disabled="currentPage == 0" ng-click="updateList(-1)">
 			        Forrige
 		        </button>
 		        {{currentPage+1}} av {{numberOfPages()}}
-		        <button class=" nav-button-right" ng-disabled="currentPage >= shownPeople.length/pageSize - 1" ng-click="currentPage=currentPage+1">
+		        <button type="button" class=" nav-button-right" ng-disabled="currentPage >= shownPeople.length/pageSize - 1" ng-click="updateList(1)">
 			        Neste
 		        </button>
 	        </div>
+
+	        <!-- TODO: Implement the required pagination code
+	        <ul class="pagination" style="margin-left: 40%; margin-bottom: 20px" ng-if="shownPeople.length" ng-hide="numberOfPages() == 1">
+		        <li><a ng-disabled="currentPage == 0" ng-click="updateList(-1)">Forrige</a></li>
+		        <li><a id="navbtn1" ng-click="updatePaginator({{nav1}})">{{nav1}}</a></li>
+		        <li><a id="navbtn2" ng-click="updatePaginator({{nav2}})">{{nav2}}</a></li>
+		        <li><a id="navbtn3" ng-click="updatePaginator({{nav3}})">{{nav3}}</a></li>
+		        <li><a class="active" id="navbtn4" ng-click="updatePaginator({{nav4}})">{{nav4}}</a></li>
+		        <li><a id="navbtn5" ng-click="updatePaginator({{nav5}})">{{nav5}}</a></li>
+		        <li><a id="navbtn6" ng-click="updatePaginator({{nav6}})">{{nav6}}</a></li>
+		        <li><a id="navbtn7" ng-click="updatePaginator({{nav7}})">{{nav7}}</a></li>
+			    <li><a ng-disabled="currentPage >= shownPeople.length/pageSize - 1" ng-click="updateList(1)">Neste</a></li>
+	        </ul>
+			-->
 
             <table class="table table-bordered" ng-if="shownPeople.length">
                 <thead>
@@ -60,7 +77,7 @@
                 </tr>
                 </thead>
                 <tbody>
-                <tr ng-repeat ="person in shownPeople | filter:searchText | orderBy:orderField | startFrom:currentPage*pageSize | limitTo:pageSize" class="ng-scope tableSelection"
+                <tr ng-repeat ="person in displayMembers | filter:searchText | orderBy:orderField " class="ng-scope tableSelection"
                     >
                     <td class ="ng-binding">{{person.sn}}</td>
                     <td class ="ng-binding">{{person.givenName}}</td>
@@ -72,6 +89,8 @@
                 </tr>
                 </tbody>
             </table>
+
+
 
         </div>
     </div>

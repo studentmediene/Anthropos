@@ -3,7 +3,13 @@
  */
 var app = angular.module('mdbApp',["ngResource", "ngRoute","ui.bootstrap"]);
 
-
+app.filter('startFrom', function() {
+    return function(input, start) {
+        console.log("FILTERING")
+        start = +start; //parse to int
+        return input.slice(start);
+    };
+});
 
     app.config(['$routeProvider',
         function($routeProvider) {
