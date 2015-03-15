@@ -1,25 +1,15 @@
 package com.springapp.mvc;
 
+import com.springapp.mvc.model.Person;
+
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by adrianh on 16.02.14.
  */
 public class PersonList extends ArrayList<Person> {
     ArrayList<Person> personList = new ArrayList<Person>();
-
-    PersonList() {
-        String[] smint = {"smint"};
-        String[] it = {"it"};
-        Person test = new Person("Test", "Testerson", "test@test.test", smint, 1);
-        Person adrian = new Person("Adrian", "Hundseth", "adrian@smint.no", smint, 2);
-        Person person = new Person("Person", "Norsep", "person@earth.com", it, 3);
-        Person person1 = new Person("Randy", "Inty", "rand@int.wat", it, 4);
-        this.personList.add(test);
-        this.personList.add(adrian);
-        this.personList.add(person);
-        this.personList.add(person1);
-    }
 
     public void addPerson(Person person) {
         this.personList.add(person);
@@ -30,12 +20,33 @@ public class PersonList extends ArrayList<Person> {
     }
 
     public Person getPersonById(int id) {
-        for (int i = 0; i < personList.size(); i++) {
-            if (this.personList.get(i).getId() == id) {
-                return this.personList.get(i);
+        for (Person person : personList) {
+            if (person.getUidNumber() == id) {
+                return person;
             }
         }
         throw new IllegalArgumentException("No person with that id found");
+    }
+
+    public Person getPersonByUid(String uid) {
+        for (Person person : personList) {
+            if (person.getUid().equals(uid)) {
+                return person;
+            }
+        }
+        return null;
+    }
+
+    public void update(PersonList updateList) {
+        for (int i = 0; i < updateList.size(); i++) {
+            this.add(updateList.get(i));
+        }
+    }
+
+    public void update(List<Person> list) {
+        for (Person person : list) {
+            this.add(person);
+        }
     }
 
     public ArrayList<Person> getPersonList() {

@@ -1,0 +1,49 @@
+
+
+<div id="page-wrap" class="pagination-centered" style="width: 300px">
+
+        <img style="padding-bottom: 30px" src="../img/SM-logo-large.png">
+
+    <div>
+        <input type="text" id="username" placeholder="Brukernavn" class="form-control"/>
+    </div>
+    <div>
+        <input ng-keyup="$event.keyCode == 13 ? login() : null" type="password" id="pass" placeholder="Passord" class="form-control"/>
+    </div>
+
+    <div class="pagination-centered">
+        <button class="btn btn-default borderBtn" data-ng-click="login()" style="background: #326ca6; color: white; width: 300px; height: 40px">Logg inn</button>
+    </div>
+    <div style="padding-top: 60px">
+        <div class="pagination-centered">
+            <button class = "btn btn-default" data-ng-click ="resetPassword()" style="width:300px">Glemt passord/brukernavn</button>
+        </div>
+    </div>
+    <div style="color:#FF0000; background-color: #FFCCCC; border-radius: 8px" id="loginError" visible="{{errorDuringLogin}}">
+        <span>{{errorDuringLogin}}</span>
+    </div>
+
+    <script type="text/ng-template" id ="resetPw.html">
+        <div class="modal-header">
+            <Legend>Tilbakestill passord</Legend>
+            </div>
+            <div class="modal-body">
+                <div class="heightPad">
+                    <label>Din epost</label>
+                    <input type="text" id="epost" class="form-control"/>
+            </div>
+            </div>
+            <div class="modal-footer">
+                <text rows="4" cols="50" class="pull-left">
+                    Customersupport: bruker@studentmediene.no
+                </text>
+                <button class="btn" data-ng-click="confirmReset()"
+                        style="
+                        background:limegreen;
+                        color:white">OK</button>
+                <button class="btn" data-ng-click="cancel()" style="background:orange; color:white">Avbryt</button>
+            </div>
+    </script>
+
+
+</div>

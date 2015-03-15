@@ -1,0 +1,37 @@
+<div id="page-wrap">
+    <form method="post" id="contact" name="contact">
+        <div class="modal-header">
+        <legend>Endre passord</legend>
+            </div>
+        <div class="modal-body">
+        <div class="heightPad">
+            <div class="input-group">
+                <span class="input-group-addon">Gammelt passord</span>
+                <input type="password" id="oldpass" class="form-control">
+                </div>
+            </div>
+        <div class="heightPad">
+            <div class="input-group">
+                <span class="input-group-addon">Nytt passord</span>
+                <input type="password" id="newpass" class="form-control"/>
+                </div>
+            </div>
+        <div class="heightPad">
+            <div class="input-group">
+                <span class="input-group-addon">Bekreft passord</span>
+                <input type="password" id="confpass" class="form-control"/>
+                </div>
+            </div>
+        </div>
+    </form>
+
+
+        <div class="modal-footer">
+            <button class="btn btn-default" data-ng-click="changePassword()" style="background:limegreen; color:white">Lagre endringer</button>
+            <button class="btn btn-default" data-ng-click="cancel()" style="background:orange; color:white">Avbryt</button>
+        </div>
+    </div>
+
+    <button class="btn" data-ng-click="changePassword()" style="background:limegreen; color:white">Lagre endringer</button>
+
+</div>
