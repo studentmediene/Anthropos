@@ -4,21 +4,24 @@
        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
        xmlns:security="http://www.springframework.org/schema/security"
        xmlns:context="http://www.springframework.org/schema/context" xmlns:tx="http://www.springframework.org/schema/tx"
-       xmlns:jpa="http://www.springframework.org/schema/data/jpa" xmlns:mvc="http://www.springframework.org/schema/mvc"
+       xmlns:mvc="http://www.springframework.org/schema/mvc"
        xmlns:task="http://www.springframework.org/schema/task" xmlns:ldap="http://www.springframework.org/schema/ldap"
        xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd http://www.springframework.org/schema/security http://www.springframework.org/schema/security/spring-security.xsd http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx.xsd http://www.springframework.org/schema/data/jpa http://www.springframework.org/schema/data/jpa/spring-jpa.xsd http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc.xsd http://www.springframework.org/schema/task http://www.springframework.org/schema/task/spring-task.xsd http://www.springframework.org/schema/ldap http://www.springframework.org/schema/ldap/spring-ldap.xsd">
 
 
-    <!-- Load the momus.properties file, can use the values like ${property.name} -->
-    <context:property-placeholder location="classpath*:anthropos.properties" />
+    <!-- Load the anthropos.properties file, can use the values like ${property.name} -->
+    <context:property-placeholder location="classpath*:anthropos.properties" order="2" />
+    <!-- Override the values with our local properties -->
+    <context:property-placeholder location="classpath*:local.properties" order="1" ignore-unresolvable="true" />
 
     <!-- SECURITY -->
     <security:http entry-point-ref="tokenEntryPoint" use-expressions="true">
-        <security:intercept-url pattern="/login" access="permitAll" />
+        <!--<security:intercept-url pattern="/login" access="permitAll" />-->
         <security:intercept-url pattern="/api/login" access="permitAll" />
         <security:intercept-url pattern="/api/**" access="isFullyAuthenticated()" />
         <!--<security:intercept-url pattern="/**" access="permitAll" />-->
     </security:http>
+
 
     <!-- Activate @PreAuthorize annotation for more fine-grained method access -->
     <security:global-method-security pre-post-annotations="enabled">
@@ -30,6 +33,16 @@
     </security:authentication-manager>
 
 
+    <bean id="exceptionTranslationFilter"
+          class="org.springframework.security.web.access.ExceptionTranslationFilter">
+        <property name="authenticationEntryPoint" ref="tokenEntryPoint"/>
+        <property name="accessDeniedHandler" ref="accessDeniedHandler"/>
+    </bean>
+
+    <bean id="accessDeniedHandler"
+          class="org.springframework.security.web.access.AccessDeniedHandlerImpl">
+        <property name="errorPage" value="/api/login"/>
+    </bean>
 
     <!-- Instantiation of our auth classes -->
     <bean id="tokenEntryPoint" class="com.springapp.mvc.authentication.TokenEntryPoint"/>

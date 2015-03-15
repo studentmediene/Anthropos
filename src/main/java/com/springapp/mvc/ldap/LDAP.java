@@ -281,7 +281,7 @@ public class LDAP {
         String[] givenName = {"givenName", user.getGivenName()};
         String[] sn = {"sn", user.getSn()};
         String[] mail = {"mail", user.getMail()};
-        String[] mobile = {"telephoneNumber", (String)user.getTelephoneNumber()};
+        String[] mobile = {"telephoneNumber", user.getTelephoneNumber()};
         //String[] groups = {"memberOf", user.getMemberOf()};
         //fields.add(givenName);
         //fields.add(sn);

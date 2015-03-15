@@ -30,7 +30,7 @@ app.controller("LoginCtrl", function($scope, $modal, $http) {
 
 
 
-    }
+    };
 
 
     $scope.modalInstance;
@@ -44,9 +44,9 @@ app.controller("LoginCtrl", function($scope, $modal, $http) {
         }, function() {
             console.log('Cancelled');
         })['finally'](function(){
-            $scope.modalInstance = undefined  // <--- This fixes
+            $scope.modalInstance = undefined;  // <--- This fixes
         });
-    }
+    };
 
     $scope.cancel = function () {
         $scope.modalInstance.$dismiss('cancel');

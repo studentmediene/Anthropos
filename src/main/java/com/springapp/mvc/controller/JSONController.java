@@ -45,25 +45,21 @@ public class JSONController {
         return userLoginService.login(ldapUserPwd);
     }
 
-    @RequestMapping(value="add", method=RequestMethod.POST)
-    public @ResponseBody Person add(@RequestBody final Person person) {
-        System.out.print("editing");
-        personList.addPerson(person);
-        System.out.print(person);
-        try{
-            LDAP.addAsEdit(person);
-        } catch (NamingException e) {
-            System.err.print(e.getMessage());
-        }
-        return person;
+    @RequestMapping(value = "logout")
+    public @ResponseBody void logout() {
+        System.out.println("logout");
+        userLoginService.logout();
     }
 
-    @RequestMapping(value = "/addList", method = RequestMethod.POST)
-    public @ResponseBody ArrayList<Person> listPost(@RequestBody final ArrayList<Person> list) {
-        for (Person person : list) {
-            personList.addPerson(person);
+    @RequestMapping(value = "{id}", method = RequestMethod.GET)
+    public @ResponseBody Person getPersonById(@PathVariable int id) {
+        Person person = null;
+        try {
+            person = LDAP.findByIdNumber(id);
+        } catch(NamingException e) {
+            System.err.println("Error: " + e.getMessage());
         }
-        return personList.getPersonList();
+        return person;
     }
 
     @RequestMapping(value = "list", method = RequestMethod.GET)
@@ -83,19 +79,7 @@ public class JSONController {
         }
         return returnList;
     }
-
-
-    @RequestMapping(value = "{id}", method = RequestMethod.GET)
-    public @ResponseBody Person getPersonById(@PathVariable int id) {
-        Person person = null;
-        try {
-            person = LDAP.findByIdNumber(id);
-        } catch(NamingException e) {
-            System.err.println("Error: " + e.getMessage());
-        }
-        return person;
-    }
-
+/*
     @RequestMapping(value = "forgotPassword")
     public @ResponseBody String forgotPassword() {
         //Code for sending new password to user here
@@ -114,9 +98,24 @@ public class JSONController {
         return returnList;
     }
 
-    @RequestMapping(value = "logout")
-    public @ResponseBody void logout() {
-        System.out.println("logout");
-        userLoginService.logout();
+    @RequestMapping(value="add", method=RequestMethod.POST)
+    public @ResponseBody Person add(@RequestBody final Person person) {
+        System.out.print("editing");
+        personList.addPerson(person);
+        System.out.print(person);
+        try{
+            LDAP.addAsEdit(person);
+        } catch (NamingException e) {
+            System.err.print(e.getMessage());
+        }
+        return person;
     }
+
+    @RequestMapping(value = "/addList", method = RequestMethod.POST)
+    public @ResponseBody ArrayList<Person> listPost(@RequestBody final ArrayList<Person> list) {
+        for (Person person : list) {
+            personList.addPerson(person);
+        }
+        return personList.getPersonList();
+    }*/
 }

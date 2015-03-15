@@ -22,7 +22,7 @@ app.controller("TestCtrl", function($scope) {
                 }
             }
         }
-    }
+    };
 
     $scope.checkAll = function() {
         $scope.allChecked = !$scope.allChecked;
@@ -34,7 +34,7 @@ app.controller("TestCtrl", function($scope) {
         else {
             return false;
         }
-    }
+    };
 
     $scope.isChecked = function(group) {
         if (_.contains($scope.selectedGroup, group)) {

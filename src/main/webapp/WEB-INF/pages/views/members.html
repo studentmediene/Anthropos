@@ -1,7 +1,7 @@
 <div class="membersWrap" ng-click="buttonAction($event)"> <!--change class style-->
     <div class="row-fluid">
         <div style="margin-top: 20px">
-            <div class="span4" id="page-wrap">
+            <div class="span4" ng-if="shownPeople.length" id="page-wrap">
                 <input placeholder="Søk..." type="text" ng-model="searchText" class="form-control">
 
                 <div class="btn-group" style="margin-top: 5px" data-ng-class="{open: open}">

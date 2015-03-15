@@ -6,14 +6,14 @@ app.controller("RegisterCtrl", function($scope, $resource, $http) {
 
     $scope.mailsSelected = [];
     $scope.myGroups = [];
-    $scope.explanation = "Følgende felter er ikke utfylt: "
+    $scope.explanation = "Følgende felter er ikke utfylt: ";
     $scope.showExplanation = "";
 
 
     $scope.showUserContainer = false;
     $scope.showFileContainer = false;
     $scope.dropbox = document.getElementById("dropbox");
-    $scope.dropText = "Slipp fil her..."
+    $scope.dropText = "Slipp fil her...";
 
     var tmpObj = $resource("api/mailingLists.json", {}, {
             get:{
@@ -59,7 +59,7 @@ app.controller("RegisterCtrl", function($scope, $resource, $http) {
             var index = $scope.mailsSelected.indexOf(mail);
             $scope.mailsSelected.splice(index, 1);
         }
-    }
+    };
 
 
     /** ADD GROUPS **/
@@ -79,7 +79,7 @@ app.controller("RegisterCtrl", function($scope, $resource, $http) {
             var index = $scope.myGroups.indexOf(group);
             $scope.myGroups.splice(index, 1);
         }
-    }
+    };
 
     $scope.hoverable = false;
     $scope.test = "HEI";
@@ -92,21 +92,21 @@ app.controller("RegisterCtrl", function($scope, $resource, $http) {
         }
         $scope.edit = false;
         $scope.hoverable = false;
-    }
+    };
 
     $scope.createHover = function() {
         if($scope.hoverable) {
             return'tableSelection'
         }
         return null;
-    }
+    };
 
     $scope.editable = function() {
         if($scope.edit) {
             return "icon-remove-sign pull-right";
         }
         return null;
-    }
+    };
 
 
     $scope.validateNumber = function() {
@@ -123,7 +123,7 @@ app.controller("RegisterCtrl", function($scope, $resource, $http) {
 
             }
         }
-    }
+    };
 
 
 
@@ -164,14 +164,14 @@ app.controller("RegisterCtrl", function($scope, $resource, $http) {
 
             }
         }
-    }
+    };
 
     $scope.remove = function(group) {
         if($scope.edit) {
             var index = $scope.groups.indexOf(group);
             $scope.groups.splice(index, 1);
         }
-    }
+    };
 
 
     mailSort = function(mailingList) {
@@ -187,46 +187,46 @@ app.controller("RegisterCtrl", function($scope, $resource, $http) {
         $scope.showUserContainer = true;
         $scope.showFileContainer = false;
        // document.getElementById("simpleUserContainer").refresh;
-    }
+    };
     $scope.selectCreateCSV = function() {
         $scope.showFileContainer = true;
         $scope.showUserContainer = false;
-    }
+    };
 
     $scope.setFile = function() {
         console.log("select file");
-    }
+    };
 
     function dragEnterLeave(evt) {
-        evt.stopPropagation()
-        evt.preventDefault()
-        console.log("enter/leave")
+        evt.stopPropagation();
+        evt.preventDefault();
+        console.log("enter/leave");
         $scope.$apply(function(){
-            $scope.dropText = "Slipp fil her"
+            $scope.dropText = "Slipp fil her";
             $scope.dropClass = ''
         })
     }
-    $scope.dropbox.addEventListener("dragenter", dragEnterLeave, false)
-    $scope.dropbox.addEventListener("dragleave", dragEnterLeave, false)
+    $scope.dropbox.addEventListener("dragenter", dragEnterLeave, false);
+    $scope.dropbox.addEventListener("dragleave", dragEnterLeave, false);
     $scope.dropbox.addEventListener("dragover", function(evt) {
-        evt.stopPropagation()
-        evt.preventDefault()
-        var clazz = 'not-available'
+        evt.stopPropagation();
+        evt.preventDefault();
+        var clazz = 'not-available';
         console.log(evt.dataTransfer.types);
-        var ok = evt.dataTransfer && evt.dataTransfer.types && evt.dataTransfer.types.indexOf('Files') > 0
+        var ok = evt.dataTransfer && evt.dataTransfer.types && evt.dataTransfer.types.indexOf('Files') > 0;
         $scope.$apply(function(){
-            $scope.dropText = ok ? 'Slipp fil her...' : 'Kun .csv-filer tillatt'
+            $scope.dropText = ok ? 'Slipp fil her...' : 'Kun .csv-filer tillatt';
             $scope.dropClass = ok ? 'over' : 'not-available'
         })
-    }, false)
+    }, false);
     $scope.dropbox.addEventListener("drop", function(evt) {
-        console.log('drop evt:', JSON.parse(JSON.stringify(evt.dataTransfer)))
-        evt.stopPropagation()
-        evt.preventDefault()
+        console.log('drop evt:', JSON.parse(JSON.stringify(evt.dataTransfer)));
+        evt.stopPropagation();
+        evt.preventDefault();
         $scope.$apply(function(){
-            $scope.dropText = 'Drop files here...'
+            $scope.dropText = 'Drop files here...';
             $scope.dropClass = ''
-        })
+        });
         $scope.file = evt.dataTransfer.files
 
     }, false)

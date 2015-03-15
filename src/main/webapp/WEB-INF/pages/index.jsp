@@ -16,6 +16,7 @@
     <script src="javascript/loginController.js" type = "text/javascript"></script>
     <script src="javascript/registerController.js" type = "text/javascript"></script>
     <script src="javascript/maincontroller.js" type = "text/javascript"></script>
+    <script src="javascript/httpInterceptor.js" type = "text/javascript"></script>
 
 
     <script src="javascript/ui-bootstrap-tpls-0.11.2.min.js" type = "text/javascript"></script>
