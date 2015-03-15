@@ -14,7 +14,7 @@ app.controller('groupCtrl', [$scope, function($scope) {
             $scope.selectedGroup.push(groupName);
         }
         return false;
-    }
+    };
 
     $scope.isChecked = function (groupName) {
         if (_.contains($scope.selectedGroup, groupName)) {

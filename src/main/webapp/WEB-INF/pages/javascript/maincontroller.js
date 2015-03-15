@@ -30,7 +30,7 @@ app.controller("mainCtrl", function($scope, $window, $resource, $http) {
         else {
             return false;
         }
-    }
+    };
 
     $scope.logout = function() {
         return $http({

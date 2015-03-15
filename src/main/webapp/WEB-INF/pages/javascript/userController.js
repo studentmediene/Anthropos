@@ -26,7 +26,7 @@ app.controller("UserCtrl", function($scope, $resource, $http, $modal, $routePara
             var level = 3;// Using test var temporarily
 
             if(level == 3) { // Admin or logged in user's profile
-                console.log("Admin")
+                console.log("Admin");
                 $scope.editProfile = true;
                 $scope.canAddGroups = true;
 
@@ -36,7 +36,7 @@ app.controller("UserCtrl", function($scope, $resource, $http, $modal, $routePara
                 $scope.authString = "ADMIN"
             }
             else if (level == 1) { // PL for this user
-                console.log("The user's PL")
+                console.log("The user's PL");
                 $scope.editProfile = false;
                 $scope.canAddGroups = true;
                 document.getElementById("givenName").disabled = true;
@@ -48,7 +48,7 @@ app.controller("UserCtrl", function($scope, $resource, $http, $modal, $routePara
                 $scope.authString = "pl"
             }
             else if (level == 0){ // Ordinary user
-                console.log("User")
+                console.log("User");
                 $scope.editProfile = false;
                 $scope.canAddGroups = false;
                 document.getElementById("givenName").disabled = true;
@@ -84,7 +84,7 @@ app.controller("UserCtrl", function($scope, $resource, $http, $modal, $routePara
         if(editable) {
             return "tableSelection"
         }return "notEditable";
-    }
+    };
 
 
     $scope.addGroupList = [];
@@ -123,7 +123,7 @@ app.controller("UserCtrl", function($scope, $resource, $http, $modal, $routePara
             var index = $scope.mailsSelected.indexOf(mail);
             $scope.mailsSelected.splice(index, 1);
         }
-    }
+    };
 
 
     /** ADD GROUPS **/
@@ -143,7 +143,7 @@ app.controller("UserCtrl", function($scope, $resource, $http, $modal, $routePara
             var index = $scope.addGroupList.indexOf(group);
             $scope.addGroupList.splice(index, 1);
     }
-    }
+    };
 
     $scope.addGroups = function() {
         angular.forEach($scope.addGroupList, function(group){
@@ -151,14 +151,14 @@ app.controller("UserCtrl", function($scope, $resource, $http, $modal, $routePara
         });
         dropdownGroups();
         $scope.addGroupList = [];
-    }
+    };
 
     $scope.removeMyGroup = function(myGroup, editable) {
         if(editable) {
             var index = $scope.myGroups.indexOf(myGroup);
             $scope.myGroups.splice(index, 1);
         }
-    }
+    };
 
     dropdownGroups = function() {
         $scope.permGroups = [];
@@ -166,7 +166,7 @@ app.controller("UserCtrl", function($scope, $resource, $http, $modal, $routePara
            if(!_.contains($scope.myGroups, group))
                 $scope.permGroups.push(group);
         });
-    }
+    };
 
     $scope.hoverable = false;
 
@@ -178,21 +178,21 @@ app.controller("UserCtrl", function($scope, $resource, $http, $modal, $routePara
         }
         $scope.edit = false;
         $scope.hoverable = false;
-    }
+    };
 
     $scope.createHover = function() {
         if($scope.hoverable) {
             return'tableSelection'
         }
         return null;
-    }
+    };
 
     $scope.editable = function() {
         if($scope.edit) {
             return "icon-remove-sign pull-right";
         }
         return null;
-    }
+    };
 
 
     $scope.validateNumber = function() {
@@ -209,12 +209,12 @@ app.controller("UserCtrl", function($scope, $resource, $http, $modal, $routePara
 
             }
         }
-    }
+    };
 
 
     $scope.endringerLagret = "";
 
-    $scope.explanation = "Vennligst fyll inn: "
+    $scope.explanation = "Vennligst fyll inn: ";
     $scope.showExplanation = "";
     $scope.save = function() {
         $scope.insufficientList = [];
@@ -238,7 +238,7 @@ app.controller("UserCtrl", function($scope, $resource, $http, $modal, $routePara
             <!-- TODO: create json and send to backend -->
             if(confirm("Lagre endringer?")) {
                 console.log("JA");
-                $scope.endringerLagret = "Endringer lagret"
+                $scope.endringerLagret = "Endringer lagret";
                 var userRet =  {
                     "givenName":document.getElementById('givenName').value,
                     "sn":document.getElementById('sn').value,
@@ -256,7 +256,7 @@ app.controller("UserCtrl", function($scope, $resource, $http, $modal, $routePara
                 });
             }
         }
-    }
+    };
 
     $scope.items = ['item1', 'item2', 'item3'];
     $scope.editPassword = function() {
@@ -275,14 +275,14 @@ app.controller("UserCtrl", function($scope, $resource, $http, $modal, $routePara
         }, function () {
             $log.info('Modal dismissed at: ' + new Date());
         });
-    }
+    };
 
     $scope.remove = function(group) {
         if($scope.edit) {
             var index = $scope.groups.indexOf(group);
             $scope.groups.splice(index, 1);
         }
-    }
+    };
 
     mailSort = function(mailingList) {
         mailingList.sort(function(a, b){   /** By first sorting by forgivenName, people with same sn will get sorted automatically #latskap **/
@@ -318,7 +318,7 @@ app.controller('ModalInstanceCtrl', function ($scope, $modalInstance, items) {
             console.log("error");
             document.getElementById("passErr").hidden = false;
         }
-    }
+    };
 
 
     $scope.ok = function () {

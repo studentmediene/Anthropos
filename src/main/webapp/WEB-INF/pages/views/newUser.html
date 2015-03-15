@@ -1,47 +1,73 @@
-<div id="page-wrap">
-    <form method="post" id="contact" name="contact">
-        <fieldset>
-            <legend>Opprett ny bruker</legend>
-            <div class="heightPad">
-                <label for="name">Fornavn</label>
-                <input type="text" id="name" name="name" />
-            </div>
+<div id = "page-wrap">
 
-            <div class="heightPad">
-                <label for="lastname">Etternavn</label>
-                <input type="text" id="lastname" name="surname" />
-            </div>
-            <div class="heightPad">
-                <label for="email">Email</label>
-                <input type="email" id="email" name="email" />
-            </div>
-            <div class="heightPad">
-                <label for="mobile">Mobilnummer</label>
-                <input type="text" id="mobile" name="mobile"/>
-            </div>
+	<!-- Brukeren velger å lage en spesifikk bruker, eller mange ved hjelp av spreadsheets, her velger man hva som skal displayes-->
 
+	<div style="text-align:center; margin-bottom: 20px">
+		<div class = "section-choose" style="display:inline-block" ng-click = "selectCreateUser()">
+			<span class = "glyphicon glyphicon-user icon-align-center"
+			      style = "margin-left: 2em; margin-right: auto"></span>
 
-        </fieldset>
-    </form>
+			<div style = "margin: auto">Opprett enkel bruker</div>
+		</div>
 
+		<div class = "section-choose" style="display:inline-block; margin-left: 40px" ng-click = "selectCreateCSV()">
+			<img src="../img/csv_icon.png"
+			      style = "margin:auto"></span>
 
+			<div style = "margin: auto">Opprett via spreadsheet</div>
+		</div>
+	</div>
 
-    <table class = "table table-bordered">
-        <tr ng-repeat="group in myGroups" class = "{{createHover()}}">
+    <span ng-show = "showUserContainer">
+	    <form method = "post" id = "contact" name = "contact">
+		    <fieldset>
+			    <legend>Opprett ny bruker</legend>
+			    <div class = "heightPad">
+				    <label for = "name">Fornavn</label>
+				    <input type = "text" id = "name" name = "name"/>
+			    </div>
 
-            <td class ="ng-binding "  data-ng-click="remove(group)">{{group.Group}} <span data-ng-class="editable()"></span>
-            </td>
-        </tr>
-    </table>
+			    <div class = "heightPad">
+				    <label for = "lastname">Etternavn</label>
+				    <input type = "text" id = "lastname" name = "surname"/>
+			    </div>
+			    <div class = "heightPad">
+				    <label for = "email">Email</label>
+				    <input type = "email" id = "email" name = "email"/>
+			    </div>
+			    <div class = "heightPad">
+				    <label for = "mobile">Mobilnummer</label>
+				    <input type = "text" id = "mobile" name = "mobile"/>
+			    </div>
+		    </fieldset>
+	    </form>
 
+	    <table class = "table table-bordered">
+		    <tr ng-repeat = "group in myGroups" class = "{{createHover()}}">
 
-    {{showExplanation}}
-    <li ng-repeat="insufficient in insufficientList">
-        <div style="color:red">{{insufficient}}</div>
-    </li>
-    <button class="btn" data-ng-click="save()" style="background:limegreen; color:white">Opprett <bruker></bruker></button>
+			    <td class = "ng-binding " data-ng-click = "remove(group)">{{group.Group}} <span
+					    data-ng-class = "editable()"></span>
+			    </td>
+		    </tr>
+	    </table>
 
+	    {{showExplanation}}
+	    <li ng-repeat = "insufficient in insufficientList">
+		    <div style = "color:red">{{insufficient}}</div>
+	    </li>
 
+	    <button class = "btn" data-ng-click = "save()" style = "background:limegreen; color:white">Opprett
+		    <bruker></bruker>
+	    </button>
 
+    </span>
+
+    <span ng-show = "showFileContainer" ng-click = "selectCreateCSV()">
+	    <legend>Lag brukere ved hjelp av spreadsheet</legend>
+	    <input type = "file" ng-model-instant id="fileToUpload" onchange = "angular.element(this).scope().setFile(this)"/>
+	    <div id = "dropbox" class = "dropbox" ng-class = "dropClass"><span>{{dropText}}</span></div>
+
+	    <button ng-click = "selectFile()">Last opp</button>
+    </span>
 
 </div>

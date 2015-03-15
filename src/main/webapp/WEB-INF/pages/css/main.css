@@ -229,12 +229,6 @@ legend				{ font-size: 1.8em; }
     background-color: #F9F9F9;
 }
 
-.tableSelection:hover td{
-    background-color:#326ca6;
-    color:white;
-    cursor:pointer;
-}
-
 
 .tableHeader:hover {
     cursor:pointer;
@@ -290,4 +284,79 @@ legend				{ font-size: 1.8em; }
 }
 .test{
     color:blue;
+}
+
+.dropbox{
+    width: 10em;
+    height: 2em;
+    border: 2px dashed #DBDACC;
+    border-radius: 8px;
+    background-color: #F0EFDF;
+    color: #BBB;
+    font-family: FontAwesome;
+    font-size: 2em;
+}
+.dropbox.over {
+    background-color: #bfb;
+}
+.dropbox.not-available {
+    background-color: #F88;
+}
+.section-choose {
+    padding: 1em;
+    width: 12em;
+    height: 12em;
+    border: 2px solid #808080;
+    border-radius: 8px;
+    background-color: lightgrey;
+    font-family: FontAwesome;
+    font-size: 1em;
+}
+.section-choose:hover {
+    background-color: #BFD7F2;
+    cursor:pointer;
+}
+
+.nav-button-left {
+    background-color: #326CA6;
+    color:white;
+    border: 1px solid white;
+    -webkit-border-bottom-left-radius: 10px;
+    -webkit-border-top-left-radius: 10px;
+    -moz-border-radius-bottomleft: 10px;
+    -moz-border-radius-topleft: 10px;
+}
+.nav-button-left:hover {
+    border: 1px solid dodgerblue;
+}
+.nav-button-left:active {
+    background-color: #437FBA;
+}
+
+.nav-button-right {
+    background-color: #326CA6;
+    color:white;
+    border: 1px solid white;
+    -webkit-border-bottom-right-radius: 10px;
+    -webkit-border-top-right-radius: 10px;
+    -moz-border-radius-bottomright: 10px;
+    -moz-border-radius-topright: 10px;
+}
+.nav-button-right:hover {
+    border: 1px solid dodgerblue;
+}
+
+.nav-button-right:active {
+    background-color: #437FBA;
+}
+
+.nav-buttons {
+    height: 3em;
+    width: 2em;
+    color: black;
+    border: 1px solid dimgrey;
+}
+.nav-buttons:active {
+    background-color: #326CA6;
+    color: white;
 }

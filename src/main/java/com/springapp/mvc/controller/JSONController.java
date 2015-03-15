@@ -45,32 +45,28 @@ public class JSONController {
         return userLoginService.login(ldapUserPwd);
     }
 
-    @RequestMapping(value="add", method=RequestMethod.POST)
-    public @ResponseBody
-    Person post(@RequestBody final Person person) {
-        return null;
+    @RequestMapping(value = "logout")
+    public @ResponseBody void logout() {
+        System.out.println("logout");
+        userLoginService.logout();
     }
 
-    @RequestMapping(value = "/addList", method = RequestMethod.POST)
-    public @ResponseBody ArrayList<Person> listPost(@RequestBody final ArrayList<Person> list) {
-        for (Person person : list) {
-            personList.addPerson(person);
+    @RequestMapping(value = "{id}", method = RequestMethod.GET)
+    public @ResponseBody Person getPersonById(@PathVariable int id) {
+        Person person = null;
+        try {
+            person = LDAP.findByIdNumber(id);
+        } catch(NamingException e) {
+            System.err.println("Error: " + e.getMessage());
         }
-        return personList.getPersonList();
+        return person;
     }
 
     @RequestMapping(value = "list", method = RequestMethod.GET)
     public @ResponseBody ArrayList<Person> getList() {
         PersonList returnList = new PersonList();
         System.out.print("Trying to get the list of users: ");
-        try {
-            System.out.println("Trying");
-            System.out.println(LDAP.getDn("adem.ruud"));
-            returnList.update(ldapUtil.getUsers());
-        }
-        catch (NamingException e) {
-            System.out.print("Error: " + e.getMessage());
-        }
+        returnList.update(ldapUtil.getUsers());
         for (Person p : returnList) {
             ArrayList<String> groups = p.getMemberOf();
             ArrayList<String> sections = new ArrayList<String>();
@@ -87,17 +83,6 @@ public class JSONController {
     @RequestMapping(value = "edit", method = RequestMethod.GET)
     public @ResponseBody void edit(@RequestParam(value="uid", required = true) String uid, @RequestParam(value = "fields", required = true) ArrayList<String[]> fields) {
 
-    }
-
-    @RequestMapping(value = "{id}", method = RequestMethod.GET)
-    public @ResponseBody Person getPersonById(@PathVariable int id) {
-        Person person = null;
-        try {
-            person = LDAP.findByIdNumber(id);
-        } catch(NamingException e) {
-            System.err.println("Error: " + e.getMessage());
-        }
-        return person;
     }
 
     @RequestMapping(value = "forgotPassword")
@@ -118,15 +103,11 @@ public class JSONController {
         return returnList;
     }
 
-    @RequestMapping(value="/streng", method = RequestMethod.POST)
-    public String test(String s) {
-        System.out.print("Streng: " + s);
-        return "/";
-    }
-
-    @RequestMapping(value = "logout")
-    public @ResponseBody void logout() {
-        System.out.println("logout");
-        userLoginService.logout();
+    @RequestMapping(value = "/addList", method = RequestMethod.POST)
+    public @ResponseBody ArrayList<Person> listPost(@RequestBody final ArrayList<Person> list) {
+        for (Person person : list) {
+            personList.addPerson(person);
+        }
+        return personList.getPersonList();
     }
 }

@@ -16,6 +16,7 @@
     <script src="javascript/loginController.js" type = "text/javascript"></script>
     <script src="javascript/registerController.js" type = "text/javascript"></script>
     <script src="javascript/maincontroller.js" type = "text/javascript"></script>
+    <script src="javascript/httpInterceptor.js" type = "text/javascript"></script>
 
 
     <script src="javascript/ui-bootstrap-tpls-0.11.2.min.js" type = "text/javascript"></script>
@@ -37,10 +38,8 @@
     <span class="header-title mediumScreen">MDB</span>
     <div class="pull-right" style="margin-top: 30px;">
       <!--  <button class="btn" ng-click="ting=!ting">{{ting}}</button> -->
-        <a href="#"> <b>Medlemmer</b></a>
-        <a href="#/user/1"> <b>Behandle bruker </b></a>  <!-- TODO go to the id retrievable from user credentials -->
         <a href="#/login" data-ng-click="logout()"> <b>Logg ut </b></a>
-        <a href="#/register" style="border-left:1px solid #FFF;height: 30px" ng-show="ting"> <b>Opprett bruker </b></a>
+
     </div>
     <!-- <a href="https://www.youtube.com/watch?v=PGNiXGX2nLU" ng-show="easter(count)"><b><div style="color: black;  ">{{egg}}</div></b></a>
      -->

@@ -9,7 +9,7 @@
 
     <properties>
         <spring.version>3.2.0.RELEASE</spring.version>
-        <spring.security.version>3.2.5.RELEASE</spring.security.version>
+        <spring.security.version>3.2.6.RELEASE</spring.security.version>
     </properties>
 
     <dependencies>
@@ -112,6 +112,11 @@
             <groupId>org.slf4j</groupId>
             <artifactId>slf4j-simple</artifactId>
             <version>1.6.1</version>
+        </dependency>
+        <dependency>
+            <groupId>org.slf4j</groupId>
+            <artifactId>slf4j-api</artifactId>
+            <version>1.7.7</version>
         </dependency>
     </dependencies>
 

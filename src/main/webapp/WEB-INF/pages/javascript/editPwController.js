@@ -13,7 +13,7 @@ app.controller("EditPwCtrl", function($scope, $resource, $http) {
         "username":"olano",
         "username":"karino",
         "username":"ottonorm"
-    }
+    };
 
     console.log('test2');
     $scope.convert = function() {
