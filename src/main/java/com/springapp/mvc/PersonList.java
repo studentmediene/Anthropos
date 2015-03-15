@@ -11,19 +11,6 @@ import java.util.List;
 public class PersonList extends ArrayList<Person> {
     ArrayList<Person> personList = new ArrayList<Person>();
 
-    public PersonList() {
-        /*String[] smint = {"smint"};
-        String[] it = {"it"};
-        Person test = new Person("Test", "Testerson", "test@test.test", new ArrayList<String>(), 1);
-        Person adrian = new Person("Adrian", "Hundseth", "adrian@smint.no", new ArrayList<String>(), 2);
-        Person person = new Person("Person", "Norsep", "person@earth.com", new ArrayList<String>(), 3);
-        Person person1 = new Person("Randy", "Inty", "rand@int.wat", new ArrayList<String>(), 4);
-        this.personList.add(test);
-        this.personList.add(adrian);
-        this.personList.add(person);
-        this.personList.add(person1);*/
-    }
-
     public void addPerson(Person person) {
         this.personList.add(person);
     }

@@ -1,7 +1,6 @@
 package com.springapp.mvc.controller;
 
 import com.springapp.mvc.PersonList;
-import com.springapp.mvc.authentication.ActiveLogin;
 import com.springapp.mvc.authentication.LdapUserPwd;
 import com.springapp.mvc.authentication.UserLoginService;
 import com.springapp.mvc.ldap.LDAP;
@@ -21,7 +20,6 @@ import java.util.ArrayList;
 @RequestMapping("/api")
 public class JSONController {
     private PersonList personList = new PersonList();
-    private ActiveLogin activeLogin;
     LdapUtil ldapUtil = new LdapUtil();
 
     @Autowired
@@ -48,10 +46,8 @@ public class JSONController {
     }
 
     @RequestMapping(value="add", method=RequestMethod.POST)
-    public @ResponseBody
-    Person post(@RequestBody final Person person) {
+    public @ResponseBody Person add(@RequestBody final Person person) {
         System.out.print("editing");
-//        System.out.print(person.getUidNumber() + " " + person.getGivenName());
         personList.addPerson(person);
         System.out.print(person);
         try{
@@ -74,14 +70,7 @@ public class JSONController {
     public @ResponseBody ArrayList<Person> getList() {
         PersonList returnList = new PersonList();
         System.out.print("Trying to get the list of users: ");
-        try {
-            System.out.println("Trying");
-            System.out.println(LDAP.getDn("adem.ruud"));
-            returnList.update(ldapUtil.getUsers());
-        }
-        catch (NamingException e) {
-            System.out.print("Error: " + e.getMessage());
-        }
+        returnList.update(ldapUtil.getUsers());
         for (Person p : returnList) {
             ArrayList<String> groups = p.getMemberOf();
             ArrayList<String> sections = new ArrayList<String>();
@@ -95,14 +84,6 @@ public class JSONController {
         return returnList;
     }
 
-    @RequestMapping(value = "edit", method = RequestMethod.GET)
-    public @ResponseBody void edit(@RequestParam(value="uid", required = true) String uid, @RequestParam(value = "fields", required = true) ArrayList<String[]> fields) {
-        try {
-            LDAP.edit(activeLogin, uid, fields);
-        } catch (NamingException e) {
-            System.err.println("Error");
-        }
-    }
 
     @RequestMapping(value = "{id}", method = RequestMethod.GET)
     public @ResponseBody Person getPersonById(@PathVariable int id) {
@@ -131,12 +112,6 @@ public class JSONController {
             System.err.println("Search error: " + e.getMessage());
         }
         return returnList;
-    }
-
-    @RequestMapping(value="/streng", method = RequestMethod.POST)
-    public String test(String s) {
-        System.out.print("Streng: " + s);
-        return "/";
     }
 
     @RequestMapping(value = "logout")

@@ -38,6 +38,17 @@ public class LDAP {
 
     Logger logger = LoggerFactory.getLogger(getClass());
 
+    //private static final String host = "ldap://localhost:8389"; //For testing on the real server. Must tunnel to scgwl.studentmediene.no
+    /*
+        For this to work, you have to run the program on the same LAN as the LDAP-server
+        or tunnel a port on your computer to the LDAP-server, for example:
+        ssh boyeborg@scgw1.studentmediene.no -L8389:ldap.studentmediene.local:389
+    */
+
+    private static final String name = "ou=Users,dc=studentmediene,dc=no";
+
+    private static final String host = "ldap://ldapstaging.studentmediene.no";
+
     public PersonList getUsers() {
         final int[] activeCount = {0};
         PersonList personList = new PersonList();
@@ -71,16 +82,6 @@ public class LDAP {
         personList.update(persons);
         return personList;
     }
-
-    //private static final String host = "ldap://localhost:8389"; //For testing on the real server. Must tunnel to scgwl.studentmediene.no
-    /*
-        For this to work, you have to run the program on the same LAN as the LDAP-server
-        or tunnel a port on your computer to the LDAP-server, for example:
-        ssh boyeborg@scgw1.studentmediene.no -L8389:ldap.studentmediene.local:389
-    */
-
-    private static final String host = "ldap://ldapstaging.studentmediene.no";
-    private static final String name = "ou=Users,dc=studentmediene,dc=no";
 
     /**
      * Binds anonymously to the LDAP server. Returns a <code>Hashtable</code> to use for searching etc.
