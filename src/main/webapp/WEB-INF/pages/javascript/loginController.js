@@ -16,10 +16,6 @@ app.controller("LoginCtrl", function($scope, $modal, $http) {
         };
 
         return $http({
-            headers: {
-                'Accept': 'application/json;charset=UTF-8',
-                'Content-Type': 'application/json;charset=UTF-8'
-            },
             method : 'POST',
             data : credentials,
             url : 'api/login'
