@@ -32,18 +32,6 @@
         <security:authentication-provider ref="tokenAuthenticationProvider" />
     </security:authentication-manager>
 
-
-    <bean id="exceptionTranslationFilter"
-          class="org.springframework.security.web.access.ExceptionTranslationFilter">
-        <property name="authenticationEntryPoint" ref="tokenEntryPoint"/>
-        <property name="accessDeniedHandler" ref="accessDeniedHandler"/>
-    </bean>
-
-    <bean id="accessDeniedHandler"
-          class="org.springframework.security.web.access.AccessDeniedHandlerImpl">
-        <property name="errorPage" value="/api/login"/>
-    </bean>
-
     <!-- Instantiation of our auth classes -->
     <bean id="tokenEntryPoint" class="com.springapp.mvc.authentication.TokenEntryPoint"/>
 

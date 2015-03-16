@@ -40,7 +40,6 @@ public class JSONController {
 
     @RequestMapping(value = "/login", method = RequestMethod.POST)
     public @ResponseBody boolean login(@RequestBody LdapUserPwd ldapUserPwd) {
-        System.out.println("login");
         logger.debug("Login try with: {}", ldapUserPwd);
         return userLoginService.login(ldapUserPwd);
     }

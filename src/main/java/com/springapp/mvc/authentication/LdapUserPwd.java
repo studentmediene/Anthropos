@@ -1,5 +1,7 @@
 package com.springapp.mvc.authentication;
 
+import org.codehaus.jackson.annotate.JsonIgnore;
+
 /**
  * Created by adrianh on 25.01.15.
  */
@@ -8,6 +10,7 @@ public class LdapUserPwd {
     private String username;
     private String password;
 
+    @JsonIgnore
     public LdapUserPwd() {
 
     }
