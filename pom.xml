@@ -100,12 +100,19 @@
         <dependency>
             <groupId>org.codehaus.jackson</groupId>
             <artifactId>jackson-mapper-asl</artifactId>
-            <version>1.9.12</version>
+            <version>1.9.13</version>
         </dependency>
-        <dependency>
+       <!-- <dependency>
             <groupId>org.json</groupId>
             <artifactId>json</artifactId>
             <version>20080701</version>
+        </dependency>-->
+
+        <!-- JSON mapper -->
+        <dependency><!-- This is Jackson JSON mapper with some modifications to work with Hibernate -->
+            <groupId>com.fasterxml.jackson.datatype</groupId>
+            <artifactId>jackson-datatype-hibernate4</artifactId>
+            <version>2.1.2</version>
         </dependency>
 
 

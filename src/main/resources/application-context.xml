@@ -14,12 +14,16 @@
     <!-- Override the values with our local properties -->
     <context:property-placeholder location="classpath*:local.properties" order="1" ignore-unresolvable="true" />
 
+
     <!-- SECURITY -->
+
     <security:http entry-point-ref="tokenEntryPoint" use-expressions="true">
+
         <!--<security:intercept-url pattern="/login" access="permitAll" />-->
         <security:intercept-url pattern="/api/login" access="permitAll" />
         <security:intercept-url pattern="/api/**" access="isFullyAuthenticated()" />
         <!--<security:intercept-url pattern="/**" access="permitAll" />-->
+
     </security:http>
 
 
@@ -42,7 +46,16 @@
     </bean>
 
     <mvc:resources mapping="/**" location="/WEB-INF/pages/" />
-    <mvc:annotation-driven/>
+    <mvc:annotation-driven>
+    <!--<mvc:message-converters>
+        &lt;!&ndash; Use the Hibernate JSON mapper instead of the default &ndash;&gt;
+        <bean class="org.springframework.http.converter.json.MappingJackson2HttpMessageConverter">
+            <property name="objectMapper">
+                <bean class="com.springapp.mvc.mapper.HibernateAwareObjectMapper" />
+            </property>
+        </bean>
+    </mvc:message-converters>-->
+    </mvc:annotation-driven>
 
     <!-- In which packages to look for ou services, controllers etc. -->
     <context:component-scan base-package="com.springapp.mvc"/>

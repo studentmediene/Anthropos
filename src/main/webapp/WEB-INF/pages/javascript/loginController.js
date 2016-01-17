@@ -5,19 +5,20 @@ app.controller("LoginCtrl", function($scope, $modal, $http) {
 
     $scope.login = function() {
 
-        var userName = document.getElementById('username').value;
+        var username = document.getElementById('username').value;
         var password = document.getElementById('pass').value;
 
         $scope.errorDuringLogin = "";
 
         var credentials = {
-            "username":userName,
+            "username":username,
             "password":password
         };
 
         return $http({
             method : 'POST',
             data : credentials,
+            contentType: 'application/json',
             url : 'api/login'
         }).success(function(data, status, headers, config) {
             window.location.href="/";

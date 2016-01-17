@@ -27,7 +27,7 @@ public class JSONController {
 
     private Logger logger = LoggerFactory.getLogger(getClass());
 
-    @RequestMapping("*")
+    /*@RequestMapping("*")
     @ResponseBody
     public String fallbackMethod(){
         return "fallback method";
@@ -36,12 +36,12 @@ public class JSONController {
     @RequestMapping
     public String defaultReturn() {
             return "index";
-    }
+    }*/
 
     @RequestMapping(value = "/login", method = RequestMethod.POST)
-    public @ResponseBody boolean login(@RequestBody LdapUserPwd ldapUserPwd) {
+    public @ResponseBody void login(@RequestBody LdapUserPwd ldapUserPwd) {
         logger.debug("Login try with: {}", ldapUserPwd);
-        return userLoginService.login(ldapUserPwd);
+        userLoginService.login(ldapUserPwd);
     }
 
     @RequestMapping(value = "logout")

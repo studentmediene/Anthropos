@@ -22,7 +22,7 @@ public class LdapUtil {
     private static final String name = "dc=studentmediene,dc=no";
 
     /**
-     * TODO: This doesn't work yet for some reason. Find out why some day. In the meantime, use the manual creation of tmpl, your friendly neighborhood temporary ldapTemplate.
+     * TODO: This doesn't work yet for some reason. Find out why some day. In the meantime, use the manual creation of tmpl, a temporary ldapTemplate.
      */
     @Autowired
     LdapTemplate ldapTemplate;

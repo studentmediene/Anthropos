@@ -42,7 +42,7 @@ public class TokenAuthenticationProvider implements AuthenticationProvider {
             // Return an updated token with the right user details
             return new Token(ldapUserPwd, authUserDetails);
             } catch (NamingException e) {
-                throw new BadCredentialsException("Logged in user no found in database. This error makes no sense and should not appear");
+                throw new BadCredentialsException("Logged in user not found in database. This error makes no sense and should not appear");
             }
         }
         throw new BadCredentialsException("Invalid username or password");
