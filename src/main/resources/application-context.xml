@@ -71,16 +71,20 @@
 
 
     <!-- LDAP -->
-    <!--<ldap:context-source
+    <ldap:context-source
             url="ldap://ldapstaging.studentmediene.no"
             base="dc=studentmediene,dc=no"
             username="${ldap.username}"
             password="${ldap.password}"
             />
 
-    <ldap:ldap-template id="ldapTemplate"/>-->
+    <ldap:ldap-template id="ldapTemplate"/>
 
-    <bean id="contextSource"
+    <!--<bean id="personRepo" class="com.springapp.mvc.ldap.LdapUtil">
+        <property name="ldapTemplate" ref="ldapTemplate" />
+    </bean>-->
+
+    <!--<bean id="contextSource"
           class="org.springframework.ldap.core.support.LdapContextSource">
         <property name="url" value="${ldap.url}" />
         <property name="base" value="${ldap.base}" />
@@ -89,6 +93,6 @@
     </bean>
     <bean id="ldapTemplate" class="org.springframework.ldap.core.LdapTemplate">
         <constructor-arg ref="contextSource" />
-    </bean>
+    </bean>-->
 
 </beans>
