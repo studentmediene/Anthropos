@@ -28,7 +28,7 @@ public class LdapUserPwd {
     public String toString() {
         return "LdapUserPwd{" +
                 "username='" + username + '\'' +
-                ", password='" + password + '\'' +
+                ", password='" + "[SECRET]" + '\'' +
                 '}';
     }
 }
