@@ -9,7 +9,6 @@ public class LdapUserPwd {
     private String password;
 
     public LdapUserPwd() {
-
     }
 
     public LdapUserPwd(String username, String password) {
@@ -29,7 +28,7 @@ public class LdapUserPwd {
     public String toString() {
         return "LdapUserPwd{" +
                 "username='" + username + '\'' +
-                ", password='" + password + '\'' +
+                ", password='" + "[SECRET]" + '\'' +
                 '}';
     }
 }
