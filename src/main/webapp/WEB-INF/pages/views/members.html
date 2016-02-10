@@ -69,23 +69,22 @@
                         <span class="pull-right">{{orderField == 'givenName' ? '&and;':'&or;'}}</span></th></th>
                     <th ng-click="orderField = (orderField == 'uid' ? '-':'') + 'uid'" class="tableHeader">Brukernavn
                         <span class="pull-right">{{orderField == 'uid' ? '&and;':'&or;'}}</span></th></th>
-                    <th ng-click="orderField = (orderField == 'email' ? '-':'') + 'email'" class="tableHeader">Mailadresse
-                        <span class="pull-right">{{orderField == 'email' ? '&and;':'&or;'}}</span></th></th>
+                    <th ng-click="orderField = (orderField == 'mail' ? '-':'') + 'mail'" class="tableHeader">Mailadresse
+                        <span class="pull-right">{{orderField == 'mail' ? '&and;':'&or;'}}</span></th></th>
                     <th ng-click="orderField = (orderField == 'telephoneNumber' ? '-':'') + 'telephoneNumber'" class="tableHeader">Mobilnummer
                         <span class="pull-right">{{orderField == 'telephoneNumber' ? '&and;':'&or;'}}</span></th></th>
                     <th>Grupper</th>
                 </tr>
                 </thead>
                 <tbody>
-                <tr ng-repeat ="person in displayMembers | filter:searchText | orderBy:orderField " class="ng-scope tableSelection"
+                <tr ng-repeat ="person in shownPeople | orderBy:orderField | startFrom:currentPage*pageSize | limitTo:pageSize | filter:searchText" class="ng-scope tableSelection"
                     >
                     <td class ="ng-binding">{{person.sn}}</td>
                     <td class ="ng-binding">{{person.givenName}}</td>
                     <td class ="ng-binding">{{person.uid}}</td>
                     <td class ="ng-binding">{{person.mail}}</td>
                     <td class ="ng-binding">{{person.telephoneNumber}}</td>
-                    <td class ="ng-binding">
-                        <div ng-repeat = "group in person.memberOf">{{group}}</div></td>    <!-- TODO: add the groups individually through ng-repeat or sth.-->
+                    <td class ="ng-binding"><div ng-repeat = "group in person.memberOf">{{group}}</div></td>    <!-- TODO: add the groups individually through ng-repeat or sth.-->
                 </tr>
                 </tbody>
             </table>
