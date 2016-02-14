@@ -1,12 +1,13 @@
 <!DOCTYPE html>
-<html class="no-js">
+<html class="no-js" >
 <head>
     <title>Medlemsdatabase</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta charset = "UTF-8">
 
     <script src='https://ajax.googleapis.com/ajax/libs/angularjs/1.2.15/angular.min.js' type="text/javascript"></script>
-    <script src='//ajax.googleapis.com/ajax/libs/angularjs/1.2.12/angular-route.js' type="text/javascript"></script>
+    <script src='https://ajax.googleapis.com/ajax/libs/angularjs/1.2.12/angular-route.js' type="text/javascript"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/angular-smart-table/2.1.7/smart-table.js" type="text/javascript"></script>
     <script src="javascript/angular-resource.min.js" type="text/javascript"></script>
     <script src="javascript/app.js" type = "text/javascript"></script>
     <script src="javascript/personController.js" type = "text/javascript"></script>
@@ -23,15 +24,19 @@
 
     <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/lodash.js/0.10.0/lodash.min.js"></script>
 
+
+
+
     <link rel="icon" type="image/png" href="favicon.png">
 
     <link rel="stylesheet" href="css/main.css">
     <link rel="stylesheet" href="css/bootstrap.css">
-    <link rel="stylesheet" href="css/bootstrap-theme.css">
+    <%--<link rel="stylesheet" href="css/bootstrap-theme.css">--%>
 
 
 </head>
-<body  ng-app="mdbApp">
+<body ng-app="mdbApp">
+
 <div class="banner" ng-controller="mainCtrl">
     <span class="header-title largeScreen"> Medlemsdatabase for Studentmediene </span>
     <img src="../img/SM-logo.png" class="banner-icon" style="float:left" href="#" ng-mouseover="count=count+1" ng-init="count=0">
