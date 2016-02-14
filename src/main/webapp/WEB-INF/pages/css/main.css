@@ -361,4 +361,4 @@ legend				{ font-size: 1.8em; }
     color: white;
 }
 
-tr:hover td {background:#F0EFDF}
+.tableSelection:hover td {background:#F0EFDF}

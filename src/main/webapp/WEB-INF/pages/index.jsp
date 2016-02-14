@@ -26,12 +26,12 @@
 
 
 
-
+    <%--<link rel="stylesheet" href="css/bootstrap-theme.css">--%>
     <link rel="icon" type="image/png" href="favicon.png">
 
     <link rel="stylesheet" href="css/main.css">
     <link rel="stylesheet" href="css/bootstrap.css">
-    <%--<link rel="stylesheet" href="css/bootstrap-theme.css">--%>
+
 
 
 </head>
