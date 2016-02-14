@@ -162,13 +162,6 @@
                     <warSourceIncludes>
                         WEB-INF/**
                     </warSourceIncludes>
-
-                    <!-- include the content of the dist folder built by grunt -->
-                    <webResources>
-                        <resource>
-                            <directory>src/main/webapp/dist</directory>
-                        </resource>
-                    </webResources>
                 </configuration>
             </plugin>
             <plugin>
