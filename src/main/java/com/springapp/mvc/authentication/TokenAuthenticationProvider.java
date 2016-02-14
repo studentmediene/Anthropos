@@ -3,11 +3,13 @@ package com.springapp.mvc.authentication;
 import com.springapp.mvc.PersonList;
 import com.springapp.mvc.RestException;
 import com.springapp.mvc.ldap.LdapUtil;
+import com.springapp.mvc.ldap.PersonAttributesMapper;
 import com.springapp.mvc.model.Person;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.ldap.core.LdapTemplate;
+import org.springframework.ldap.query.LdapQuery;
 import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.core.Authentication;
@@ -15,7 +17,11 @@ import org.springframework.security.core.AuthenticationException;
 import org.springframework.stereotype.Service;
 
 import javax.naming.NamingException;
+import javax.naming.directory.SearchControls;
 import javax.servlet.http.HttpServletResponse;
+import java.util.List;
+
+import static org.springframework.ldap.query.LdapQueryBuilder.query;
 
 /**
  * Created by adrianh on 25.01.15.
@@ -36,15 +42,12 @@ public class TokenAuthenticationProvider implements AuthenticationProvider {
         LdapUserPwd ldapUserPwd = token.getLdapUserPwd();
 
         if (validateLogin(ldapUserPwd)) {
-            try {
-            Person loggedInUser = ldapUtil.search(ldapUserPwd.getUsername()).get(0);
-            AuthUserDetails authUserDetails = new AuthUserDetails(loggedInUser);
+                Person loggedInUser = getLoggedInUser(ldapUserPwd.getUsername());
+                AuthUserDetails authUserDetails = new AuthUserDetails(loggedInUser);
 
-            // Return an updated token with the right user details
-            return new Token(ldapUserPwd, authUserDetails);
-            } catch (NamingException e) {
-                throw new BadCredentialsException("Logged in user not found in database. This error makes no sense and should not appear");
-            }
+                // Return an updated token with the right user details
+                return new Token(ldapUserPwd, authUserDetails);
+
         }
         throw new BadCredentialsException("Invalid username or password");
     }
@@ -73,7 +76,7 @@ public class TokenAuthenticationProvider implements AuthenticationProvider {
         System.out.println(username);
         Person person = new Person();
         try {
-            person = ldapUtil.search(username).get(0);
+            person = search(username).get(0);
         } catch (NamingException e) {
             e.printStackTrace();
         }
@@ -81,5 +84,19 @@ public class TokenAuthenticationProvider implements AuthenticationProvider {
             throw new RestException("User was logged in, but not found in our database!", HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
         }
         return person;
+    }
+
+
+    //TODO: This way is less than ideal. Search can not be referenced from LdapUtil because a new instance breaks the autowiring of ldapTemplate. Try to find a solution to this.
+    public PersonList search(String search) throws NamingException {
+        PersonList personList = new PersonList();
+        SearchControls ctls = new SearchControls();
+        LdapQuery query = query()
+                .where("objectclass").is("person")
+                .and("uid").is(search);
+        List<Person> persons = ldapTemplate.search(query, new PersonAttributesMapper());
+
+        personList.update(persons);
+        return personList;
     }
 }
