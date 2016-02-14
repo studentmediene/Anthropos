@@ -37,7 +37,8 @@
     </security:authentication-manager>
 
     <!-- Instantiation of our auth classes -->
-    <bean id="tokenEntryPoint" class="com.springapp.mvc.authentication.TokenEntryPoint"/>
+    <bean id="tokenEntryPoint" class="no.smint.anthropos.authentication.TokenEntryPoint"/>
+
 
 
     <bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
@@ -51,14 +52,14 @@
         &lt;!&ndash; Use the Hibernate JSON mapper instead of the default &ndash;&gt;
         <bean class="org.springframework.http.converter.json.MappingJackson2HttpMessageConverter">
             <property name="objectMapper">
-                <bean class="com.springapp.mvc.mapper.HibernateAwareObjectMapper" />
+                <bean class="HibernateAwareObjectMapper" />
             </property>
         </bean>
     </mvc:message-converters>-->
     </mvc:annotation-driven>
 
     <!-- In which packages to look for ou services, controllers etc. -->
-    <context:component-scan base-package="com.springapp.mvc"/>
+    <context:component-scan base-package="no.smint.anthropos"/>
 
     <!-- Enable @Autowired etc. -->
     <context:annotation-config />
@@ -71,16 +72,20 @@
 
 
     <!-- LDAP -->
-    <!--<ldap:context-source
+    <ldap:context-source
             url="ldap://ldapstaging.studentmediene.no"
             base="dc=studentmediene,dc=no"
             username="${ldap.username}"
             password="${ldap.password}"
             />
 
-    <ldap:ldap-template id="ldapTemplate"/>-->
+    <ldap:ldap-template id="ldapTemplate"/>
 
-    <bean id="contextSource"
+    <!--<bean id="personRepo" class="LdapUtil">
+        <property name="ldapTemplate" ref="ldapTemplate" />
+    </bean>-->
+
+    <!--<bean id="contextSource"
           class="org.springframework.ldap.core.support.LdapContextSource">
         <property name="url" value="${ldap.url}" />
         <property name="base" value="${ldap.base}" />
@@ -89,6 +94,6 @@
     </bean>
     <bean id="ldapTemplate" class="org.springframework.ldap.core.LdapTemplate">
         <constructor-arg ref="contextSource" />
-    </bean>
+    </bean>-->
 
 </beans>

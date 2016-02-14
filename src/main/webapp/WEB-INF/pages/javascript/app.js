@@ -1,7 +1,7 @@
 /**
  * Created by Kristian on 12/02/14.
  */
-var app = angular.module('mdbApp',["ngResource", "ngRoute","ui.bootstrap"]);
+var app = angular.module('mdbApp',["ngResource", "ngRoute","ui.bootstrap","smart-table"]);
 
 app.filter('startFrom', function() {
     return function(input, start) {
