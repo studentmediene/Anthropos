@@ -43,3 +43,16 @@ app.filter('startFrom', function() {
     config(['$httpProvider', function ($httpProvider) {
         $httpProvider.interceptors.push('HttpInterceptor');
     }]);
+
+angular.module('mdbApp')
+    .directive('pageSelect', function() {
+        return {
+            restrict: 'E',
+            template: '<input type="text" class="select-page" ng-model="inputPage" ng-change="selectPage(inputPage)" style=" text-align: center; width: 30%; line-height: 0.1em; padding: 0;">',
+            link: function(scope, element, attrs) {
+                scope.$watch('currentPage', function(c) {
+                    scope.inputPage = c;
+                });
+            }
+        }
+    });

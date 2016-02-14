@@ -60,16 +60,16 @@
 	        </ul>
 			-->
 
-            <table st-safe-src="shownPeople" st-table="displayedCollection" class="table table-bordered"  ng-if="shownPeople.length" >
+            <table st-safe-src="shownPeople" st-table="displayedCollection" class="table"  ng-if="shownPeople.length" >
 
 
                 <thead>
                     <td colspan="6" class="text-center">
-                        <div  st-pagination st-items-by-page="pageSize" st-displayed-pages="7" style="cursor:pointer;"></div>
+                        <div  st-pagination st-items-by-page="pageSize" st-template="views/customPagination.html"></div>
 
                             <input st-search="" placeholder="Søk..." class="form-control" type="search"/>
                     </td>
-                    <tr>
+                    <tr class="table table-bordered"">
                         <th st-sort="sn" class="tableHeader">Etternavn</th>
                         <th st-sort="givenName" class="tableHeader">Fornavn</th></th>
                         <th st-sort="uid" class="tableHeader">Brukernavn</th></th>
@@ -79,13 +79,13 @@
                     </tr>
                 </thead>
 
-                <tbody>
+                <tbody class="table table-bordered">
 
-                <tr ng-repeat ="person in displayedCollection | limitTo:pageSize" class="ng-scope tableSelection"
+                <tr ng-click="navToUser(person.uidNumber)" ng-repeat ="person in displayedCollection | limitTo:pageSize" class="ng-scope tableSelection" style="cursor:pointer;"
                     >
                     <td class ="ng-binding">{{person.sn}}</td>
                     <td class ="ng-binding">{{person.givenName}}</td>
-                    <td class ="ng-binding">{{person.uid}}</td>
+                    <td class ="ng-binding" >{{person.uid}}</td>
                     <td class ="ng-binding">{{person.mail}}</td>
                     <td class ="ng-binding">{{person.telephoneNumber}}</td>
                     <td class ="ng-binding"><div ng-repeat = "group in person.memberOf">{{group}}</div></td>    <!-- TODO: add the groups individually through ng-repeat or sth.-->

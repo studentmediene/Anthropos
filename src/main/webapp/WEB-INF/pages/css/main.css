@@ -360,3 +360,5 @@ legend				{ font-size: 1.8em; }
     background-color: #326CA6;
     color: white;
 }
+
+tr:hover td {background:#F0EFDF}
