@@ -1,6 +1,6 @@
-package com.springapp.mvc.authentication;
+package no.smint.anthropos.authentication;
 
-import com.springapp.mvc.model.Person;
+import no.smint.anthropos.model.Person;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AnonymousAuthenticationToken;
 import org.springframework.security.authentication.AuthenticationManager;

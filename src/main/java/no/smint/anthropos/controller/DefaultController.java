@@ -1,4 +1,4 @@
-package com.springapp.mvc.controller;
+package no.smint.anthropos.controller;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;

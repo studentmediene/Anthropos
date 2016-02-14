@@ -1,6 +1,6 @@
-package com.springapp.mvc.ldap;
+package no.smint.anthropos.ldap;
 
-import com.springapp.mvc.model.Person;
+import no.smint.anthropos.model.Person;
 import org.springframework.ldap.core.AttributesMapper;
 
 import javax.naming.NamingException;

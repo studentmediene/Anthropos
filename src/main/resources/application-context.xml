@@ -37,7 +37,7 @@
     </security:authentication-manager>
 
     <!-- Instantiation of our auth classes -->
-    <bean id="tokenEntryPoint" class="com.springapp.mvc.authentication.TokenEntryPoint"/>
+    <bean id="tokenEntryPoint" class="no.smint.anthropos.authentication.TokenEntryPoint"/>
 
 
 
@@ -52,14 +52,14 @@
         &lt;!&ndash; Use the Hibernate JSON mapper instead of the default &ndash;&gt;
         <bean class="org.springframework.http.converter.json.MappingJackson2HttpMessageConverter">
             <property name="objectMapper">
-                <bean class="com.springapp.mvc.mapper.HibernateAwareObjectMapper" />
+                <bean class="HibernateAwareObjectMapper" />
             </property>
         </bean>
     </mvc:message-converters>-->
     </mvc:annotation-driven>
 
     <!-- In which packages to look for ou services, controllers etc. -->
-    <context:component-scan base-package="com.springapp.mvc"/>
+    <context:component-scan base-package="no.smint.anthropos"/>
 
     <!-- Enable @Autowired etc. -->
     <context:annotation-config />
@@ -81,7 +81,7 @@
 
     <ldap:ldap-template id="ldapTemplate"/>
 
-    <!--<bean id="personRepo" class="com.springapp.mvc.ldap.LdapUtil">
+    <!--<bean id="personRepo" class="LdapUtil">
         <property name="ldapTemplate" ref="ldapTemplate" />
     </bean>-->
 

@@ -1,4 +1,4 @@
-package com.springapp.mvc.model;
+package no.smint.anthropos.model;
 
 import java.util.ArrayList;
 

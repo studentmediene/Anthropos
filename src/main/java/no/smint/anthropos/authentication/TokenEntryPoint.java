@@ -1,4 +1,4 @@
-package com.springapp.mvc.authentication;
+package no.smint.anthropos.authentication;
 
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.web.AuthenticationEntryPoint;

@@ -1,6 +1,6 @@
-package com.springapp.mvc.authentication;
+package no.smint.anthropos.authentication;
 
-import com.springapp.mvc.model.Person;
+import no.smint.anthropos.model.Person;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 

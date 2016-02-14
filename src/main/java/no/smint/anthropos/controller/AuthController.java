@@ -1,7 +1,7 @@
-package com.springapp.mvc.controller;
+package no.smint.anthropos.controller;
 
-import com.springapp.mvc.authentication.LdapUserPwd;
-import com.springapp.mvc.authentication.UserLoginService;
+import no.smint.anthropos.authentication.LdapUserPwd;
+import no.smint.anthropos.authentication.UserLoginService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;

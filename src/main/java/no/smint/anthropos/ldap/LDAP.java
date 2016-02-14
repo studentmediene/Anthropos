@@ -3,10 +3,10 @@ For this to work, you have to run the program on the same LAN as the LDAP-server
 or tunnel a port on your computer to the LDAP-server, for example:
 ssh boyeborg@scgw1.studentmediene.no -L8389:ldap.studentmediene.local:389
 */
-package com.springapp.mvc.ldap;
+package no.smint.anthropos.ldap;
 
-import com.springapp.mvc.PersonList;
-import com.springapp.mvc.model.Person;
+import no.smint.anthropos.PersonList;
+import no.smint.anthropos.model.Person;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,7 +14,6 @@ import org.springframework.ldap.core.AttributesMapper;
 import org.springframework.ldap.core.LdapTemplate;
 import org.springframework.stereotype.Service;
 
-import javax.naming.AuthenticationException;
 import javax.naming.Context;
 import javax.naming.NamingEnumeration;
 import javax.naming.NamingException;
@@ -134,7 +133,7 @@ public class LDAP {
      * @return Returns a <code>PersonList</code> object with <code>Person</code> objects corresponding to the search term
      * @throws NamingException Thrown upwards by the <code>config</code> function
      * @see SearchProcessing
-     * @see com.springapp.mvc.PersonList
+     * @see PersonList
      */
     /*public static PersonList search(String search) throws NamingException {
         Hashtable<String, Object> env = config();

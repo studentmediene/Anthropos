@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.springapp.mvc.mapper;
+package no.smint.anthropos.mapper;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.PropertyNamingStrategy;

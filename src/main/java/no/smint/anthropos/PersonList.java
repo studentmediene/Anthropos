@@ -1,6 +1,6 @@
-package com.springapp.mvc;
+package no.smint.anthropos;
 
-import com.springapp.mvc.model.Person;
+import no.smint.anthropos.model.Person;
 
 import java.util.ArrayList;
 import java.util.List;

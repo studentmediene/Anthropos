@@ -1,6 +1,6 @@
-package com.springapp.mvc.authentication;
+package no.smint.anthropos.authentication;
 
-import com.springapp.mvc.model.Person;
+import no.smint.anthropos.model.Person;
 
 /**
  * Created by adrianh on 08.02.15.

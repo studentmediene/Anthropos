@@ -1,4 +1,4 @@
-package com.springapp.mvc.authentication;
+package no.smint.anthropos.authentication;
 
 /**
  * Created by adrianh on 25.01.15.

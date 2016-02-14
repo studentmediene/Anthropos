@@ -1,7 +1,7 @@
-package com.springapp.mvc.ldap;
+package no.smint.anthropos.ldap;
 
-import com.springapp.mvc.PersonList;
-import com.springapp.mvc.model.Person;
+import no.smint.anthropos.PersonList;
+import no.smint.anthropos.model.Person;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;

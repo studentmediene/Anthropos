@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.springapp.mvc;
+package no.smint.anthropos;
 
 /**
  * Can be thrown when an error should be shown to the user with a specific http code

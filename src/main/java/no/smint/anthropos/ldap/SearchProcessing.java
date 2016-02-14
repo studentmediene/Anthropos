@@ -1,7 +1,7 @@
-package com.springapp.mvc.ldap;
+package no.smint.anthropos.ldap;
 
-import com.springapp.mvc.PersonList;
-import com.springapp.mvc.model.Person;
+import no.smint.anthropos.PersonList;
+import no.smint.anthropos.model.Person;
 
 import javax.naming.NamingEnumeration;
 import javax.naming.NamingException;
@@ -22,7 +22,7 @@ public class SearchProcessing {
      *     If the user does not contain certain attributes, the function prints an error.
      * </p>
      * @param searchResult The result of a search on the LDAP server
-     * @return Returns a {@link com.springapp.mvc.model.Person} object
+     * @return Returns a {@link Person} object
      */
     protected static Person getPerson(SearchResult searchResult) {
         Person person = null;
@@ -88,7 +88,7 @@ public class SearchProcessing {
      *     If the user does not contain certain attributes, the function prints an error.
      * </p>
      * @param answer A <code>NamingEnumeration</code> that contains the result of an LDAP search
-     * @return Returns a {@link com.springapp.mvc.PersonList} of {@link com.springapp.mvc.model.Person} objects
+     * @return Returns a {@link PersonList} of {@link Person} objects
      */
     protected static PersonList getPersons(NamingEnumeration answer) {
         PersonList returnList = new PersonList();

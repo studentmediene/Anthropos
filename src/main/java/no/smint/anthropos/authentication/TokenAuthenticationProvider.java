@@ -1,10 +1,10 @@
-package com.springapp.mvc.authentication;
+package no.smint.anthropos.authentication;
 
-import com.springapp.mvc.PersonList;
-import com.springapp.mvc.RestException;
-import com.springapp.mvc.ldap.LdapUtil;
-import com.springapp.mvc.ldap.PersonAttributesMapper;
-import com.springapp.mvc.model.Person;
+import no.smint.anthropos.PersonList;
+import no.smint.anthropos.RestException;
+import no.smint.anthropos.ldap.LdapUtil;
+import no.smint.anthropos.ldap.PersonAttributesMapper;
+import no.smint.anthropos.model.Person;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;

@@ -1,11 +1,11 @@
-package com.springapp.mvc.controller;
+package no.smint.anthropos.controller;
 
-import com.springapp.mvc.PersonList;
-import com.springapp.mvc.authentication.LdapUserPwd;
-import com.springapp.mvc.authentication.UserLoginService;
-import com.springapp.mvc.ldap.LDAP;
-import com.springapp.mvc.ldap.LdapUtil;
-import com.springapp.mvc.model.Person;
+import no.smint.anthropos.PersonList;
+import no.smint.anthropos.authentication.LdapUserPwd;
+import no.smint.anthropos.authentication.UserLoginService;
+import no.smint.anthropos.ldap.LDAP;
+import no.smint.anthropos.ldap.LdapUtil;
+import no.smint.anthropos.model.Person;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -90,6 +90,7 @@ public class JSONController {
         return "index";
     }
 
+    @Deprecated
     @RequestMapping(value = "search", method = RequestMethod.GET)
     public @ResponseBody ArrayList<Person> search(@RequestParam(value="name", required = true) String name) {
         PersonList returnList = new PersonList();
