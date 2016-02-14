@@ -4,7 +4,7 @@
     <groupId>com.springapp</groupId>
     <artifactId>Anthropos</artifactId>
     <packaging>war</packaging>
-    <version>1.0-SNAPSHOT</version>
+    <version>1.0.0-RELEASE</version>
     <name>Anthropos</name>
 
     <properties>
@@ -133,6 +133,7 @@
         <plugins>
             <plugin>
                 <artifactId>maven-compiler-plugin</artifactId>
+                <version>3.1</version>
                 <configuration>
                     <source>1.6</source>
                     <target>1.6</target>
@@ -152,8 +153,27 @@
                     </connectors>
                 </configuration>
             </plugin>
+            <!-- Control how the application is built -->
+            <plugin>
+                <artifactId>maven-war-plugin</artifactId>
+                <version>2.4</version>
+                <configuration>
+                    <!-- Only keep the WEB-INF folder in the war -->
+                    <warSourceIncludes>
+                        WEB-INF/**
+                    </warSourceIncludes>
+
+                    <!-- include the content of the dist folder built by grunt -->
+                    <webResources>
+                        <resource>
+                            <directory>src/main/webapp/dist</directory>
+                        </resource>
+                    </webResources>
+                </configuration>
+            </plugin>
             <plugin>
                 <artifactId>maven-surefire-plugin</artifactId>
+                <version>2.19.1</version>
                 <configuration>
                     <includes>
                         <include>**/*Tests.java</include>
