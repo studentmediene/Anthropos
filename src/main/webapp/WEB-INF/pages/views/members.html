@@ -1,8 +1,8 @@
-<div class="membersWrap" ng-click="buttonAction($event)"> <!--change class style-->
+<div class="membersWrap" ng-click="buttonAction($event)" > <!--change class style-->
     <div class="row-fluid">
         <div style="margin-top: 20px">
             <div class="span4" ng-if="shownPeople.length" id="page-wrap">
-                <input placeholder="Søk..." type="text" ng-model="searchText" class="form-control">
+
 
                 <div class="btn-group" style="margin-top: 5px" data-ng-class="{open: open}">
                     <button class="btn btn-default dropdown-toggle" data-ng-click="open=!open">
@@ -36,7 +36,7 @@
 
             <img src="../img/ajax-loader.gif" ng-if="!shownPeople.length" style="margin: auto;display:block"/>
 
-	        <div style="margin-left: 45%; margin-bottom: 20px" ng-if="shownPeople.length">
+	        <!--<div style="margin-left: 45%; margin-bottom: 20px" ng-if="shownPeople.length">
 		        <button type="button" class="nav-button-left" ng-disabled="currentPage == 0" ng-click="updateList(-1)">
 			        Forrige
 		        </button>
@@ -44,7 +44,7 @@
 		        <button type="button" class=" nav-button-right" ng-disabled="currentPage >= shownPeople.length/pageSize - 1" ng-click="updateList(1)">
 			        Neste
 		        </button>
-	        </div>
+	        </div>-->
 
 	        <!-- TODO: Implement the required pagination code
 	        <ul class="pagination" style="margin-left: 40%; margin-bottom: 20px" ng-if="shownPeople.length" ng-hide="numberOfPages() == 1">
@@ -60,24 +60,28 @@
 	        </ul>
 			-->
 
-            <table class="table table-bordered" ng-if="shownPeople.length">
+            <table st-safe-src="shownPeople" st-table="displayedCollection" class="table table-bordered"  ng-if="shownPeople.length" >
+
+
                 <thead>
-                <tr>
-                    <th ng-click="orderField = (orderField == 'sn' ? '-':'') + 'sn'" class="tableHeader">Etternavn
-                    <span class="pull-right">{{orderField == 'sn' ? '&and;':'&or;'}}</span></th>
-                    <th ng-click="orderField = (orderField == 'givenName' ? '-':'') + 'givenName'" class="tableHeader">Fornavn
-                        <span class="pull-right">{{orderField == 'givenName' ? '&and;':'&or;'}}</span></th></th>
-                    <th ng-click="orderField = (orderField == 'uid' ? '-':'') + 'uid'" class="tableHeader">Brukernavn
-                        <span class="pull-right">{{orderField == 'uid' ? '&and;':'&or;'}}</span></th></th>
-                    <th ng-click="orderField = (orderField == 'mail' ? '-':'') + 'mail'" class="tableHeader">Mailadresse
-                        <span class="pull-right">{{orderField == 'mail' ? '&and;':'&or;'}}</span></th></th>
-                    <th ng-click="orderField = (orderField == 'telephoneNumber' ? '-':'') + 'telephoneNumber'" class="tableHeader">Mobilnummer
-                        <span class="pull-right">{{orderField == 'telephoneNumber' ? '&and;':'&or;'}}</span></th></th>
-                    <th>Grupper</th>
-                </tr>
+                    <td colspan="6" class="text-center">
+                        <div  st-pagination st-items-by-page="pageSize" st-displayed-pages="7" style="cursor:pointer;"></div>
+
+                            <input st-search="" placeholder="Søk..." class="form-control" type="search"/>
+                    </td>
+                    <tr>
+                        <th st-sort="sn" class="tableHeader">Etternavn</th>
+                        <th st-sort="givenName" class="tableHeader">Fornavn</th></th>
+                        <th st-sort="uid" class="tableHeader">Brukernavn</th></th>
+                        <th st-sort="mail" class="tableHeader">Mailadresse</th></th>
+                        <th st-sort="telephoneNumber" class="tableHeader">Mobilnummer</th></th>
+                        <th>Grupper</th>
+                    </tr>
                 </thead>
+
                 <tbody>
-                <tr ng-repeat ="person in shownPeople | orderBy:orderField | startFrom:currentPage*pageSize | limitTo:pageSize | filter:searchText" class="ng-scope tableSelection"
+
+                <tr ng-repeat ="person in displayedCollection | limitTo:pageSize" class="ng-scope tableSelection"
                     >
                     <td class ="ng-binding">{{person.sn}}</td>
                     <td class ="ng-binding">{{person.givenName}}</td>
@@ -87,9 +91,8 @@
                     <td class ="ng-binding"><div ng-repeat = "group in person.memberOf">{{group}}</div></td>    <!-- TODO: add the groups individually through ng-repeat or sth.-->
                 </tr>
                 </tbody>
+
             </table>
-
-
 
         </div>
     </div>
