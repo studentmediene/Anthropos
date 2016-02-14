@@ -53,4 +53,5 @@
 
 <div ng-view></div>
 </body>
+<div class="panel-footer" style="padding: 5em; margin-top: 2em; text-align: center;">Copyright © 2016 Studentmediene i Trondheim AS. All Rights Reserved </div> <!-- TODO: Make real footer -->
 </html>
