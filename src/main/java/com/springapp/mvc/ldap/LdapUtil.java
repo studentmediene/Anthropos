@@ -5,6 +5,7 @@ import com.springapp.mvc.model.Person;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Configurable;
 import org.springframework.ldap.core.LdapTemplate;
 import org.springframework.ldap.core.support.LdapContextSource;
 import org.springframework.ldap.query.LdapQuery;
@@ -20,6 +21,7 @@ import static org.springframework.ldap.query.LdapQueryBuilder.query;
  * Created by adrianh on 01.03.15.
  */
 @Service
+@Configurable
 public class LdapUtil {
 
     LdapTemplate tmpl;
@@ -69,7 +71,7 @@ public class LdapUtil {
         LdapQuery query = query()
                 .where("objectclass").is("person")
                 .and("uid").is(search);
-        List<Person> persons = tmpl.search(query, new PersonAttributesMapper());
+        List<Person> persons = ldapTemplate.search(query, new PersonAttributesMapper());
 
         personList.update(persons);
         return personList;
