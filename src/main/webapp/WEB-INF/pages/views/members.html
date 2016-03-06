@@ -1,39 +1,6 @@
 <div class="membersWrap" ng-click="buttonAction($event)" > <!--change class style-->
     <div class="row-fluid">
         <div style="margin-top: 20px">
-            <div class="span4" ng-if="shownPeople.length" id="page-wrap">
-
-                <!--TODO: Very slow code, replace with faster -->
-                <!--<div class="btn-group" style="margin-top: 5px" data-ng-class="{open: open}">
-                    <button class="btn btn-default dropdown-toggle" data-ng-click="open=!open">
-                        Filtrer etter gruppe <span class="caret"></span>
-                    </button>
-                    <ul class="dropdown-menu" aria-labelledby="dropdownMenu">
-                        <input placeholder="Søk etter gruppe..." type = "text" ng-model="groupSearch" class="searchgroup form-control"/>
-                        <li>
-                            <a data-ng-click="checkAll()">
-                                <span class="glyphicon glyphicon-ok-sign"></span>  Check All</a>
-                        </li>
-                        <li>
-                            <a data-ng-click="uncheck()">
-                                <i class="glyphicon glyphicon-remove-sign"></i> Uncheck all</a>
-                        </li>
-                        <li class="divider"></li>
-                        <div class="filterScrollBar pull-right">
-                            <li data-ng-repeat="group in tmpGroupList | filter:groupSearch">
-                                <a data-ng-click="personInGroup(group)">
-                                    {{group}}
-                                    <span data-ng-class="isChecked(group)"></span>
-                                </a>
-                            </li>
-                        </div>
-                    </ul>
-                </div>
-                <button class="btn btn-default" style="margin-top:5px; border-radius:20px" ng-show="groupsSelected.length > 0" data-ng-click="uncheck()">X</button>
-                -->
-            </div>
-
-
 
             <img src="../img/ajax-loader.gif" ng-if="!shownPeople.length" style="margin: auto;display:block"/>
 
@@ -66,9 +33,38 @@
 
                 <thead>
                     <td colspan="6" class="text-center">
-                        <div  st-pagination st-items-by-page="pageSize" st-template="views/customPagination.html"></div>
-
-                            <input st-search="" placeholder="Søk..." class="form-control" type="search"/>
+                        <div  st-pagination st-items-by-page="pageSize" st-template="views/customPagination.html" ></div>
+                            <div class="input-group col-md-12">
+                            <input st-search="" placeholder="Søk..." class="form-control col-md-4" type="search"/>
+                            <div class="input-group-btn" ng-if="shownPeople.length" id="">
+                                <div class="btn-group" data-ng-class="{open: open}">
+                                    <button class="btn btn-default dropdown-toggle" data-ng-click="open=!open">
+                                        Filtrer etter gruppe <span class="caret"></span>
+                                    </button>
+                                    <ul class="dropdown-menu" aria-labelledby="dropdownMenu">
+                                        <input placeholder="Søk etter gruppe..." type = "text" ng-model="groupSearch" class="searchgroup form-control"/>
+                                        <li>
+                                            <a data-ng-click="checkAll()">
+                                                <span class="glyphicon glyphicon-ok-sign"></span>  Check All</a>
+                                        </li>
+                                        <li>
+                                            <a data-ng-click="uncheck()">
+                                                <i class="glyphicon glyphicon-remove-sign"></i> Uncheck all</a>
+                                        </li>
+                                        <li class="divider"></li>
+                                        <div class="filterScrollBar pull-right">
+                                            <li data-ng-repeat="group in tmpGroupList | filter:groupSearch">
+                                                <a data-ng-click="personInGroup(group)">
+                                                    {{group}}
+                                                    <span data-ng-class="isChecked(group)"></span>
+                                                </a>
+                                            </li>
+                                        </div>
+                                    </ul>
+                                </div>
+                                <button class="btn btn-default"  ng-show="groupsSelected.length > 0" data-ng-click="uncheck()">X</button>
+                            </div>
+                            </div>
                     </td>
                     <tr class="table table-bordered">
                         <th st-sort="sn" class="tableHeader">Etternavn</th>

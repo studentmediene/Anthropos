@@ -35,11 +35,11 @@
 
 
 </head>
-<body ng-app="mdbApp">
-
+<body ng-app="mdbApp" >
+<div id="wrap" >
 <div class="banner" ng-controller="mainCtrl">
     <span class="header-title largeScreen"> Medlemsdatabase for Studentmediene </span>
-    <img src="../img/SM-logo.png" class="banner-icon" style="float:left" href="#" ng-mouseover="count=count+1" ng-init="count=0">
+    <img href="#"  src="../img/SM-logo.png" class="banner-icon" style="float:left" ng-mouseover="count=count+1" ng-init="count=0">
     <span class="header-title mediumScreen">MDB</span>
     <div class="pull-right" style="margin-top: 30px;">
       <!--  <button class="btn" ng-click="ting=!ting">{{ting}}</button> -->
@@ -51,8 +51,10 @@
 </div>
 
 
-<div ng-view></div>
-<div class="panel-footer" style="padding: 5em; margin-top: 2em; text-align: center;">Copyright © 2016 Studentmediene i Trondheim AS. All Rights Reserved </div> <!-- TODO: Make real footer -->
+<div ng-view style="margin-bottom: 100px;"></div>
+    <div class="panel-footer" style=" position: relative; left: 0; right: 0; padding-top: 60px; bottom:0; text-align: center;">Copyright © 2016 Studentmediene i Trondheim AS. All Rights Reserved </div> <!-- TODO: Make real footer -->
+</div>
+
 </body>
 
 </html>
