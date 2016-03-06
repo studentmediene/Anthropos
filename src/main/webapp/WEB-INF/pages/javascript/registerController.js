@@ -14,8 +14,9 @@ app.controller("RegisterCtrl", function($scope, $resource, $http) {
     $scope.showFileContainer = false;
     $scope.dropbox = document.getElementById("dropbox");
     $scope.dropText = "Slipp fil her...";
+    $scope.csvFile = '';
 
-    var tmpObj = $resource("api/mailingLists.json", {}, {
+    var tmpObj = $resource("../mailingLists.json", {}, {
             get:{
                 isArray:true,
                 method:"GET"
@@ -24,7 +25,7 @@ app.controller("RegisterCtrl", function($scope, $resource, $http) {
     );
     $scope.mailingList = tmpObj.get();
 
-    var tmpObj = $resource("api/groups.json", {}, {
+    var tmpObj = $resource("../groups.json", {}, {
             get:{
                 isArray:true,
                 method:"GET"
@@ -151,7 +152,7 @@ app.controller("RegisterCtrl", function($scope, $resource, $http) {
                 console.log("JA");
                 var user =  {
                     "firstName":document.getElementById('name').value,
-                    "lastName":document.getElementById('surname').value,
+                    "lastName":document.getElementById('lastname').value,
                     "email":document.getElementById('email').value,
                     "mobil e":document.getElementById('mobile').value,
                 };
@@ -193,9 +194,25 @@ app.controller("RegisterCtrl", function($scope, $resource, $http) {
         $scope.showUserContainer = false;
     };
 
-    $scope.setFile = function() {
-        console.log("select file");
+    $scope.filetypeCheck = true;
+    $scope.setFile = function(element) {
+        $scope.$apply(function($scope) {
+            console.log('files:', element.files.item(0).type);
+            $scope.file = element.files.item(0);
+            if($scope.file.type !== "text/csv"){
+                $scope.filetypeCheck = false;
+
+            }
+            else{
+                $scope.filetypeCheck = true;
+                $scope.csvFile = $scope.file;
+            }
+        });
     };
+
+    $scope.selectFile = function(){
+        console.log("heisann");
+    }
 
     function dragEnterLeave(evt) {
         evt.stopPropagation();
