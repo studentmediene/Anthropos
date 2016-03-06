@@ -54,6 +54,7 @@
 <div ng-view style="margin-bottom: 100px;"></div>
     <div class="panel-footer" style=" position: relative; left: 0; right: 0; padding-top: 60px; bottom:0; text-align: center;">Copyright © 2016 Studentmediene i Trondheim AS. All Rights Reserved </div> <!-- TODO: Make real footer -->
 </div>
+
 </body>
 
 </html>
