@@ -28,12 +28,11 @@
 	        </ul>
 			-->
 
-            <table st-safe-src="shownPeople" st-table="displayedCollection" class="table"  ng-if="shownPeople.length" >
+            <table st-safe-src="shownPeople" st-table="displayedCollection" class="table"  ng-if="shownPeople.length">
 
 
-                <thead>
-                    <td colspan="6" class="text-center">
-                        <div  st-pagination st-items-by-page="pageSize" st-template="views/customPagination.html" ></div>
+                <thead >
+                <td colspan="6" class="text-center">
                             <div class="input-group col-md-12">
                             <input st-search="" placeholder="Søk..." class="form-control col-md-4" type="search"/>
                             <div class="input-group-btn" ng-if="shownPeople.length" id="">
@@ -42,16 +41,16 @@
                                         Filtrer etter gruppe <span class="caret"></span>
                                     </button>
                                     <ul class="dropdown-menu" aria-labelledby="dropdownMenu">
-                                        <input placeholder="Søk etter gruppe..." type = "text" ng-model="groupSearch" class="searchgroup form-control"/>
-                                        <li>
-                                            <a data-ng-click="checkAll()">
-                                                <span class="glyphicon glyphicon-ok-sign"></span>  Check All</a>
-                                        </li>
-                                        <li>
-                                            <a data-ng-click="uncheck()">
-                                                <i class="glyphicon glyphicon-remove-sign"></i> Uncheck all</a>
-                                        </li>
-                                        <li class="divider"></li>
+                                        <!-- <input placeholder="Søk etter gruppe..." type = "text" ng-model="groupSearch" class="searchgroup form-control"/>
+                                         <li>
+                                             <a data-ng-click="checkAll()">
+                                                 <span class="glyphicon glyphicon-ok-sign"></span>  Check All</a>
+                                         </li>
+                                         <li>
+                                             <a data-ng-click="uncheck()">
+                                                 <i class="glyphicon glyphicon-remove-sign"></i> Uncheck all</a>
+                                         </li>
+                                         <li class="divider"></li>-->
                                         <div class="filterScrollBar pull-right">
                                             <li data-ng-repeat="group in tmpGroupList | filter:groupSearch">
                                                 <a data-ng-click="personInGroup(group)">
@@ -66,31 +65,37 @@
                             </div>
                             </div>
                     </td>
-                    <tr class="table table-bordered">
+                    <tr class="table table-bordered " >
                         <th st-sort="sn" class="tableHeader">Etternavn</th>
                         <th st-sort="givenName" class="tableHeader">Fornavn</th></th>
-                        <th st-sort="uid" class="tableHeader">Brukernavn</th></th>
-                        <th st-sort="mail" class="tableHeader">Mailadresse</th></th>
+                        <th st-sort="uid" class="tableHeader ">Brukernavn</th></th>
+                        <th st-sort="mail" class="tableHeader ">Mailadresse</th></th>
                         <th st-sort="telephoneNumber" class="tableHeader">Mobilnummer</th></th>
                         <th>Grupper</th>
                     </tr>
                 </thead>
 
-                <tbody class="table table-bordered">
+                <tbody class="table table-bordered" >
 
                 <tr ng-click="navToUser(person.uidNumber)" ng-repeat ="person in displayedCollection | limitTo:pageSize" class="ng-scope tableSelection" style="cursor:pointer;"
                     >
                     <td class ="ng-binding">{{person.sn}}</td>
                     <td class ="ng-binding">{{person.givenName}}</td>
-                    <td class ="ng-binding" >{{person.uid}}</td>
+                    <td class ="ng-binding">{{person.uid}}</td>
                     <td class ="ng-binding">{{person.mail}}</td>
                     <td class ="ng-binding">{{person.telephoneNumber}}</td>
-                    <td class ="ng-binding"><div ng-repeat = "group in person.memberOf">{{group}}</div></td>    <!-- TODO: add the groups individually through ng-repeat or sth.-->
+                    <td class ="ng-binding "><div ng-repeat = "group in person.memberOf">{{group}}</div></td>    <!-- TODO: add the groups individually through ng-repeat or sth.-->
                 </tr>
                 </tbody>
+                <tfoot>
+                <td colspan="6" class="text-center">
+                    <div  st-pagination st-items-by-page="pageSize" st-template="views/customPagination.html"></div>
+                </td>
+                </tfoot>
 
             </table>
 
+        </div>
         </div>
     </div>
 </div>
