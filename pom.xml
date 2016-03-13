@@ -140,18 +140,9 @@
                 </configuration>
             </plugin>
             <plugin>
-                <groupId>org.mortbay.jetty</groupId>
+                <groupId>org.eclipse.jetty</groupId>
                 <artifactId>jetty-maven-plugin</artifactId>
-                <version>8.1.9.v20130131</version>
-                <configuration>
-                    <connectors>
-                        <!-- Using BIO because of file locking on Windows -->
-                        <!--<connector implementation="org.eclipse.jetty.server.nio.SelectChannelConnector">-->
-                        <connector implementation="org.eclipse.jetty.server.bio.SocketConnector">
-                            <port>8080</port>
-                        </connector>
-                    </connectors>
-                </configuration>
+                <version>9.3.7.v20160115</version>
             </plugin>
             <!-- Control how the application is built -->
             <plugin>
