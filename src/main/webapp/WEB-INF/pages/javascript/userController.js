@@ -30,8 +30,8 @@ app.controller("UserCtrl", function($scope, $resource, $http, $modal, $routePara
                 $scope.editProfile = true;
                 $scope.canAddGroups = true;
 
-                document.getElementById("givenName").disabled = false;
-                document.getElementById("sn").disabled = false;
+                //document.getElementById("givenName").disabled = false;
+                //document.getElementById("sn").disabled = false;
 
                 $scope.authString = "ADMIN"
             }

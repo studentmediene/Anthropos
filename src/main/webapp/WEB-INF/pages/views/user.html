@@ -7,21 +7,21 @@
             <div class="heightPad">
                 <div class="input-group">
                     <span class="input-group-addon" id="name" >Fornavn</span>
-                    <input class="form-control" type="text" id="givenName" name="name" value={{givenName}} required="true" />
+                    <input class="form-control" disabled type="text" id="givenName" name="name" value={{givenName}} required="true" />
                 </div>
             </div>
             <div class="heightPad">
                 <div class="input-group">
                     <span class="input-group-addon" id="lastName">Etternavn</span>
-                    <input class="form-control" type="text" id="sn" name="sn" value={{sn}} required="true" />
+                    <input class="form-control" disabled type="text" id="sn" name="sn" value={{sn}} required="true" />
                 </div>
                 </div>
 
 
             <div class="heightPad">
                 <div class="input-group">
-                    <span class="input-group-addon" id="mailText">mail</span>
-                    <input class="form-control" type="mail" id="mail" name="mail" value={{mail}} required="true" />
+                    <span class="input-group-addon" id="mailText">E-Post</span>
+                    <input class="form-control" disabled type="mail" id="mail" name="mail" value={{mail}} required="true" />
                 </div>
             </div>
 
@@ -29,7 +29,7 @@
             <div class="heightPad">
                 <div class="input-group">
                     <span class="input-group-addon">Mobilnummer</span>
-                    <input class="form-control" type="text" id="telephoneNumber" name="telephoneNumber" value={{telephoneNumber}} required="true" />
+                    <input class="form-control" disabled type="text" id="telephoneNumber" name="telephoneNumber" value={{telephoneNumber}} required="true" />
                 </div>
             </div>
 
@@ -64,19 +64,19 @@
         </fieldset>
     </form>
     <!-- <a href = "#/pw"> -->
-    <button id="pwBtn" class="btn btn-default" data-ng-click ="editPassword()" >Endre passord</button> </a>
+    <button id="pwBtn" disabled class="btn btn-default" data-ng-click ="editPassword()" >Endre passord</button> </a>
 
     <div style="height:40px"></div>
     <legend>Grupper
 
 
-        <div class="btn-group pull-right" data-ng-class="{open: openGroup}" ng-init="editable = false">
-            <btn class="btn btn-default" ng-click="editable = true" ng-show="!editable"  ng-blur="openGroup = false">Endre grupper</btn>
-            <btn class="btn btn-default" ng-click="editable = false; addGroups()" ng-show="editable" style="background:limegreen; color:white">OK</btn>
-            <button id="groupBtn" class="btn btn-default dropdown-toggle" data-ng-click="openGroup=!openGroup" ng-show="editable">
+        <div class="btn-group pull-right"  data-ng-class="{open: openGroup}" ng-init="editable = false">
+            <btn class="btn btn-default" disabled ng-click="editable = true" ng-show="!editable"  ng-blur="openGroup = false">Endre grupper</btn>
+            <btn class="btn btn-default" disabled ng-click="editable = false; addGroups()" ng-show="editable" style="background:limegreen; color:white">OK</btn>
+            <button id="groupBtn" disabled class="btn btn-default dropdown-toggle" data-ng-click="openGroup=!openGroup" ng-show="editable">
                 Legg til gruppe <span class="caret"></span>
             </button>
-            <ul class="dropdown-menu" aria-labelledby="dropdownMenu">
+            <ul class="dropdown-menu" disabled aria-labelledby="dropdownMenu">
                 <input type = "text" ng-model="groupSearch" class="form-control"/>
                 <div class="filterScrollBar pull-right">
                     <li data-ng-repeat="group in permGroups | filter:groupSearch">
@@ -105,7 +105,7 @@
     <li ng-repeat="insufficient in insufficientList">
         <div style="color:red">{{insufficient}}</div>
     </li>
-    <button class="btn btn-default" data-ng-click="save()" style="background:limegreen; color:white" id="saveBtn" >Lagre endringer</button>
+    <button class="btn btn-default" disabled data-ng-click="save()" style="background:limegreen; color:white" id="saveBtn" >Lagre endringer</button>
     <span style="color:green; margin-left:25px"> {{endringerLagret}}</span>
     <script type="text/ng-template" id ="editPw.html">
 

@@ -360,3 +360,11 @@ legend				{ font-size: 1.8em; }
     background-color: #326CA6;
     color: white;
 }
+
+.tableSelection:hover td {background:#F0EFDF}
+
+#1{
+    width:50%;
+}
+
+
