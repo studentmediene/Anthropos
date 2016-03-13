@@ -9,7 +9,7 @@ Referat fra møte 24/09/2014
 1) Seksjonsleder etc. skal kunne legge til personer i sin gruppe.<br/>
 2) Legg til støtte for posisjoner - ala Anthropos-utvikler.<br/>
 3) Opptakssemester _ skal også kunne vises på frontend.<br/>
-4) Kryptere passord (?) Dette må utredes.<br/>
+4) ~~Kryptere passord (?) Dette må utredes.~~<br/>
 5) Mail lister kan utsettes litt.<br/>
 6) Gjengadmin skal kunne endre på alle sine medlemmer.<br/>
 7) Endreettigheter på alle brukere hvor deres nivå er lavere enn eget. <br/>
