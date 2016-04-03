@@ -19,7 +19,7 @@ app.controller("LoginCtrl", function($scope, $modal, $http) {
             method : 'POST',
             data : credentials,
             contentType: 'application/json',
-            url : 'api/login'
+            url : '/api/auth/login'
         }).success(function(data, status, headers, config) {
             window.location.href="/";
             //You logged inn successfully
