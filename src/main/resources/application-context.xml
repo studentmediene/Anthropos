@@ -21,8 +21,9 @@
 
         <!--<security:intercept-url pattern="/login" access="permitAll" />-->
         <security:intercept-url pattern="/api/login" access="permitAll" />
+        <security:intercept-url pattern="/index" access="permitAll" />
         <security:intercept-url pattern="/api/**" access="isFullyAuthenticated()" />
-        <!--<security:intercept-url pattern="/**" access="permitAll" />-->
+        <!--<security:intercept-url pattern="/**" access="isFullyAuthenticated()"/>-->
 
     </security:http>
 
@@ -41,12 +42,12 @@
 
 
 
-    <bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+    <!--<bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
         <property name="prefix" value="/WEB-INF/pages/"/>
         <property name="suffix" value=".jsp"/>
     </bean>
 
-    <mvc:resources mapping="/**" location="/WEB-INF/pages/" />
+    <mvc:resources mapping="/**" location="/WEB-INF/pages/" />-->
     <mvc:annotation-driven>
     <!--<mvc:message-converters>
         &lt;!&ndash; Use the Hibernate JSON mapper instead of the default &ndash;&gt;

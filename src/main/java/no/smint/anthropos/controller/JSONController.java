@@ -17,7 +17,7 @@ import java.util.ArrayList;
 
 
 @Controller
-@RequestMapping("/api")
+@RequestMapping("/")
 public class JSONController {
     private PersonList personList = new PersonList();
     LdapUtil ldapUtil = new LdapUtil();
@@ -61,7 +61,7 @@ public class JSONController {
         return person;
     }
 
-    @RequestMapping(value = "list", method = RequestMethod.GET)
+    @RequestMapping(value = "/list", method = RequestMethod.GET)
     public @ResponseBody ArrayList<Person> getList() {
         PersonList returnList = new PersonList();
         System.out.print("Trying to get the list of users: ");
