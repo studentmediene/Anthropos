@@ -4,7 +4,7 @@
     <groupId>no.smint</groupId>
     <artifactId>Anthropos</artifactId>
     <packaging>war</packaging>
-    <version>1.2.1</version>
+    <version>1.2.2</version>
     <name>Anthropos</name>
 
     <properties>
@@ -101,6 +101,13 @@
             <groupId>org.springframework.ldap</groupId>
             <artifactId>spring-ldap-core</artifactId>
             <version>${spring.ldap.version}</version>
+        </dependency>
+
+        <!-- Only for the redirect in index.jsp ... -->
+        <dependency>
+            <groupId>javax.servlet</groupId>
+            <artifactId>servlet-api</artifactId>
+            <version>2.5</version>
         </dependency>
 
 
