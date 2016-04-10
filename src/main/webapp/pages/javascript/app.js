@@ -3,13 +3,16 @@
  */
 var app = angular.module('mdbApp',["ngResource", "ngRoute","ui.bootstrap","smart-table"]);
 
-app.filter('startFrom', function() {
+/*app.filter('startFrom', function() {
     return function(input, start) {
         console.log("FILTERING");
         start = +start; //parse to int
         return input.slice(start);
     };
-});
+});*/
+
+
+
 
     app.config(['$routeProvider',
         function($routeProvider) {
@@ -20,7 +23,8 @@ app.filter('startFrom', function() {
                 })
                 .when('/', {
                     templateUrl: 'views/members.html',
-                    controller: 'PersonCtrl'
+                    controller: 'PersonCtrl',
+                    title: "/"
                 })
                 .when('/login', {
                     templateUrl: 'views/login.html',
@@ -44,6 +48,8 @@ app.filter('startFrom', function() {
         $httpProvider.interceptors.push('HttpInterceptor');
     }]);
 
+
+//Adds pagenumber to the paginatior
 angular.module('mdbApp')
     .directive('pageSelect', function() {
         return {
@@ -56,3 +62,4 @@ angular.module('mdbApp')
             }
         }
     });
+

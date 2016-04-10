@@ -1,8 +1,10 @@
 package no.smint.anthropos.controller;
 
 import no.smint.anthropos.PersonList;
+import no.smint.anthropos.authentication.AuthUserDetails;
 import no.smint.anthropos.authentication.LdapUserPwd;
 import no.smint.anthropos.authentication.UserLoginService;
+import no.smint.anthropos.authentication.UserLoginServiceImpl;
 import no.smint.anthropos.ldap.LDAP;
 import no.smint.anthropos.ldap.LdapUtil;
 import no.smint.anthropos.model.Person;
@@ -18,25 +20,17 @@ import java.util.ArrayList;
 
 @Controller
 @RequestMapping("/")
-public class JSONController {
+public class PersonController {
     private PersonList personList = new PersonList();
     LdapUtil ldapUtil = new LdapUtil();
 
     @Autowired
     private UserLoginService userLoginService;
 
+    @Autowired
+    private UserLoginServiceImpl userLoginServiceImpl;
+
     private Logger logger = LoggerFactory.getLogger(getClass());
-
-    /*@RequestMapping("*")
-    @ResponseBody
-    public String fallbackMethod(){
-        return "fallback method";
-    }
-
-    @RequestMapping
-    public String defaultReturn() {
-            return "index";
-    }*/
 
     @RequestMapping(value = "/login", method = RequestMethod.POST)
     public @ResponseBody void login(@RequestBody LdapUserPwd ldapUserPwd) {
@@ -48,6 +42,19 @@ public class JSONController {
     public @ResponseBody void logout() {
         System.out.println("logout");
         userLoginService.logout();
+    }
+
+    @RequestMapping(value = "me")
+    public @ResponseBody Person me() {
+        AuthUserDetails loggedInUser = userLoginServiceImpl.getLoggedInUserDetails();
+        logger.debug("Current user: {}", loggedInUser.getUsername());
+
+        try {
+            return LDAP.findByIdNumber(loggedInUser.getUidNumber().intValue());
+        } catch (NamingException e) {
+            e.printStackTrace();
+        }
+        return null;
     }
 
     @RequestMapping(value = "{id}", method = RequestMethod.GET)
