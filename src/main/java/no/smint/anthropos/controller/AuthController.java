@@ -29,5 +29,6 @@ public class AuthController {
     @RequestMapping("/logout")
     public @ResponseBody void logout() {
         userLoginService.logout();
+        logger.info("User logged out");
     }
 }
