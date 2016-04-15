@@ -1,7 +1,9 @@
 /**
  * Created by Kristian on 12/02/14.
  */
-app.controller("mainCtrl", function($scope, $window, $resource, $http) {
+app.controller("mainCtrl", function($scope, $location, $rootScope, $resource, $http, PersonService) {
+
+
 
 
     $scope.ting=true;
@@ -12,6 +14,7 @@ app.controller("mainCtrl", function($scope, $window, $resource, $http) {
             return true;
         }
     };
+
 
     if($scope.detectMobile){console.log("is a mobile")} /* TODO make something incredible for mobile platforms or some shit like that */
     else {console.log("is desktop")}
@@ -33,9 +36,26 @@ app.controller("mainCtrl", function($scope, $window, $resource, $http) {
     };
 
     $scope.logout = function() {
+        window.location.href = "/";
+
         return $http({
             url : '/api/auth/logout'
+
         });
+    };
+
+    PersonService.getCurrentUser().success(function(user) {
+        console.log(user);
+        $scope.user = user;
+    });
+
+
+
+    $scope.profile = function(){
+
+            $location.url("/user/" + $scope.user.uidNumber);
+
+
     }
 
 });

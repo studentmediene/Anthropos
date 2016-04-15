@@ -3,12 +3,12 @@
  */
 
 app.controller("TestCtrl", function($scope) {
-
+/*
     $scope.allChecked = false;
 
     $scope.groupList = $scope.tmpGroupList;
 
-    $scope.groupsSelected = []; /* Selected groups are id'ed with namestrings, since no groups can have the same name */
+    $scope.groupsSelected = []; /* Selected groups are id'ed with namestrings, since no groups can have the same name
     $scope.shownPeople = [];
     $scope.isInGroup = function() {
         console.log("hei");
@@ -42,6 +42,5 @@ app.controller("TestCtrl", function($scope) {
         }
         return false;
     };
-
-
+*/
 });

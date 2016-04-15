@@ -1,7 +1,25 @@
 /**
  * Created by Kristian on 12/02/14.
  */
-var app = angular.module('mdbApp',["ngResource", "ngRoute","ui.bootstrap","smart-table"]);
+
+'use strict';
+
+angular.module('mdbApp.controllers', []);
+angular.module('mdbApp.filters', []);
+angular.module('mdbApp.services', []);
+angular.module('mdbApp.directives', []);
+
+
+var app = angular.module('mdbApp',
+    [
+        "ngResource",
+        "ngRoute",
+        "ui.bootstrap",
+        "smart-table",
+        "mdbApp.controllers",
+        "mdbApp.services",
+        'mdbApp.directives'
+    ]);
 
 /*app.filter('startFrom', function() {
     return function(input, start) {
@@ -10,8 +28,6 @@ var app = angular.module('mdbApp',["ngResource", "ngRoute","ui.bootstrap","smart
         return input.slice(start);
     };
 });*/
-
-
 
 
     app.config(['$routeProvider',
@@ -23,8 +39,7 @@ var app = angular.module('mdbApp',["ngResource", "ngRoute","ui.bootstrap","smart
                 })
                 .when('/', {
                     templateUrl: 'views/members.html',
-                    controller: 'PersonCtrl',
-                    title: "/"
+                    controller: 'PersonCtrl'
                 })
                 .when('/login', {
                     templateUrl: 'views/login.html',
@@ -49,17 +64,6 @@ var app = angular.module('mdbApp',["ngResource", "ngRoute","ui.bootstrap","smart
     }]);
 
 
-//Adds pagenumber to the paginatior
-angular.module('mdbApp')
-    .directive('pageSelect', function() {
-        return {
-            restrict: 'E',
-            template: '<input type="text" class="select-page" ng-model="inputPage" ng-change="selectPage(inputPage)" style=" text-align: center; width: 30%; line-height: 0.1em; padding: 0;">',
-            link: function(scope, element, attrs) {
-                scope.$watch('currentPage', function(c) {
-                    scope.inputPage = c;
-                });
-            }
-        }
-    });
+
+
 

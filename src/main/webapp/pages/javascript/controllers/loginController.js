@@ -1,7 +1,7 @@
 /**
  * Created by Kristian on 23/04/14.
  */
-app.controller("LoginCtrl", function($scope, $modal, $http) {
+app.controller("LoginCtrl", function($scope, $location, $rootScope, $modal, $http) {
 
     $scope.login = function() {
 
@@ -21,7 +21,9 @@ app.controller("LoginCtrl", function($scope, $modal, $http) {
             contentType: 'application/json',
             url : '/api/auth/login'
         }).success(function(data, status, headers, config) {
+
             window.location.href="/";
+
             //You logged inn successfully
 
         }).error(function(data, status, headers, config) {
@@ -32,6 +34,7 @@ app.controller("LoginCtrl", function($scope, $modal, $http) {
 
 
     };
+
 
 
     $scope.modalInstance;
@@ -54,3 +57,4 @@ app.controller("LoginCtrl", function($scope, $modal, $http) {
     };
 
 });
+
