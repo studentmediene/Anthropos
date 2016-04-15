@@ -16,7 +16,7 @@
 
 'use strict';
 
-app.factory('HttpInterceptor', function ($q) {
+app.factory('HttpInterceptor', function ($q, $location) {
         /*
          This interceptor will intercept http requests that have failed.
 
@@ -30,7 +30,7 @@ app.factory('HttpInterceptor', function ($q) {
             'responseError': function (response) {
                 if (response.status === 401) {
                     // redirect to login page
-                    window.location.href="/#/login"
+                    $location.url("/login");
                 }
                 return $q.reject(response);
             }
