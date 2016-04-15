@@ -41,12 +41,14 @@
 <div id="wrap" >
 <div class="banner" ng-controller="mainCtrl">
     <span class="header-title largeScreen"> Medlemsdatabase for Studentmediene </span>
-    <img href="#"  src="img/SM-logo.png" class="banner-icon" style="float:left" ng-mouseover="count=count+1" ng-init="count=0">
+    <img href="/"  src="img/SM-logo.png" class="banner-icon" style="float:left" ng-mouseover="count=count+1" ng-init="count=0">
     <span class="header-title mediumScreen">MDB</span>
     <div class="pull-right" style="margin-top: 30px;">
       <!--  <button class="btn" ng-click="ting=!ting">{{ting}}</button> -->
-        <a ng-if="user" data-ng-click="profile()"> <b>Profile</b></a>
-        <a ng-if="user" data-ng-click="logout()"> <b>Log out</b></a>
+        <a ng-if="user" ng-href="/"> <b>Hjem</b></a>
+        <a ng-if="user" ng-href="/#/register"> <b>Ny bruker</b></a>
+        <a ng-if="user" data-ng-click="profile()"> <b>Profil</b></a>
+        <a ng-if="user" data-ng-click="logout()"> <b>Logg ut</b></a>
 
 
     </div>
