@@ -4,7 +4,7 @@
     <groupId>no.smint</groupId>
     <artifactId>Anthropos</artifactId>
     <packaging>war</packaging>
-    <version>1.1.0</version>
+    <version>1.2.2</version>
     <name>Anthropos</name>
 
     <properties>
@@ -44,19 +44,6 @@
             <artifactId>spring-test</artifactId>
             <version>${spring.version}</version>
             <scope>test</scope>
-        </dependency>
-
-        <dependency>
-            <groupId>javax.servlet</groupId>
-            <artifactId>javax.servlet-api</artifactId>
-            <version>3.0.1</version>
-        </dependency>
-
-        <dependency>
-            <groupId>javax.servlet.jsp</groupId>
-            <artifactId>jsp-api</artifactId>
-            <version>2.1</version>
-            <scope>provided</scope>
         </dependency>
 
         <dependency>
@@ -134,6 +121,13 @@
             <artifactId>slf4j-api</artifactId>
             <version>1.7.7</version>
         </dependency>
+
+        <!-- Only for the redirect in index.jsp ... -->
+        <dependency>
+            <groupId>javax.servlet</groupId>
+            <artifactId>servlet-api</artifactId>
+            <version>2.5</version>
+        </dependency>
     </dependencies>
 
     <build>
@@ -141,16 +135,25 @@
         <plugins>
             <plugin>
                 <artifactId>maven-compiler-plugin</artifactId>
-                <version>3.1</version>
+                <version>3.0</version>
                 <configuration>
-                    <source>1.6</source>
-                    <target>1.6</target>
+                    <source>1.7</source>
+                    <target>1.7</target>
                 </configuration>
             </plugin>
             <plugin>
-                <groupId>org.eclipse.jetty</groupId>
+                <groupId>org.mortbay.jetty</groupId>
                 <artifactId>jetty-maven-plugin</artifactId>
-                <version>9.3.7.v20160115</version>
+                <version>8.1.9.v20130131</version>
+                <configuration>
+                    <connectors>
+                        <!-- Using BIO because of file locking on Windows -->
+                        <!--<connector implementation="org.eclipse.jetty.server.nio.SelectChannelConnector">-->
+                        <connector implementation="org.eclipse.jetty.server.bio.SocketConnector">
+                            <port>8080</port>
+                        </connector>
+                    </connectors>
+                </configuration>
             </plugin>
             <!-- Control how the application is built -->
             <plugin>
@@ -163,7 +166,7 @@
                     </warSourceIncludes>
                 </configuration>
             </plugin>
-            <plugin>
+            <!--<plugin>
                 <artifactId>maven-surefire-plugin</artifactId>
                 <version>2.19.1</version>
                 <configuration>
@@ -171,7 +174,7 @@
                         <include>**/*Tests.java</include>
                     </includes>
                 </configuration>
-            </plugin>
+            </plugin>-->
         </plugins>
     </build>
 </project>
