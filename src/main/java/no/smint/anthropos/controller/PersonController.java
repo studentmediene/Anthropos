@@ -20,7 +20,6 @@ import no.smint.anthropos.PersonList;
 import no.smint.anthropos.authentication.AuthUserDetails;
 import no.smint.anthropos.authentication.UserLoginService;
 import no.smint.anthropos.authentication.UserLoginServiceImpl;
-import no.smint.anthropos.ldap.LDAP;
 import no.smint.anthropos.ldap.LdapUtil;
 import no.smint.anthropos.model.Person;
 import org.slf4j.Logger;
@@ -29,7 +28,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
-import javax.naming.NamingException;
 import java.util.ArrayList;
 
 
@@ -54,22 +52,12 @@ public class PersonController {
         AuthUserDetails loggedInUser = userLoginServiceImpl.getLoggedInUserDetails();
         logger.debug("Current user: {}", loggedInUser.getUsername());
 
-        try {
-            return LDAP.findByIdNumber(loggedInUser.getUidNumber().intValue());
-        } catch (NamingException e) {
-            e.printStackTrace();
-        }
-        return null;
+        return ldapUtil.getUserById(loggedInUser.getUidNumber().intValue());
     }
 
     @RequestMapping(value = "{id}", method = RequestMethod.GET)
     public @ResponseBody Person getPersonById(@PathVariable int id) {
-        Person person = null;
-        try {
-            person = LDAP.findByIdNumber(id);
-        } catch(NamingException e) {
-            System.err.println("Error: " + e.getMessage());
-        }
+        Person person = ldapUtil.getUserById(id);
         return person;
     }
 

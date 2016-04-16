@@ -22,6 +22,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.ldap.core.LdapTemplate;
+import org.springframework.ldap.filter.AndFilter;
+import org.springframework.ldap.filter.EqualsFilter;
 import org.springframework.ldap.query.LdapQuery;
 import org.springframework.stereotype.Service;
 
@@ -51,6 +53,12 @@ public class LdapUtil {
 
         personList.update(persons);
         return personList;
+    }
+
+    public Person getUserById(int id) {
+        AndFilter filter = new AndFilter();
+        filter.and(new EqualsFilter("uidNumber", id));
+        return ldapTemplate.search("ou=Users", filter.encode(), new PersonAttributesMapper()).get(0);
     }
 
     public Person getUser(String dn) {
