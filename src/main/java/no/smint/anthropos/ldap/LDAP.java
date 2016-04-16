@@ -22,21 +22,20 @@ ssh boyeborg@scgw1.studentmediene.no -L8389:ldap.studentmediene.local:389
 package no.smint.anthropos.ldap;
 
 import no.smint.anthropos.PersonList;
-import no.smint.anthropos.model.Person;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.ldap.core.AttributesMapper;
 import org.springframework.ldap.core.LdapTemplate;
 import org.springframework.stereotype.Service;
 
 import javax.naming.Context;
 import javax.naming.NamingEnumeration;
 import javax.naming.NamingException;
-import javax.naming.directory.*;
-import java.util.ArrayList;
+import javax.naming.directory.DirContext;
+import javax.naming.directory.InitialDirContext;
+import javax.naming.directory.SearchControls;
+import javax.naming.directory.SearchResult;
 import java.util.Hashtable;
-import java.util.List;
 
 
 /**
@@ -63,7 +62,7 @@ public class LDAP {
 
     private static final String host = "ldap://ldapstaging.studentmediene.no";
 
-    public PersonList getUsers() {
+    /*public PersonList getUsers() {
         final int[] activeCount = {0};
         PersonList personList = new PersonList();
         logger.info("ldapTemplate context source: " + ldapTemplate.getContextSource());
@@ -95,7 +94,7 @@ public class LDAP {
 
         personList.update(persons);
         return personList;
-    }
+    }*/
 
     /**
      * Binds anonymously to the LDAP server. Returns a <code>Hashtable</code> to use for searching etc.
@@ -266,7 +265,7 @@ public class LDAP {
         return searchResult.getNameInNamespace();
     }
 
-    public static Person findByIdNumber(int id) throws NamingException {
+    /*public static Person findByIdNumber(int id) throws NamingException {
         Hashtable<String, Object> env = config();
         DirContext ctx = new InitialDirContext(env);
         SearchControls ctls = new SearchControls();
@@ -280,7 +279,7 @@ public class LDAP {
         }
         ctx.close();
         return SearchProcessing.getPerson(searchResult);
-    }
+    }*/
 
 
 /*    public static void addAsEdit(Person user) throws NamingException {
