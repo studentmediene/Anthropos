@@ -84,7 +84,8 @@
                     <td class ="ng-binding">{{person.uid}}</td>
                     <td class ="ng-binding">{{person.mail}}</td>
                     <td class ="ng-binding">{{person.telephoneNumber}}</td>
-                    <td class ="ng-binding "><div ng-repeat = "group in person.memberOf">{{group}}</div></td>    <!-- TODO: add the groups individually through ng-repeat or sth.-->
+                    <!-- Adds groups separated by comma-->
+                    <td class ="ng-binding "><span ng-repeat = "group in person.memberOf" >{{group}} {{{true: '', false: ', '}[$last]}}</span></td>
                 </tr>
                 </tbody>
                 <tfoot>
