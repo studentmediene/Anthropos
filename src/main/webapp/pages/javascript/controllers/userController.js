@@ -1,15 +1,10 @@
 /**
  * Created by Kristian on 05/03/14.
  */
-app.controller("UserCtrl", function($scope, $resource, $http, $modal, $routeParams, $log) {
+app.controller("UserCtrl", function($scope, $resource, $http, $modal, $routeParams, $log, UserListService) {
 
-    var tmpObj = $resource("/api/"+$routeParams.id, {}, {
-            get:{
-                isArray:false,
-                method:"GET"
-            }
-        }
-    );
+    var tmpObj = UserListService.getGroups($routeParams.id);
+
     $scope.allGroups = tmpObj.get();
 
     $scope.showPasswordError = false;

@@ -1,7 +1,7 @@
 /**
  * Created by Kristian on 23/04/14.
  */
-app.controller("LoginCtrl", function($scope, $location, $rootScope, $modal, $http) {
+app.controller("LoginCtrl", function($scope, $location, $rootScope, $modal, $http, LoginService) {
 
     $scope.login = function() {
 
@@ -15,12 +15,13 @@ app.controller("LoginCtrl", function($scope, $location, $rootScope, $modal, $htt
             "password":password
         };
 
-        return $http({
+        /*return $http({
             method : 'POST',
             data : credentials,
             contentType: 'application/json',
             url : '/api/auth/login'
-        }).success(function(data, status, headers, config) {
+        })*/
+        LoginService.login(credentials).success(function(data, status, headers, config) {
 
             window.location.href="/";
 
