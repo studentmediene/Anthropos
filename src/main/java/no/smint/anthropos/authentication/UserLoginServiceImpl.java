@@ -24,9 +24,6 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
-/**
- * Created by adrianh on 08.02.15.
- */
 @Service
 public class UserLoginServiceImpl implements UserLoginService {
 
