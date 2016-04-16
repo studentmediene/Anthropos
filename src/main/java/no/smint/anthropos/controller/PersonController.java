@@ -18,7 +18,6 @@ package no.smint.anthropos.controller;
 
 import no.smint.anthropos.PersonList;
 import no.smint.anthropos.authentication.AuthUserDetails;
-import no.smint.anthropos.authentication.LdapUserPwd;
 import no.smint.anthropos.authentication.UserLoginService;
 import no.smint.anthropos.authentication.UserLoginServiceImpl;
 import no.smint.anthropos.ldap.LDAP;
@@ -38,6 +37,8 @@ import java.util.ArrayList;
 @RequestMapping("/")
 public class PersonController {
     private PersonList personList = new PersonList();
+
+    @Autowired
     LdapUtil ldapUtil = new LdapUtil();
 
     @Autowired
@@ -47,18 +48,6 @@ public class PersonController {
     private UserLoginServiceImpl userLoginServiceImpl;
 
     private Logger logger = LoggerFactory.getLogger(getClass());
-
-    @RequestMapping(value = "/login", method = RequestMethod.POST)
-    public @ResponseBody void login(@RequestBody LdapUserPwd ldapUserPwd) {
-        logger.debug("Login try with: {}", ldapUserPwd);
-        userLoginService.login(ldapUserPwd);
-    }
-
-    @RequestMapping(value = "logout")
-    public @ResponseBody void logout() {
-        System.out.println("logout");
-        userLoginService.logout();
-    }
 
     @RequestMapping(value = "me")
     public @ResponseBody Person me() {
