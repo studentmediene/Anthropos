@@ -18,15 +18,29 @@ package no.smint.anthropos.authentication;
 
 import no.smint.anthropos.model.Person;
 
+public class UserLoginServiceMock implements UserLoginService {
+    @Override
+    public int getId() {
+        return 1;
+    }
 
-public interface UserLoginService {
-    int getId();
+    @Override
+    public String getUsername() {
+        return null;
+    }
 
-    String getUsername();
+    @Override
+    public boolean login(LdapUserPwd token) {
+        return false;
+    }
 
-    boolean login(LdapUserPwd token);
+    @Override
+    public void logout() {
 
-    void logout();
+    }
 
-    Person getLoggedInUser();
+    @Override
+    public Person getLoggedInUser() {
+        return null;
+    }
 }

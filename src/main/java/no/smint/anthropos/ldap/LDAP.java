@@ -21,21 +21,7 @@ ssh boyeborg@scgw1.studentmediene.no -L8389:ldap.studentmediene.local:389
 */
 package no.smint.anthropos.ldap;
 
-import no.smint.anthropos.PersonList;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.ldap.core.LdapTemplate;
 import org.springframework.stereotype.Service;
-
-import javax.naming.Context;
-import javax.naming.NamingEnumeration;
-import javax.naming.NamingException;
-import javax.naming.directory.DirContext;
-import javax.naming.directory.InitialDirContext;
-import javax.naming.directory.SearchControls;
-import javax.naming.directory.SearchResult;
-import java.util.Hashtable;
 
 
 /**
@@ -46,10 +32,10 @@ import java.util.Hashtable;
 @Deprecated
 public class LDAP {
 
-    @Autowired
+/*    @Autowired
     LdapTemplate ldapTemplate;
 
-    Logger logger = LoggerFactory.getLogger(getClass());
+    Logger logger = LoggerFactory.getLogger(getClass());*/
 
     //private static final String host = "ldap://localhost:8389"; //For testing on the real server. Must tunnel to scgwl.studentmediene.no
     /*
@@ -58,9 +44,11 @@ public class LDAP {
         ssh boyeborg@scgw1.studentmediene.no -L8389:ldap.studentmediene.local:389
     */
 
+/*
     private static final String name = "ou=Users,dc=studentmediene,dc=no";
 
     private static final String host = "ldap://ldapstaging.studentmediene.no";
+*/
 
     /*public PersonList getUsers() {
         final int[] activeCount = {0};
@@ -95,11 +83,11 @@ public class LDAP {
         personList.update(persons);
         return personList;
     }*/
-
-    /**
+/*
+    *//**
      * Binds anonymously to the LDAP server. Returns a <code>Hashtable</code> to use for searching etc.
      * @return <code>Hashtable</code> with the binding to the server.
-     */
+     *//*
     public static Hashtable<String, Object> config() {
 		Hashtable<String, Object> env = new Hashtable<String, Object>();
 
@@ -113,7 +101,7 @@ public class LDAP {
         //env.put(Context.SECURITY_PRINCIPAL, "uid=birgith.do,ou=System Users,dc=studentmeidene,dc=no");
         //env.put(Context.SECURITY_CREDENTIALS, "overrated rapid machine");
         return env;
-    }
+    }*/
 
 /*    *//*
      * Receives a <code>DistinguishedName</code> in the form of an <code>ActiveLogin</code> object (i.e. uid=firstname.lastname,ou=Users,dc=studentmediene,dc=no) and a password.
@@ -242,7 +230,7 @@ public class LDAP {
         return 0;
     }*/
 
-    public static String getDn(String uid) throws NamingException {
+    /*public static String getDn(String uid) throws NamingException {
         Hashtable<String, Object> env = config();
         DirContext ctx = new InitialDirContext(env);
         SearchControls ctls = new SearchControls();
@@ -263,7 +251,7 @@ public class LDAP {
         }
         ctx.close();
         return searchResult.getNameInNamespace();
-    }
+    }*/
 
     /*public static Person findByIdNumber(int id) throws NamingException {
         Hashtable<String, Object> env = config();
@@ -330,7 +318,7 @@ public class LDAP {
         return checkRightsLevel(activeLogin, editDn) >= 0;
     }*/
 
-    public static PersonList retrieve() throws NamingException {
+    /*public static PersonList retrieve() throws NamingException {
         Hashtable<String, Object> env = config();
 
 		DirContext ctx = new InitialDirContext(env);
@@ -343,7 +331,7 @@ public class LDAP {
 
         ctx.close();
         return SearchProcessing.getPersons(answer);
-	}
+	}*/
 }
 
 

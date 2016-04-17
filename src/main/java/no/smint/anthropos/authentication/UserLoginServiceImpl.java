@@ -31,7 +31,7 @@ public class UserLoginServiceImpl implements UserLoginService {
     private AuthenticationManager authenticationManager;
 
     @Override
-    public Long getId() {
+    public int getId() {
         return getLoggedInUserDetails().getUidNumber();
     }
 

@@ -28,7 +28,7 @@ import java.util.Collections;
  */
 public class AuthUserDetails implements UserDetails {
 
-    private Long uidNumber;
+    private int uidNumber;
     private final String uid;
 
     public AuthUserDetails(Person person) {
@@ -36,7 +36,7 @@ public class AuthUserDetails implements UserDetails {
         uid = person.getUid();
     }
 
-    public Long getUidNumber() {
+    public int getUidNumber() {
         return uidNumber;
     }
 

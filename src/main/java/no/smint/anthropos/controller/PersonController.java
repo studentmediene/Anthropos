@@ -48,35 +48,24 @@ public class PersonController {
     private Logger logger = LoggerFactory.getLogger(getClass());
 
     @RequestMapping(value = "me")
-    public @ResponseBody Person me() {
+    public @ResponseBody Person getCurrentUser() {
         AuthUserDetails loggedInUser = userLoginServiceImpl.getLoggedInUserDetails();
         logger.debug("Current user: {}", loggedInUser.getUsername());
 
-        return ldapUtil.getUserById(loggedInUser.getUidNumber().intValue());
+        return ldapUtil.getUserById(userLoginService.getId());
     }
 
     @RequestMapping(value = "{id}", method = RequestMethod.GET)
-    public @ResponseBody Person getPersonById(@PathVariable int id) {
-        Person person = ldapUtil.getUserById(id);
-        return person;
+    public @ResponseBody Person getPersonById(@PathVariable("id") int id) {
+        return ldapUtil.getUserById(id);
     }
 
     @RequestMapping(value = "/list", method = RequestMethod.GET)
-    public @ResponseBody ArrayList<Person> getList() {
-        PersonList returnList = new PersonList();
+    public @ResponseBody ArrayList<Person> getAllPersons() {
         System.out.print("Trying to get the list of users: ");
-        returnList.update(ldapUtil.getUsers());
-        for (Person p : returnList) {
-            ArrayList<String> groups = p.getMemberOf();
-            ArrayList<String> sections = new ArrayList<String>();
-            for (String group : groups) {
-                if (group.contains("sections")) {
-                    sections.add(group.substring(group.indexOf('=') + 1, group.indexOf(',')));
-                }
-            }
-            p.setMemberOf(sections);
-        }
-        return returnList;
+        PersonList personList = (ldapUtil.getUsers());
+
+        return personList;
     }
 
     @RequestMapping(value = "edit", method = RequestMethod.GET)

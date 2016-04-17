@@ -29,6 +29,7 @@ import org.springframework.stereotype.Service;
 
 import javax.naming.NamingException;
 import javax.naming.directory.SearchControls;
+import java.util.ArrayList;
 import java.util.List;
 
 import static org.springframework.ldap.query.LdapQueryBuilder.query;
@@ -46,12 +47,23 @@ public class LdapUtil {
         final int[] activeCount = {0};
         PersonList personList = new PersonList();
         logger.info("ldapTemplate context source: " + ldapTemplate);
-            List<Person> persons = ldapTemplate.search("ou=Users", "(objectClass=person)", new PersonAttributesMapper());
+        List<Person> persons = ldapTemplate.search("ou=Users", "(objectClass=person)", new PersonAttributesMapper());
 
         logger.info("Number of users from LDAP: {}", persons.size());
         logger.info("Number of active: {}", activeCount[0]);
 
         personList.update(persons);
+
+        for (Person p : personList) {
+            ArrayList<String> groups = p.getMemberOf();
+            ArrayList<String> sections = new ArrayList<String>();
+            for (String group : groups) {
+                if (group.contains("sections")) {
+                    sections.add(group.substring(group.indexOf('=') + 1, group.indexOf(',')));
+                }
+            }
+            p.setMemberOf(sections);
+        }
         return personList;
     }
 

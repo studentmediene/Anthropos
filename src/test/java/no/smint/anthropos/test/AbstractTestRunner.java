@@ -14,19 +14,16 @@
  * limitations under the License.
  */
 
-package no.smint.anthropos.authentication;
+package no.smint.anthropos.test;
 
-import no.smint.anthropos.model.Person;
+import org.junit.runner.RunWith;
+import org.springframework.test.context.ContextConfiguration;
+import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
-
-public interface UserLoginService {
-    int getId();
-
-    String getUsername();
-
-    boolean login(LdapUserPwd token);
-
-    void logout();
-
-    Person getLoggedInUser();
+/**
+ * Created by adrianh on 17.04.16.
+ */
+@RunWith(SpringJUnit4ClassRunner.class)
+@ContextConfiguration("classpath*:testContext.xml")
+public class AbstractTestRunner {
 }

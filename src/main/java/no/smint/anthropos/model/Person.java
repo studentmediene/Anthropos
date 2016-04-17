@@ -30,11 +30,11 @@ public class Person {
     private String mail;
     private String telephoneNumber;
     public ArrayList<String> memberOf = new ArrayList<String>();
-    private Long uidNumber;
+    private int uidNumber;
     private String dn;
     private boolean harOblat;
 
-    public Person(String givenName, String sn, String mail, ArrayList<String> memberOf, String telephoneNumber, Long uidNumber, String uid, boolean harOblat) {
+    public Person(String givenName, String sn, String mail, ArrayList<String> memberOf, String telephoneNumber, int uidNumber, String uid, boolean harOblat) {
         setGivenName(givenName);
         setSn(sn);
         setMail(mail);
@@ -66,7 +66,7 @@ public class Person {
         return this.cn;
     }
 
-    public Long getUidNumber() {
+    public int getUidNumber() {
         return this.uidNumber;
     }
 
@@ -112,7 +112,7 @@ public class Person {
         this.mail = mail;
     }
 
-    public void setUidNumber(Long uidNumber) { this.uidNumber = uidNumber; }
+    public void setUidNumber(int uidNumber) { this.uidNumber = uidNumber; }
 
     public void setDn(String dn) {
         this.dn = dn;
