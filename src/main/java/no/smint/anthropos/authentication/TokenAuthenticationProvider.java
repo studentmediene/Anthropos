@@ -39,9 +39,6 @@ import java.util.List;
 
 import static org.springframework.ldap.query.LdapQueryBuilder.query;
 
-/**
- * Created by adrianh on 25.01.15.
- */
 @Service
 public class TokenAuthenticationProvider implements AuthenticationProvider {
     Logger logger = LoggerFactory.getLogger(getClass());

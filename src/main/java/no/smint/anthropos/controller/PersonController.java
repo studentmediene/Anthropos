@@ -25,6 +25,8 @@ import no.smint.anthropos.model.Person;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
@@ -63,9 +65,22 @@ public class PersonController {
     @RequestMapping(value = "/list", method = RequestMethod.GET)
     public @ResponseBody ArrayList<Person> getAllPersons() {
         System.out.print("Trying to get the list of users: ");
-        PersonList personList = (ldapUtil.getUsers());
 
-        return personList;
+        return ldapUtil.getUsers();
+    }
+
+    @RequestMapping(value = "add", method = RequestMethod.POST)
+    @ResponseBody
+    public ResponseEntity<?> addPerson(@RequestBody Person person) {
+        if (person != null) {
+            logger.info("Adding user: {}", person);
+            ldapUtil.addUser(person);
+            return new ResponseEntity<>(person, HttpStatus.OK);
+        } else {
+            String errorMessage = "Failed to add user, Person object was null";
+            logger.error(errorMessage);
+            return new ResponseEntity<>(errorMessage, HttpStatus.UNPROCESSABLE_ENTITY);
+        }
     }
 
     @RequestMapping(value = "edit", method = RequestMethod.GET)
@@ -77,19 +92,6 @@ public class PersonController {
     public @ResponseBody String forgotPassword() {
         //Code for sending new password to user here
         return "index";
-    }
-
-    @Deprecated
-    @RequestMapping(value = "search", method = RequestMethod.GET)
-    public @ResponseBody ArrayList<Person> search(@RequestParam(value="name", required = true) String name) {
-        PersonList returnList = new PersonList();
-/*        System.out.println("Attempting search for: " + name);
-        try {
-            returnList.update(LDAP.search(name));
-        } catch (NamingException e) {
-            System.err.println("Search error: " + e.getMessage());
-        }*/
-        return returnList;
     }
 
     @RequestMapping(value = "/addList", method = RequestMethod.POST)

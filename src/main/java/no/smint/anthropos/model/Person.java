@@ -92,6 +92,10 @@ public class Person {
 
     public String getTelephoneNumber() { return telephoneNumber; }
 
+    public boolean getHarOblat() {
+        return harOblat;
+    }
+
     public void setGivenName(String givenName) {
         this.givenName = givenName;
     }
@@ -126,6 +130,27 @@ public class Person {
 
     public void setHarOblat(boolean harOblat) {
         this.harOblat = harOblat;
+    }
+
+    public boolean equals(Person person) {
+        if (    person.getCn().equals(this.cn) &&
+                person.getDn().equals(this.dn) &&
+                person.getGivenName().equals(this.givenName) &&
+                person.getMail().equals(this.mail) &&
+                person.getSn().equals(this.sn) &&
+                person.getTelephoneNumber().equals(this.telephoneNumber) &&
+                person.getUid().equals(this.uid) &&
+                person.getUidNumber() == this.uidNumber &&
+                person.getHarOblat() == this.getHarOblat() &&
+                person.getMemberOf().size() == this.memberOf.size()) {
+            for (String group : person.getMemberOf()) {
+                if (!this.getMemberOf().contains(group)) {
+                    return false;
+                }
+            }
+            return true;
+        }
+        return false;
     }
 
     @Override
