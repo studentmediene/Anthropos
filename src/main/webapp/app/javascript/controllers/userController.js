@@ -17,7 +17,7 @@
 /**
  * Created by Kristian on 05/03/14.
  */
-app.controller("UserCtrl", function($scope, $resource, $http, $modal, $routeParams, $log, UserListService) {
+app.controller("UserCtrl", function($scope, $resource, $http, $modal, $routeParams, $log, UserListService, $location) {
 
     var tmpObj = UserListService.getGroups($routeParams.id);
 
@@ -304,6 +304,13 @@ app.controller("UserCtrl", function($scope, $resource, $http, $modal, $routePara
     };
 
 
+    //TODO: Add to directives & make work
+    $scope.returnToCorrectPage = function(){
+        $scope.currentPage = localStorage.getItem("currentPage");
+        localStorage.setItem("currentPage", null);
+        console.log($scope.currentPage);
+        $location.url("/");
+    }
 
 });
 
@@ -340,3 +347,4 @@ app.controller('ModalInstanceCtrl', function ($scope, $modalInstance, items) {
         $modalInstance.dismiss('cancel');
     };
 });
+

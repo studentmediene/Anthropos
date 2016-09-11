@@ -68,7 +68,7 @@ app.controller("mainCtrl", function($scope, $location, $rootScope, $resource, $h
 
 
     $scope.profile = function(){
-
+            localStorage.setItem("currentPage", 2);
             $location.url("/user/" + $scope.user.uidNumber);
 
 
